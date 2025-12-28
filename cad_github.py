@@ -1,1804 +1,555 @@
+#!/usr/bin/env python3
 """
-Airport Runway System CAD Generator
-Generates comprehensive CAD drawings of airport runway systems including:
-- Safety zones
-- All 5 taxiways
-- Aprons
-- Detailed runway markings
-- Lighting systems
-Based on runway_geometry.json data
+Extended DXF Generator for Airport Runway System
+Supports 4 modules: Runway Markings, Safety Areas, Lighting Systems, and Taxiways
+Reads from runway_geometry.json and generates R2010 format DXF files
+Author: Quintus-coder
+Date: 2025-12-28
 """
 
 import json
-import math
 import os
-from dataclasses import dataclass
-from typing import List, Dict, Tuple
 from datetime import datetime
+from typing import Dict, List, Tuple, Optional, Any
+import math
 
 
-@dataclass
-class Point:
-    """Represents a 2D point in CAD space"""
-    x: float
-    y: float
-    
-    def __add__(self, other):
-        return Point(self.x + other.x, self.y + other.y)
-    
-    def __sub__(self, other):
-        return Point(self.x - other.x, self.y - other.y)
-    
-    def rotate(self, angle_deg: float, origin: 'Point' = None) -> 'Point':
-        """Rotate point around origin by angle in degrees"""
-        if origin is None:
-            origin = Point(0, 0)
-        angle_rad = math.radians(angle_deg)
-        cos_a = math.cos(angle_rad)
-        sin_a = math.sin(angle_rad)
-        
-        x = self.x - origin.x
-        y = self.y - origin.y
-        
-        new_x = x * cos_a - y * sin_a + origin.x
-        new_y = x * sin_a + y * cos_a + origin.y
-        
-        return Point(new_x, new_y)
+class DXFGenerator:
+    """Generate DXF (R2010 format) files for airport runway systems using 2D entities."""
 
-
-@dataclass
-class Rectangle:
-    """Represents a rectangular region"""
-    x: float
-    y: float
-    width: float
-    height: float
-    rotation: float = 0  # degrees
-    
-    def corners(self) -> List[Point]:
-        """Get corners of rectangle"""
-        center = Point(self.x + self.width / 2, self.y + self.height / 2)
-        corners = [
-            Point(self.x, self.y),
-            Point(self.x + self.width, self.y),
-            Point(self.x + self.width, self.y + self.height),
-            Point(self.x, self.y + self.height),
-        ]
-        if self.rotation != 0:
-            corners = [c.rotate(self.rotation, center) for c in corners]
-        return corners
-
-
-class RunwayLighting:
-    """Generates lighting system data"""
-    
-    def __init__(self, runway_length: float, runway_width: float):
-        self.runway_length = runway_length
-        self.runway_width = runway_width
-    
-    def generate_edge_lights(self, spacing: float = 60) -> List[Dict]:
-        """Generate runway edge lighting"""
-        lights = []
-        half_width = self.runway_width / 2
+    def __init__(self, filename: str = "airport_runway_system.dxf"):
+        """
+        Initialize DXF generator.
         
-        for i in range(int(self.runway_length / spacing)):
-            y = i * spacing
-            # Left edge lights
-            lights.append({
-                'type': 'edge',
-                'position': {'x': -half_width, 'y': y},
-                'color': 'white'
-            })
-            # Right edge lights
-            lights.append({
-                'type': 'edge',
-                'position': {'x': half_width, 'y': y},
-                'color': 'white'
-            })
-        
-        return lights
-    
-    def generate_threshold_lights(self) -> List[Dict]:
-        """Generate runway threshold lighting"""
-        lights = []
-        half_width = self.runway_width / 2
-        
-        # Threshold lights at start
-        for i in range(6):
-            offset = (i - 2.5) * (self.runway_width / 5)
-            lights.append({
-                'type': 'threshold',
-                'position': {'x': offset, 'y': -50},
-                'color': 'green'
-            })
-        
-        # End lights
-        for i in range(6):
-            offset = (i - 2.5) * (self.runway_width / 5)
-            lights.append({
-                'type': 'end',
-                'position': {'x': offset, 'y': self.runway_length + 50},
-                'color': 'red'
-            })
-        
-        return lights
-    
-    def generate_touchdown_lights(self) -> List[Dict]:
-        """Generate touchdown zone lighting"""
-        lights = []
-        half_width = self.runway_width / 2
-        td_start = self.runway_length * 0.25
-        td_length = self.runway_length * 0.5
-        
-        for i in range(int(td_length / 150)):
-            y = td_start + i * 150
-            for j in range(3):
-                offset = (j - 1) * (self.runway_width / 3)
-                lights.append({
-                    'type': 'touchdown',
-                    'position': {'x': offset, 'y': y},
-                    'color': 'white'
-                })
-        
-        return lights
-
-
-class RunwayMarkings:
-    """Generates detailed runway markings"""
-    
-    @staticmethod
-    def generate_centerline(length: float, spacing: float = 60) -> List[Dict]:
-        """Generate runway centerline markings"""
-        markings = []
-        dash_length = 36
-        gap = spacing - dash_length
-        
-        for i in range(int(length / spacing)):
-            start_y = i * spacing
-            markings.append({
-                'type': 'centerline',
-                'start': {'x': 0, 'y': start_y},
-                'end': {'x': 0, 'y': start_y + dash_length},
-                'width': 0.6
-            })
-        
-        return markings
-    
-    @staticmethod
-    def generate_threshold_markings(width: float) -> List[Dict]:
-        """Generate runway threshold markings"""
-        markings = []
-        bar_count = int(width / 3)
-        
-        for i in range(bar_count):
-            x = (i - bar_count / 2 + 0.5) * 3
-            markings.append({
-                'type': 'threshold_bar',
-                'x': x,
-                'y': -30,
-                'length': 3
-            })
-        
-        return markings
-    
-    @staticmethod
-    def generate_touchdown_markings(length: float, width: float) -> List[Dict]:
-        """Generate touchdown zone markings"""
-        markings = []
-        td_start = length * 0.25
-        td_length = length * 0.5
-        
-        for zone in range(3):
-            y = td_start + zone * (td_length / 3)
-            for side in [-1, 1]:
-                x = side * (width / 3)
-                markings.append({
-                    'type': 'touchdown_mark',
-                    'position': {'x': x, 'y': y},
-                    'size': 9
-                })
-        
-        return markings
-
-
-class TaxiwaySystem:
-    """Generates all 5 taxiways"""
-    
-    def __init__(self, runway_geometry: Dict):
-        self.runway_geometry = runway_geometry
-        self.runway_length = runway_geometry.get('length', 3000)
-        self.runway_width = runway_geometry.get('width', 45)
-    
-    def generate_taxiways(self) -> List[Dict]:
-        """Generate all 5 taxiways"""
-        taxiways = []
-        
-        # Taxiway A (main parallel)
-        taxiways.append(self._generate_taxiway_a())
-        
-        # Taxiway B (connecting)
-        taxiways.append(self._generate_taxiway_b())
-        
-        # Taxiway C (connecting)
-        taxiways.append(self._generate_taxiway_c())
-        
-        # Taxiway D (rapid exit)
-        taxiways.append(self._generate_taxiway_d())
-        
-        # Taxiway E (rapid exit)
-        taxiways.append(self._generate_taxiway_e())
-        
-        return taxiways
-    
-    def _generate_taxiway_a(self) -> Dict:
-        """Main parallel taxiway A"""
-        width = 35
-        offset = self.runway_width / 2 + 100
-        return {
-            'name': 'Taxiway A',
-            'type': 'main_parallel',
-            'width': width,
-            'length': self.runway_length,
-            'position': {'x': offset, 'y': 0},
-            'surface': 'asphalt'
+        Args:
+            filename: Output DXF filename
+        """
+        self.filename = filename
+        self.entities = []
+        self.handles = {}
+        self.next_handle = 256
+        self.version = "AC1021"  # R2010 format
+        self.layers = {
+            "RUNWAY_MARKINGS": {"color": 1, "linetype": "CONTINUOUS"},
+            "SAFETY_AREAS": {"color": 3, "linetype": "DASHED"},
+            "LIGHTING_SYSTEMS": {"color": 5, "linetype": "CONTINUOUS"},
+            "TAXIWAYS": {"color": 2, "linetype": "CONTINUOUS"},
+            "TEXT_LABELS": {"color": 7, "linetype": "CONTINUOUS"},
         }
-    
-    def _generate_taxiway_b(self) -> Dict:
-        """Connecting taxiway B"""
-        return {
-            'name': 'Taxiway B',
-            'type': 'connecting',
-            'width': 23,
-            'start': {'x': 200, 'y': 0},
-            'end': {'x': self.runway_width / 2 + 100, 'y': 200},
-            'surface': 'asphalt'
-        }
-    
-    def _generate_taxiway_c(self) -> Dict:
-        """Connecting taxiway C"""
-        return {
-            'name': 'Taxiway C',
-            'type': 'connecting',
-            'width': 23,
-            'start': {'x': 800, 'y': 0},
-            'end': {'x': self.runway_width / 2 + 100, 'y': 300},
-            'surface': 'asphalt'
-        }
-    
-    def _generate_taxiway_d(self) -> Dict:
-        """Rapid exit taxiway D"""
-        return {
-            'name': 'Taxiway D',
-            'type': 'rapid_exit',
-            'width': 25,
-            'start': {'x': 0, 'y': self.runway_length * 0.5},
-            'end': {'x': self.runway_width / 2 + 100, 'y': self.runway_length * 0.5 + 300},
-            'surface': 'asphalt'
-        }
-    
-    def _generate_taxiway_e(self) -> Dict:
-        """Rapid exit taxiway E"""
-        return {
-            'name': 'Taxiway E',
-            'type': 'rapid_exit',
-            'width': 25,
-            'start': {'x': 0, 'y': self.runway_length * 0.75},
-            'end': {'x': self.runway_width / 2 + 100, 'y': self.runway_length * 0.75 + 250},
-            'surface': 'asphalt'
-        }
+        self.current_entity_id = 0
 
+    def get_handle(self) -> str:
+        """Generate next handle in hexadecimal format."""
+        handle = format(self.next_handle, 'X')
+        self.next_handle += 1
+        return handle
 
-class SafetyZones:
-    """Generates safety zone configurations"""
-    
-    def __init__(self, runway_geometry: Dict):
-        self.runway_geometry = runway_geometry
-        self.runway_length = runway_geometry.get('length', 3000)
-        self.runway_width = runway_geometry.get('width', 45)
-    
-    def generate_zones(self) -> List[Dict]:
-        """Generate all safety zones"""
-        zones = []
-        
-        # Runway Safety Area (RSA)
-        zones.append(self._generate_rsa())
-        
-        # Obstacle Free Zone (OFZ)
-        zones.append(self._generate_ofz())
-        
-        # Runway Object Free Area (ROFA)
-        zones.append(self._generate_rofa())
-        
-        # Blast Pad
-        zones.append(self._generate_blast_pad())
-        
-        # Stopway
-        zones.append(self._generate_stopway())
-        
-        return zones
-    
-    def _generate_rsa(self) -> Dict:
-        """Runway Safety Area"""
-        return {
-            'name': 'Runway Safety Area',
-            'type': 'RSA',
-            'length': self.runway_length + 600,
-            'width': self.runway_width + 150,
-            'surface_type': 'clear',
-            'purpose': 'Emergency recovery area'
-        }
-    
-    def _generate_ofz(self) -> Dict:
-        """Obstacle Free Zone"""
-        return {
-            'name': 'Obstacle Free Zone',
-            'type': 'OFZ',
-            'length': self.runway_length,
-            'width': self.runway_width + 50,
-            'height_limit': 35,
-            'purpose': 'Aircraft clearance'
-        }
-    
-    def _generate_rofa(self) -> Dict:
-        """Runway Object Free Area"""
-        return {
-            'name': 'Runway Object Free Area',
-            'type': 'ROFA',
-            'width': self.runway_width + 80,
-            'length': self.runway_length,
-            'purpose': 'Object free surface'
-        }
-    
-    def _generate_blast_pad(self) -> Dict:
-        """Blast Pad for high-power aircraft"""
-        return {
-            'name': 'Blast Pad',
-            'type': 'blast_pad',
-            'length': 300,
-            'width': self.runway_width + 150,
-            'position': 'runway_end',
-            'surface': 'reinforced_concrete'
-        }
-    
-    def _generate_stopway(self) -> Dict:
-        """Additional stopway for go-around"""
-        return {
-            'name': 'Stopway',
-            'type': 'stopway',
-            'length': 300,
-            'width': self.runway_width,
-            'position': 'runway_end',
-            'surface': 'asphalt'
-        }
-
-
-class ApronSystem:
-    """Generates apron configurations"""
-    
-    def __init__(self, runway_geometry: Dict):
-        self.runway_geometry = runway_geometry
-        self.runway_width = runway_geometry.get('width', 45)
-    
-    def generate_aprons(self) -> List[Dict]:
-        """Generate apron areas"""
-        aprons = []
-        
-        # Runway Apron
-        aprons.append({
-            'name': 'Runway Apron',
-            'type': 'runway_apron',
-            'length': 500,
-            'width': self.runway_width + 200,
-            'position': {'x': 0, 'y': 0},
-            'surface': 'asphalt'
+    def add_line(self, x1: float, y1: float, x2: float, y2: float, 
+                 layer: str = "0", color: int = 256) -> None:
+        """Add LINE entity to DXF."""
+        handle = self.get_handle()
+        self.entities.append({
+            "type": "LINE",
+            "handle": handle,
+            "layer": layer,
+            "color": color,
+            "x1": x1,
+            "y1": y1,
+            "x2": x2,
+            "y2": y2,
         })
-        
-        # Terminal Apron
-        aprons.append({
-            'name': 'Terminal Apron',
-            'type': 'terminal_apron',
-            'length': 400,
-            'width': 600,
-            'position': {'x': self.runway_width / 2 + 100, 'y': -400},
-            'surface': 'asphalt',
-            'gates': 6
-        })
-        
-        # Cargo Apron
-        aprons.append({
-            'name': 'Cargo Apron',
-            'type': 'cargo_apron',
-            'length': 300,
-            'width': 400,
-            'position': {'x': self.runway_width / 2 + 100, 'y': 500},
-            'surface': 'asphalt'
-        })
-        
-        # Maintenance Apron
-        aprons.append({
-            'name': 'Maintenance Apron',
-            'type': 'maintenance_apron',
-            'length': 250,
-            'width': 350,
-            'position': {'x': self.runway_width / 2 + 550, 'y': 800},
-            'surface': 'concrete'
-        })
-        
-        return aprons
 
+    def add_lwpolyline(self, points: List[Tuple[float, float]], 
+                       layer: str = "0", color: int = 256, closed: bool = False) -> None:
+        """Add LWPOLYLINE entity to DXF."""
+        handle = self.get_handle()
+        self.entities.append({
+            "type": "LWPOLYLINE",
+            "handle": handle,
+            "layer": layer,
+            "color": color,
+            "points": points,
+            "closed": closed,
+        })
 
-class AirportCADGenerator:
-    """Main CAD generator for airport runway systems"""
-    
-    def __init__(self, runway_geometry_file: str = 'runway_geometry.json'):
-        self.runway_geometry_file = runway_geometry_file
-        self.runway_geometry = self._load_geometry()
-        self.timestamp = datetime.utcnow().isoformat() + 'Z'
-    
-    def _load_geometry(self) -> Dict:
-        """Load runway geometry from JSON file"""
+    def add_point(self, x: float, y: float, 
+                  layer: str = "0", color: int = 256) -> None:
+        """Add POINT entity to DXF."""
+        handle = self.get_handle()
+        self.entities.append({
+            "type": "POINT",
+            "handle": handle,
+            "layer": layer,
+            "color": color,
+            "x": x,
+            "y": y,
+        })
+
+    def add_circle(self, cx: float, cy: float, radius: float, 
+                   layer: str = "0", color: int = 256) -> None:
+        """Add CIRCLE entity to DXF."""
+        handle = self.get_handle()
+        self.entities.append({
+            "type": "CIRCLE",
+            "handle": handle,
+            "layer": layer,
+            "color": color,
+            "cx": cx,
+            "cy": cy,
+            "radius": radius,
+        })
+
+    def add_text(self, text: str, x: float, y: float, height: float = 1.0,
+                 layer: str = "0", color: int = 256) -> None:
+        """Add TEXT entity to DXF."""
+        handle = self.get_handle()
+        self.entities.append({
+            "type": "TEXT",
+            "handle": handle,
+            "layer": layer,
+            "color": color,
+            "text": text,
+            "x": x,
+            "y": y,
+            "height": height,
+        })
+
+    def generate_runway_markings(self, runway_data: Dict[str, Any]) -> None:
+        """Generate runway marking entities."""
+        if "runways" not in runway_data:
+            return
+
+        layer = "RUNWAY_MARKINGS"
+        color = self.layers[layer]["color"]
+
+        for runway in runway_data["runways"]:
+            # Runway outline
+            start_x = runway.get("start_x", 0)
+            start_y = runway.get("start_y", 0)
+            end_x = runway.get("end_x", 0)
+            end_y = runway.get("end_y", 0)
+            width = runway.get("width", 60)
+
+            # Calculate perpendicular points for runway width
+            direction_x = end_x - start_x
+            direction_y = end_y - start_y
+            length = math.sqrt(direction_x**2 + direction_y**2)
+            
+            if length > 0:
+                perp_x = -direction_y / length * (width / 2)
+                perp_y = direction_x / length * (width / 2)
+
+                # Runway boundary points
+                points = [
+                    (start_x - perp_x, start_y - perp_y),
+                    (end_x - perp_x, end_y - perp_y),
+                    (end_x + perp_x, end_y + perp_y),
+                    (start_x + perp_x, start_y + perp_y),
+                ]
+                
+                # Draw runway outline
+                self.add_lwpolyline(points, layer=layer, color=color, closed=True)
+
+                # Center line
+                self.add_line(start_x, start_y, end_x, end_y, layer=layer, color=color)
+
+            # Runway designation
+            runway_name = runway.get("name", "RWY")
+            mid_x = (start_x + end_x) / 2
+            mid_y = (start_y + end_y) / 2
+            self.add_text(runway_name, mid_x, mid_y, height=2.0, layer="TEXT_LABELS", color=color)
+
+            # Threshold markings (dashed lines)
+            threshold_offset = 30
+            threshold_points = [
+                (start_x - perp_x * 0.3, start_y - perp_y * 0.3),
+                (start_x + perp_x * 0.3, start_y + perp_y * 0.3),
+            ]
+            
+            for i in range(0, int(width), 10):
+                frac = i / width
+                px = start_x + (perp_x * 2 * frac - perp_x)
+                py = start_y + (perp_y * 2 * frac - perp_y)
+                self.add_point(px, py, layer=layer, color=color)
+
+    def generate_safety_areas(self, runway_data: Dict[str, Any]) -> None:
+        """Generate safety area entities (RESA, OFZ, etc.)."""
+        if "runways" not in runway_data:
+            return
+
+        layer = "SAFETY_AREAS"
+        color = self.layers[layer]["color"]
+
+        for runway in runway_data["runways"]:
+            start_x = runway.get("start_x", 0)
+            start_y = runway.get("start_y", 0)
+            end_x = runway.get("end_x", 0)
+            end_y = runway.get("end_y", 0)
+            width = runway.get("width", 60)
+            resa_length = runway.get("resa_length", 240)
+
+            # Calculate direction vectors
+            direction_x = end_x - start_x
+            direction_y = end_y - start_y
+            length = math.sqrt(direction_x**2 + direction_y**2)
+            
+            if length > 0:
+                unit_x = direction_x / length
+                unit_y = direction_y / length
+                perp_x = -unit_y * (width / 2)
+                perp_y = unit_x * (width / 2)
+
+                # RESA at start of runway
+                resa_start_x = start_x - unit_x * resa_length
+                resa_start_y = start_y - unit_y * resa_length
+                
+                resa_points = [
+                    (resa_start_x - perp_x, resa_start_y - perp_y),
+                    (start_x - perp_x, start_y - perp_y),
+                    (start_x + perp_x, start_y + perp_y),
+                    (resa_start_x + perp_x, resa_start_y + perp_y),
+                ]
+                self.add_lwpolyline(resa_points, layer=layer, color=color, closed=True)
+                self.add_text("RESA", resa_start_x, resa_start_y - 50, height=2.0, 
+                            layer="TEXT_LABELS", color=color)
+
+                # RESA at end of runway
+                resa_end_x = end_x + unit_x * resa_length
+                resa_end_y = end_y + unit_y * resa_length
+                
+                resa_end_points = [
+                    (end_x - perp_x, end_y - perp_y),
+                    (resa_end_x - perp_x, resa_end_y - perp_y),
+                    (resa_end_x + perp_x, resa_end_y + perp_y),
+                    (end_x + perp_x, end_y + perp_y),
+                ]
+                self.add_lwpolyline(resa_end_points, layer=layer, color=color, closed=True)
+                self.add_text("RESA", resa_end_x, resa_end_y + 50, height=2.0, 
+                            layer="TEXT_LABELS", color=color)
+
+    def generate_lighting_systems(self, runway_data: Dict[str, Any]) -> None:
+        """Generate lighting system entities (approach lights, edge lights, etc.)."""
+        if "runways" not in runway_data:
+            return
+
+        layer = "LIGHTING_SYSTEMS"
+        color = self.layers[layer]["color"]
+
+        for runway in runway_data["runways"]:
+            start_x = runway.get("start_x", 0)
+            start_y = runway.get("start_y", 0)
+            end_x = runway.get("end_x", 0)
+            end_y = runway.get("end_y", 0)
+            width = runway.get("width", 60)
+            light_spacing = runway.get("light_spacing", 30)
+
+            # Calculate direction and perpendicular vectors
+            direction_x = end_x - start_x
+            direction_y = end_y - start_y
+            length = math.sqrt(direction_x**2 + direction_y**2)
+            
+            if length > 0:
+                unit_x = direction_x / length
+                unit_y = direction_y / length
+                perp_x = -unit_y
+                perp_y = unit_x
+
+                # Edge lighting along runway
+                for i in range(int(length / light_spacing)):
+                    t = (i * light_spacing) / length
+                    px = start_x + unit_x * i * light_spacing
+                    py = start_y + unit_y * i * light_spacing
+
+                    # Left edge light
+                    light_x = px - perp_x * (width / 2 + 5)
+                    light_y = py - perp_y * (width / 2 + 5)
+                    self.add_circle(light_x, light_y, radius=2.0, layer=layer, color=color)
+
+                    # Right edge light
+                    light_x = px + perp_x * (width / 2 + 5)
+                    light_y = py + perp_y * (width / 2 + 5)
+                    self.add_circle(light_x, light_y, radius=2.0, layer=layer, color=color)
+
+                # Approach lighting system
+                approach_length = runway.get("approach_length", 300)
+                approach_spacing = 15
+                
+                for i in range(0, approach_length, approach_spacing):
+                    # Left approach lights
+                    approach_x = start_x - unit_x * i
+                    approach_y = start_y - unit_y * i
+                    light_x = approach_x - perp_x * (width / 2 + 15)
+                    light_y = approach_y - perp_y * (width / 2 + 15)
+                    self.add_point(light_x, light_y, layer=layer, color=color)
+
+                    # Right approach lights
+                    light_x = approach_x + perp_x * (width / 2 + 15)
+                    light_y = approach_y + perp_y * (width / 2 + 15)
+                    self.add_point(light_x, light_y, layer=layer, color=color)
+
+    def generate_taxiways(self, runway_data: Dict[str, Any]) -> None:
+        """Generate taxiway entities."""
+        if "taxiways" not in runway_data:
+            return
+
+        layer = "TAXIWAYS"
+        color = self.layers[layer]["color"]
+
+        for taxiway in runway_data["taxiways"]:
+            taxiway_name = taxiway.get("name", "TWY")
+            start_x = taxiway.get("start_x", 0)
+            start_y = taxiway.get("start_y", 0)
+            end_x = taxiway.get("end_x", 0)
+            end_y = taxiway.get("end_y", 0)
+            width = taxiway.get("width", 30)
+
+            # Calculate perpendicular points
+            direction_x = end_x - start_x
+            direction_y = end_y - start_y
+            length = math.sqrt(direction_x**2 + direction_y**2)
+            
+            if length > 0:
+                perp_x = -direction_y / length * (width / 2)
+                perp_y = direction_x / length * (width / 2)
+
+                # Taxiway outline
+                points = [
+                    (start_x - perp_x, start_y - perp_y),
+                    (end_x - perp_x, end_y - perp_y),
+                    (end_x + perp_x, end_y + perp_y),
+                    (start_x + perp_x, start_y + perp_y),
+                ]
+                self.add_lwpolyline(points, layer=layer, color=color, closed=True)
+
+                # Center line
+                self.add_line(start_x, start_y, end_x, end_y, layer=layer, color=color)
+
+                # Taxiway label
+                mid_x = (start_x + end_x) / 2
+                mid_y = (start_y + end_y) / 2
+                self.add_text(taxiway_name, mid_x, mid_y, height=1.5, 
+                            layer="TEXT_LABELS", color=color)
+
+    def load_runway_geometry(self, json_file: str) -> Dict[str, Any]:
+        """Load runway geometry from JSON file."""
+        if not os.path.exists(json_file):
+            print(f"Warning: {json_file} not found. Using default geometry.")
+            return self._get_default_geometry()
+        
         try:
-            if os.path.exists(self.runway_geometry_file):
-                with open(self.runway_geometry_file, 'r') as f:
-                    return json.load(f)
-        except (json.JSONDecodeError, IOError) as e:
-            print(f"Error loading geometry file: {e}")
-        
-        # Default geometry if file not found
+            with open(json_file, 'r') as f:
+                data = json.load(f)
+            print(f"Successfully loaded runway geometry from {json_file}")
+            return data
+        except json.JSONDecodeError as e:
+            print(f"Error parsing JSON: {e}. Using default geometry.")
+            return self._get_default_geometry()
+
+    def _get_default_geometry(self) -> Dict[str, Any]:
+        """Return default airport geometry."""
         return {
-            'length': 3000,
-            'width': 45,
-            'elevation': 100,
-            'heading': 180,
-            'surface_type': 'asphalt'
+            "airport_name": "Default Airport",
+            "runways": [
+                {
+                    "name": "09/27",
+                    "start_x": 0,
+                    "start_y": 0,
+                    "end_x": 4000,
+                    "end_y": 0,
+                    "width": 60,
+                    "resa_length": 240,
+                    "approach_length": 300,
+                    "light_spacing": 30,
+                },
+            ],
+            "taxiways": [
+                {
+                    "name": "A",
+                    "start_x": 500,
+                    "start_y": 100,
+                    "end_x": 500,
+                    "end_y": -100,
+                    "width": 30,
+                },
+                {
+                    "name": "B",
+                    "start_x": 2000,
+                    "start_y": 100,
+                    "end_x": 2000,
+                    "end_y": -100,
+                    "width": 30,
+                },
+            ],
         }
-    
-    def generate_complete_cad(self) -> Dict:
-        """Generate complete CAD data for airport"""
-        cad_data = {
-            'metadata': {
-                'project': 'Airport Runway System CAD',
-                'version': '2.0',
-                'generated': self.timestamp,
-                'generator': 'AirportCADGenerator',
-                'runway_geometry_source': self.runway_geometry_file
-            },
-            'runway': {
-                'geometry': self.runway_geometry,
-                'markings': RunwayMarkings.generate_centerline(
-                    self.runway_geometry.get('length', 3000)
-                ) + RunwayMarkings.generate_threshold_markings(
-                    self.runway_geometry.get('width', 45)
-                ) + RunwayMarkings.generate_touchdown_markings(
-                    self.runway_geometry.get('length', 3000),
-                    self.runway_geometry.get('width', 45)
-                )
-            },
-            'lighting': {
-                'edge': RunwayLighting(
-                    self.runway_geometry.get('length', 3000),
-                    self.runway_geometry.get('width', 45)
-                ).generate_edge_lights(),
-                'threshold': RunwayLighting(
-                    self.runway_geometry.get('length', 3000),
-                    self.runway_geometry.get('width', 45)
-                ).generate_threshold_lights(),
-                'touchdown': RunwayLighting(
-                    self.runway_geometry.get('length', 3000),
-                    self.runway_geometry.get('width', 45)
-                ).generate_touchdown_lights()
-            },
-            'safety_zones': SafetyZones(self.runway_geometry).generate_zones(),
-            'taxiways': TaxiwaySystem(self.runway_geometry).generate_taxiways(),
-            'aprons': ApronSystem(self.runway_geometry).generate_aprons()
-        }
+
+    def generate_dxf_header(self) -> str:
+        """Generate DXF header section."""
+        header = "  0\nSECTION\n  2\nHEADER\n"
+        header += "  9\n$ACADVER\n  1\nAC1021\n"  # R2010
+        header += "  9\n$EXTMIN\n 10\n-500.0\n 20\n-500.0\n"
+        header += "  9\n$EXTMAX\n 10\n5000.0\n 20\n500.0\n"
+        header += "  0\nENDSEC\n"
+        return header
+
+    def generate_dxf_classes(self) -> str:
+        """Generate DXF classes section."""
+        return "  0\nSECTION\n  2\nCLASSES\n  0\nENDSEC\n"
+
+    def generate_dxf_tables(self) -> str:
+        """Generate DXF tables section with layer definitions."""
+        tables = "  0\nSECTION\n  2\nTABLES\n"
         
-        return cad_data
-    
-    def export_to_json(self, output_file: str = 'airport_cad.json') -> str:
-        """Export CAD data to JSON file"""
-        cad_data = self.generate_complete_cad()
-        with open(output_file, 'w') as f:
-            json.dump(cad_data, f, indent=2)
-        return output_file
-    
-    def export_to_dxf_format(self, output_file: str = 'airport_cad.dxf') -> str:
-        """Export CAD data in DXF-compatible format"""
-        cad_data = self.generate_complete_cad()
+        # LTYPE table
+        tables += "  0\nTABLE\n  2\nLTYPE\n 70\n2\n"
+        tables += "  0\nLTYPE\n  2\nCONTINUOUS\n 70\n0\n  3\nSolid line\n 72\n65\n 73\n0\n 40\n0.0\n"
+        tables += "  0\nLTYPE\n  2\nDASHED\n 70\n0\n  3\nDashed line\n 72\n65\n 73\n2\n 40\n0.75\n 55\n0.5\n 55\n-0.25\n"
+        tables += "  0\nENDTAB\n"
         
-        dxf_content = self._generate_dxf_header()
+        # LAYER table
+        tables += "  0\nTABLE\n  2\nLAYER\n 70\n6\n"
         
-        # Add runway
-        dxf_content += self._add_dxf_rectangle(
-            0, 0,
-            self.runway_geometry.get('width', 45),
-            self.runway_geometry.get('length', 3000),
-            'RUNWAY', 'white'
-        )
+        for layer_name, layer_props in self.layers.items():
+            tables += f"  0\nLAYER\n  2\n{layer_name}\n 70\n0\n"
+            tables += f" 62\n{layer_props['color']}\n"
+            tables += f"  6\n{layer_props['linetype']}\n"
+            tables += " 370\n25\n"  # Line weight
         
-        # Add taxiways
-        for taxiway in cad_data['taxiways']:
-            if 'length' in taxiway:
-                dxf_content += self._add_dxf_rectangle(
-                    taxiway['position']['x'], taxiway['position']['y'],
-                    taxiway['width'], taxiway['length'],
-                    taxiway['name'], 'yellow'
-                )
+        # Default layer
+        tables += "  0\nLAYER\n  2\n0\n 70\n0\n 62\n7\n  6\nCONTINUOUS\n 370\n-1\n"
         
-        # Add aprons
-        for apron in cad_data['aprons']:
-            dxf_content += self._add_dxf_rectangle(
-                apron['position']['x'], apron['position']['y'],
-                apron['width'], apron['length'],
-                apron['name'], 'gray'
-            )
+        tables += "  0\nENDTAB\n"
         
-        dxf_content += self._generate_dxf_footer()
+        # STYLE table
+        tables += "  0\nTABLE\n  2\nSTYLE\n 70\n1\n"
+        tables += "  0\nSTYLE\n  2\nSTANDARD\n 70\n0\n 40\n0.0\n 41\n1.0\n 50\n0.0\n 71\n0\n 42\n1.0\n  3\ntxt\n  4\n\n"
+        tables += "  0\nENDTAB\n"
         
-        with open(output_file, 'w') as f:
-            f.write(dxf_content)
+        tables += "  0\nENDSEC\n"
+        return tables
+
+    def generate_dxf_blocks(self) -> str:
+        """Generate DXF blocks section."""
+        return "  0\nSECTION\n  2\nBLOCKS\n  0\nBLOCK\n  8\n0\n  2\n*MODEL_SPACE\n 70\n0\n  0\nENDBLK\n  0\nENDSEC\n"
+
+    def generate_dxf_entities(self) -> str:
+        """Generate DXF entities section with all created entities."""
+        entities = "  0\nSECTION\n  2\nENTITIES\n"
         
-        return output_file
-    
-    def _generate_dxf_header(self) -> str:
-        """Generate DXF file header"""
-        return """  0
-SECTION
-  2
-HEADER
-  9
-$ACADVER
-  1
-AC1021
-  9
-$EXTMIN
- 10
-0
- 20
-0
-  9
-$EXTMAX
- 10
-5000
- 20
-5000
-  0
-ENDSEC
-  0
-SECTION
-  2
-TABLES
-  0
-TABLE
-  2
-LAYER
- 70
-10
-  0
-LAYER
-  2
-RUNWAY
- 70
-0
- 62
-7
-  6
-CONTINUOUS
-  0
-LAYER
-  2
-TAXIWAY
- 70
-0
- 62
-2
-  6
-CONTINUOUS
-  0
-LAYER
-  2
-APRON
- 70
-0
- 62
-8
-  6
-CONTINUOUS
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-ENDTAB
-  0
-SECTION
-  2
-BLOCKS
-  0
-ENDBLK
-  0
-ENDSEC
-  0
-SECTION
-  2
-ENTITIES
-"""
-    
-    def _generate_dxf_footer(self) -> str:
-        """Generate DXF file footer"""
-        return """  0
-ENDSEC
-  0
-EOF
-"""
-    
-    def _add_dxf_rectangle(self, x: float, y: float, width: float, 
-                          height: float, name: str, color: str) -> str:
-        """Add a rectangle to DXF content"""
-        color_code = {'white': 7, 'yellow': 2, 'gray': 8, 'green': 3, 'red': 1}[color]
-        return f"""  0
-LWPOLYLINE
-  5
-{id(name)}
-330
-1F
-100
-AcDbEntity
-  8
-{name}
- 62
-{color_code}
-370
--1
-100
-AcDbLwPolyline
- 90
-4
- 70
-1
- 43
-0.0
- 10
-{x}
- 20
-{y}
- 10
-{x + width}
- 20
-{y}
- 10
-{x + width}
- 20
-{y + height}
- 10
-{x}
- 20
-{y + height}
-"""
+        for entity in self.entities:
+            if entity["type"] == "LINE":
+                entities += f"  0\nLINE\n"
+                entities += f"  5\n{entity['handle']}\n"
+                entities += f"  8\n{entity['layer']}\n"
+                entities += f" 62\n{entity['color']}\n"
+                entities += f" 10\n{entity['x1']}\n 20\n{entity['y1']}\n"
+                entities += f" 11\n{entity['x2']}\n 21\n{entity['y2']}\n"
+            
+            elif entity["type"] == "LWPOLYLINE":
+                entities += f"  0\nLWPOLYLINE\n"
+                entities += f"  5\n{entity['handle']}\n"
+                entities += f"  8\n{entity['layer']}\n"
+                entities += f" 62\n{entity['color']}\n"
+                entities += f" 90\n{len(entity['points'])}\n"
+                entities += f" 70\n{'1' if entity['closed'] else '0'}\n"
+                for point in entity["points"]:
+                    entities += f" 10\n{point[0]}\n 20\n{point[1]}\n"
+            
+            elif entity["type"] == "POINT":
+                entities += f"  0\nPOINT\n"
+                entities += f"  5\n{entity['handle']}\n"
+                entities += f"  8\n{entity['layer']}\n"
+                entities += f" 62\n{entity['color']}\n"
+                entities += f" 10\n{entity['x']}\n 20\n{entity['y']}\n"
+            
+            elif entity["type"] == "CIRCLE":
+                entities += f"  0\nCIRCLE\n"
+                entities += f"  5\n{entity['handle']}\n"
+                entities += f"  8\n{entity['layer']}\n"
+                entities += f" 62\n{entity['color']}\n"
+                entities += f" 10\n{entity['cx']}\n 20\n{entity['cy']}\n"
+                entities += f" 40\n{entity['radius']}\n"
+            
+            elif entity["type"] == "TEXT":
+                entities += f"  0\nTEXT\n"
+                entities += f"  5\n{entity['handle']}\n"
+                entities += f"  8\n{entity['layer']}\n"
+                entities += f" 62\n{entity['color']}\n"
+                entities += f" 10\n{entity['x']}\n 20\n{entity['y']}\n"
+                entities += f" 40\n{entity['height']}\n"
+                entities += f"  1\n{entity['text']}\n"
+        
+        entities += "  0\nENDSEC\n"
+        return entities
+
+    def generate_dxf_objects(self) -> str:
+        """Generate DXF objects section."""
+        return "  0\nSECTION\n  2\nOBJECTS\n  0\nDICTIONARY\n  0\nENDSEC\n"
+
+    def generate(self, json_file: str = "runway_geometry.json") -> None:
+        """Generate complete DXF file from runway geometry JSON."""
+        print(f"Generating DXF file: {self.filename}")
+        
+        # Load runway geometry
+        runway_data = self.load_runway_geometry(json_file)
+        
+        # Generate all modules
+        print("Generating runway markings...")
+        self.generate_runway_markings(runway_data)
+        
+        print("Generating safety areas...")
+        self.generate_safety_areas(runway_data)
+        
+        print("Generating lighting systems...")
+        self.generate_lighting_systems(runway_data)
+        
+        print("Generating taxiways...")
+        self.generate_taxiways(runway_data)
+        
+        # Write DXF file
+        self._write_dxf_file()
+        print(f"DXF file generated successfully: {self.filename}")
+
+    def _write_dxf_file(self) -> None:
+        """Write all sections to DXF file."""
+        with open(self.filename, 'w') as f:
+            f.write(self.generate_dxf_header())
+            f.write(self.generate_dxf_classes())
+            f.write(self.generate_dxf_tables())
+            f.write(self.generate_dxf_blocks())
+            f.write(self.generate_dxf_entities())
+            f.write(self.generate_dxf_objects())
+            f.write("  0\nEOF\n")
 
 
 def main():
-    """Main execution function"""
-    print("Airport Runway System CAD Generator")
-    print("=" * 50)
+    """Main function to generate airport runway system DXF."""
+    import sys
     
-    # Initialize generator
-    generator = AirportCADGenerator()
+    output_file = "airport_runway_system.dxf"
+    input_json = "runway_geometry.json"
     
-    # Generate JSON output
-    print("Generating CAD data...")
-    json_file = generator.export_to_json()
-    print(f"✓ JSON export: {json_file}")
+    # Check for command line arguments
+    if len(sys.argv) > 1:
+        input_json = sys.argv[1]
+    if len(sys.argv) > 2:
+        output_file = sys.argv[2]
     
-    # Generate DXF output
-    dxf_file = generator.export_to_dxf_format()
-    print(f"✓ DXF export: {dxf_file}")
+    print("=" * 60)
+    print("Extended Airport Runway System DXF Generator")
+    print("=" * 60)
+    print(f"Input JSON:  {input_json}")
+    print(f"Output DXF:  {output_file}")
+    print("Modules: Runway Markings, Safety Areas, Lighting Systems, Taxiways")
+    print("Format: R2010 (AC1021)")
+    print("=" * 60)
     
-    # Display summary
-    cad_data = generator.generate_complete_cad()
-    print("\nCAD System Summary:")
-    print(f"  Runway Length: {cad_data['runway']['geometry'].get('length', 'N/A')} m")
-    print(f"  Runway Width: {cad_data['runway']['geometry'].get('width', 'N/A')} m")
-    print(f"  Runway Markings: {len(cad_data['runway']['markings'])} elements")
-    print(f"  Safety Zones: {len(cad_data['safety_zones'])}")
-    print(f"  Taxiways: {len(cad_data['taxiways'])}")
-    print(f"  Aprons: {len(cad_data['aprons'])}")
-    print(f"  Lighting Systems:")
-    print(f"    - Edge Lights: {len(cad_data['lighting']['edge'])}")
-    print(f"    - Threshold Lights: {len(cad_data['lighting']['threshold'])}")
-    print(f"    - Touchdown Lights: {len(cad_data['lighting']['touchdown'])}")
-    print("\n✓ CAD generation complete!")
+    generator = DXFGenerator(output_file)
+    generator.generate(input_json)
+    
+    print("\nGeneration complete!")
+    print(f"Output file: {output_file}")
+    print("=" * 60)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
