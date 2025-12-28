@@ -111,6 +111,18 @@ class AirportRunwayDXFGenerator:
                                        # 用途：控制瞄准点矩形的实际绘制宽度
                                        # 原因：JSON中未提供此具体宽度参数
         
+        self.RUNWAY_NUMBER_X_OFFSET = 15  # 跑道编号横向偏移（米）
+                                           # 用途：控制跑道编号相对中心线的横向位置调整
+                                           # 原因：用于居中对齐跑道编号文字，JSON中无此数据
+        
+        self.RUNWAY_NUMBER_36L_Y_ADJUSTMENT = 50  # 36L端跑道编号额外纵向调整（米）
+                                                   # 用途：36L端编号需要额外向内调整以避免过于靠近边缘
+                                                   # 原因：确保编号在合适位置，JSON中无此数据
+        
+        self.ANNOTATION_HEIGHT_ADJUSTMENT = 5  # 注释文字高度微调（米）
+                                                # 用途：用于某些文字高度的微调以保持视觉和谐
+                                                # 原因：CAD排版细节调整，JSON中无此数据
+        
         # ==================== 硬编码配置区域结束 ====================
     
     def load_geometry(self):
@@ -212,7 +224,7 @@ class AirportRunwayDXFGenerator:
                 dxfattribs={
                     'layer': 'RUNWAY_MARKINGS',
                     'height': self.RUNWAY_NUMBER_HEIGHT,
-                    'insert': (cx - 15, self.RUNWAY_NUMBER_DISTANCE),
+                    'insert': (cx - self.RUNWAY_NUMBER_X_OFFSET, self.RUNWAY_NUMBER_DISTANCE),
                     'rotation': 0
                 }
             )
@@ -222,7 +234,7 @@ class AirportRunwayDXFGenerator:
                 dxfattribs={
                     'layer': 'RUNWAY_MARKINGS',
                     'height': self.RUNWAY_NUMBER_HEIGHT,
-                    'insert': (cx - 15, length - self.RUNWAY_NUMBER_DISTANCE - 50),
+                    'insert': (cx - self.RUNWAY_NUMBER_X_OFFSET, length - self.RUNWAY_NUMBER_DISTANCE - self.RUNWAY_NUMBER_36L_Y_ADJUSTMENT),
                     'rotation': 180
                 }
             )
@@ -361,7 +373,6 @@ class AirportRunwayDXFGenerator:
             stripe_spacing = threshold['dimensions']['spacing']
             
             # 计算条纹数量：跑道宽度 / (条纹宽度 + 间距)
-            # 60m / (3m + 3m) = 10条
             num_stripes = int(w / (stripe_width + stripe_spacing))
             
             # 18R端入口标记（0m位置）
@@ -631,7 +642,7 @@ class AirportRunwayDXFGenerator:
                 f"ICAO: {icao}  IATA: {iata}",
                 dxfattribs={
                     'layer': 'TEXT',
-                    'height': self.ANNOTATION_SUBTITLE_HEIGHT - 5,
+                    'height': self.ANNOTATION_SUBTITLE_HEIGHT - self.ANNOTATION_HEIGHT_ADJUSTMENT,
                     'insert': (self.ANNOTATION_X_OFFSET, length + self.ANNOTATION_Y_BASE - 40)
                 }
             )
