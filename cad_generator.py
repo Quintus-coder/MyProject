@@ -11,10 +11,11 @@ Generates 3D CAD models from runway_geometry.json data with support for:
 
 import json
 import math
-from dataclasses import dataclass
-from typing import List, Tuple, Dict, Optional
-from enum import Enum
 import os
+from dataclasses import dataclass
+from datetime import datetime
+from enum import Enum
+from typing import Dict, List, Optional, Tuple
 
 
 class LightType(Enum):
@@ -101,19 +102,46 @@ class RunwayGeometry:
 
     def __init__(self, geometry_data: Dict):
         """Initialize from geometry dictionary"""
-        self.name = geometry_data.get("name", "Runway")
-        self.length = geometry_data.get("length", 3000.0)
-        self.width = geometry_data.get("width", 60.0)
-        self.heading = geometry_data.get("heading", 0.0)
-        self.elevation = geometry_data.get("elevation", 0.0)
-        self.origin = Vector3D(
-            geometry_data.get("origin", {}).get("x", 0.0),
-            geometry_data.get("origin", {}).get("y", 0.0),
-            geometry_data.get("origin", {}).get("z", 0.0)
+        rw_dims = geometry_data.get("runwayDimensions", {})
+        rw_geom = geometry_data.get("runwayGeometry", {})
+        rw_mark = geometry_data.get("runwayMarkings", {})
+
+        self.name = geometry_data.get("name", geometry_data.get("runway", {}).get("runwayIdentifier", "Runway"))
+
+        self.length = (
+            rw_dims.get("length", {}).get("meters")
+            or geometry_data.get("length", 3000.0)
         )
+        self.width = (
+            rw_dims.get("width", {}).get("meters")
+            or geometry_data.get("width", 60.0)
+        )
+
+        self.heading = (
+            rw_geom.get("magnetic_heading_18R", {}).get("trueHeading")
+            or geometry_data.get("heading", 0.0)
+        )
+
+        self.elevation = (
+            rw_geom.get("slope", {}).get("elevation_18R_meters")
+            or geometry_data.get("elevation", 0.0)
+        )
+
+        origin_data = geometry_data.get("origin", {})
+        self.origin = Vector3D(
+            origin_data.get("x", 0.0),
+            origin_data.get("y", 0.0),
+            origin_data.get("z", 0.0)
+        )
+
         self.surface_type = geometry_data.get("surface_type", "asphalt")
-        self.threshold_distance = geometry_data.get("threshold_distance", 300.0)
-        self.touchdown_zone_length = geometry_data.get("touchdown_zone_length", 900.0)
+
+        start_dist = rw_mark.get("touchdown_zone_markings", {}).get("start_distance_from_threshold")
+        end_dist = rw_mark.get("touchdown_zone_markings", {}).get("end_distance_from_threshold")
+        self.threshold_distance = start_dist or geometry_data.get("threshold_distance", 300.0)
+        self.touchdown_zone_length = (
+            (end_dist - start_dist) if (start_dist is not None and end_dist is not None) else geometry_data.get("touchdown_zone_length", 900.0)
+        )
 
     def get_runway_corners(self) -> List[Vector3D]:
         """Calculate 4 corners of runway base"""
@@ -166,19 +194,48 @@ class STEPExporter:
         self.entities.append(f"#{entity_id} = LINE('Line_{entity_id}', #{p1_id}, #{p2_id});")
         return entity_id
 
-    def add_circle(self, center: Vector3D, radius: float, normal: Vector3D) -> int:
-        """Add a circle"""
-        center_id = self.add_cartesian_point(center)
+    def add_direction(self, vec: Vector3D, label: str) -> int:
+        """Add a DIRECTION entity"""
+        norm = vec.normalize()
         entity_id = self._get_entity_id()
-        normal_str = f"{normal.x:.4f}, {normal.y:.4f}, {normal.z:.4f}"
         self.entities.append(
-            f"#{entity_id} = CIRCLE('Circle_{entity_id}', #{center_id}, {radius:.4f});"
+            f"#{entity_id} = DIRECTION('{label}', ({norm.x:.4f}, {norm.y:.4f}, {norm.z:.4f}));"
+        )
+        return entity_id
+
+    def add_axis2_placement(self, center_id: int, axis_dir_id: int, ref_dir_id: int) -> int:
+        """Add AXIS2_PLACEMENT_3D entity"""
+        entity_id = self._get_entity_id()
+        self.entities.append(
+            f"#{entity_id} = AXIS2_PLACEMENT_3D('Axis_{entity_id}', #{center_id}, #{axis_dir_id}, #{ref_dir_id});"
+        )
+        return entity_id
+
+    def add_circle(self, center: Vector3D, radius: float, normal: Vector3D) -> int:
+        """Add a circle lying on plane defined by normal"""
+        center_id = self.add_cartesian_point(center)
+
+        axis_dir_id = self.add_direction(normal, f"AxisDir_{self.current_id}")
+
+        # Choose a reference direction orthogonal to the normal
+        normal_unit = normal.normalize()
+        fallback = Vector3D(1, 0, 0) if abs(normal_unit.x) < 0.9 else Vector3D(0, 1, 0)
+        ref_vec = fallback - normal_unit * normal_unit.dot(fallback)
+        ref_dir_id = self.add_direction(ref_vec, f"RefDir_{self.current_id}")
+
+        placement_id = self.add_axis2_placement(center_id, axis_dir_id, ref_dir_id)
+
+        entity_id = self._get_entity_id()
+        self.entities.append(
+            f"#{entity_id} = CIRCLE('Circle_{entity_id}', #{placement_id}, {radius:.4f});"
         )
         return entity_id
 
     def add_plane(self, vertices: List[Vector3D]) -> int:
         """Add a plane (polygon)"""
         vertex_ids = [self.add_cartesian_point(v) for v in vertices]
+        if vertex_ids and vertex_ids[0] != vertex_ids[-1]:
+            vertex_ids.append(vertex_ids[0])
         entity_id = self._get_entity_id()
         vertex_refs = ", ".join([f"#{vid}" for vid in vertex_ids])
         self.entities.append(
@@ -201,10 +258,11 @@ class STEPExporter:
 
     def _generate_header(self) -> str:
         """Generate STEP file header"""
-        return """ISO-10303-21;
+        timestamp = datetime.now().isoformat()
+        return f"""ISO-10303-21;
 HEADER;
 FILE_DESCRIPTION(('Runway CAD Model'), '2.0');
-FILE_NAME('runway_model.stp', 2025-12-28T11:08:34, ('Quintus-coder'), (''),
+FILE_NAME('{os.path.basename(self.filename)}', '{timestamp}', ('CAD Generator'), (''),
   'CAD Generator v1.0', 'Generated', '');
 FILE_SCHEMA(('AP203'));
 ENDHDR;"""
@@ -305,7 +363,11 @@ class CADGenerator:
         # Perpendicular to runway direction
         perp_vec = Vector3D(-sin_h, cos_h, 0) * (self.runway.width / 2)
 
-        threshold_point = self.runway.origin
+        threshold_point = self.runway.origin + Vector3D(
+            cos_h * self.runway.threshold_distance,
+            sin_h * self.runway.threshold_distance,
+            self.runway.elevation
+        )
         start = threshold_point - perp_vec
         end = threshold_point + perp_vec
 
@@ -403,7 +465,7 @@ class CADGenerator:
 
         print(f"Generating CAD model for: {self.runway.name}")
         print(f"  Runway dimensions: {self.runway.length}m x {self.runway.width}m")
-        print(f"  Heading: {self.runway.heading}°")
+        print(f"  Heading: {self.runway.heading} deg")
         print()
 
         # Generate all components
