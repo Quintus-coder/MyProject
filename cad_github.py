@@ -3,6 +3,7 @@ CAD Generator - AutoCAD 2018 DXF (R2010) Compatible
 """
 
 import json
+import math
 import os
 import re
 from pathlib import Path
@@ -124,7 +125,7 @@ class AirportRunwayDXFGenerator:
             dxfattribs={
                 'layer': 'RUNWAY_MARKINGS',
                 'height': 30,
-                'insert': (cx - 15, length - 150),  # 距入口100m
+                'insert': (cx - 15, length - 150),  # 距末端100m（从入口算约150m）
                 'rotation': 180
             }
         )
@@ -196,7 +197,6 @@ class AirportRunwayDXFGenerator:
                 
                 # 绘制快速出口滑行道（简化为直线，实际应该是曲线）
                 # 从跑道右侧边缘开始，45度角向外
-                import math
                 start_x = w
                 start_y = distance
                 
