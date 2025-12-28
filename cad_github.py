@@ -279,6 +279,7 @@ class AirportRunwayDXFGenerator:
             exit_count = 0
             
             for taxiway in intermediate:
+                designator = 'unknown'  # Default value for error reporting
                 try:
                     designator = taxiway['designator']
                     if designator in ['C', 'D', 'E']:
