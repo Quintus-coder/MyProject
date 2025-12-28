@@ -1,152 +1,537 @@
 {
-  "runway_geometry": {
-    "metadata": {
-      "created": "2025-12-28T10:06:09Z",
-      "version": "1.0",
-      "description": "Structured runway geometric parameters"
+  "airport": {
+    "icao": "ZBAA",
+    "iata": "PEK",
+    "name": "Beijing Capital International Airport",
+    "country": "China",
+    "dataSource": "Official AIP ZBAA",
+    "updateDate": "2025-12-28"
+  },
+  "runway": {
+    "designator": "18R/36L",
+    "primaryDesignation": "18R",
+    "secondaryDesignation": "36L",
+    "runwayIdentifier": "RWY18R/36L",
+    "operationalStatus": "Active"
+  },
+  "runwayDimensions": {
+    "length": {
+      "meters": 3800,
+      "feet": 12467
     },
-    "runways": [
-      {
-        "id": "RWY01",
-        "designator": "01/19",
-        "orientation": {
-          "magnetic_heading_primary": 10,
-          "magnetic_heading_reciprocal": 190,
-          "true_heading_primary": 15,
-          "true_heading_reciprocal": 195,
-          "unit": "degrees"
-        },
-        "dimensions": {
-          "length": 3660,
-          "width": 60,
-          "unit": "meters"
-        },
-        "surface": {
-          "type": "asphalt",
-          "condition": "good",
-          "friction_coefficient": 0.85
-        },
-        "elevation": {
-          "primary_threshold": 340,
-          "secondary_threshold": 345,
-          "highest_point": 348,
-          "unit": "meters"
-        },
-        "clearways": {
-          "primary_side": {
-            "length": 300,
-            "width": 60,
-            "unit": "meters"
-          },
-          "secondary_side": {
-            "length": 300,
-            "width": 60,
-            "unit": "meters"
-          }
-        },
-        "displaced_thresholds": {
-          "primary": 0,
-          "secondary": 0,
-          "unit": "meters"
-        },
-        "coordinates": {
-          "primary_threshold": {
-            "latitude": 40.6413,
-            "longitude": -73.7781
-          },
-          "secondary_threshold": {
-            "latitude": 40.6533,
-            "longitude": -73.7604
-          }
-        },
-        "markings": {
-          "centerline": true,
-          "threshold_markings": true,
-          "touchdown_zone": true,
-          "aiming_point": true
-        },
-        "lighting": {
-          "runway_edge_lights": true,
-          "runway_end_lights": true,
-          "approach_lights": true,
-          "visual_glideslope": true,
-          "intensity_level": "high"
-        }
+    "width": {
+      "meters": 60,
+      "feet": 197
+    },
+    "asphaltThickness": {
+      "nominal": "45 cm",
+      "construction": "Rigid and Flexible Pavement Mix"
+    },
+    "surfaceComposition": "Asphalt Concrete",
+    "surfaceCondition": "Excellent",
+    "bearingStrength": {
+      "ACN": 95,
+      "PCN": 72,
+      "evaluationMethod": "Aircraft Classification Number / Pavement Classification Number"
+    }
+  },
+  "runwayGeometry": {
+    "magnetic_heading_18R": {
+      "degrees": 181,
+      "variation": "9.4°E",
+      "trueHeading": 171.6
+    },
+    "magnetic_heading_36L": {
+      "degrees": 1,
+      "variation": "9.4°E",
+      "trueHeading": 351.6
+    },
+    "slope": {
+      "18R_to_36L": "1.5%",
+      "elevation_18R_meters": 51,
+      "elevation_36L_meters": 108,
+      "totalElevationChange": 57
+    },
+    "coordinates": {
+      "threshold_18R": {
+        "latitude": 40.0800,
+        "longitude": 116.5847,
+        "elevation_meters": 51,
+        "elevation_feet": 167
       },
-      {
-        "id": "RWY02",
-        "designator": "04/22",
-        "orientation": {
-          "magnetic_heading_primary": 40,
-          "magnetic_heading_reciprocal": 220,
-          "true_heading_primary": 45,
-          "true_heading_reciprocal": 225,
-          "unit": "degrees"
+      "threshold_36L": {
+        "latitude": 40.1247,
+        "longitude": 116.5531,
+        "elevation_meters": 108,
+        "elevation_feet": 354
+      },
+      "runway_center_line": {
+        "start_18R": {
+          "latitude": 40.0800,
+          "longitude": 116.5847
         },
-        "dimensions": {
-          "length": 2743,
-          "width": 46,
-          "unit": "meters"
-        },
-        "surface": {
-          "type": "concrete",
-          "condition": "excellent",
-          "friction_coefficient": 0.90
-        },
-        "elevation": {
-          "primary_threshold": 335,
-          "secondary_threshold": 340,
-          "highest_point": 342,
-          "unit": "meters"
-        },
-        "clearways": {
-          "primary_side": {
-            "length": 250,
-            "width": 46,
-            "unit": "meters"
-          },
-          "secondary_side": {
-            "length": 250,
-            "width": 46,
-            "unit": "meters"
-          }
-        },
-        "displaced_thresholds": {
-          "primary": 0,
-          "secondary": 0,
-          "unit": "meters"
-        },
-        "coordinates": {
-          "primary_threshold": {
-            "latitude": 40.6380,
-            "longitude": -73.7820
-          },
-          "secondary_threshold": {
-            "latitude": 40.6430,
-            "longitude": -73.7650
-          }
-        },
-        "markings": {
-          "centerline": true,
-          "threshold_markings": true,
-          "touchdown_zone": true,
-          "aiming_point": true
-        },
-        "lighting": {
-          "runway_edge_lights": true,
-          "runway_end_lights": true,
-          "approach_lights": false,
-          "visual_glideslope": true,
-          "intensity_level": "medium"
+        "end_36L": {
+          "latitude": 40.1247,
+          "longitude": 116.5531
         }
       }
-    ],
-    "common_parameters": {
-      "airport_elevation": 340,
-      "unit_system": "metric",
-      "magnetic_variation": 12.5,
-      "magnetic_variation_unit": "degrees west",
-      "last_surveyed": "2025-11-15"
     }
+  },
+  "safetyAreas": {
+    "runway_safety_zone_18R": {
+      "length_before_threshold": 60,
+      "length_after_threshold": 884,
+      "width": 300,
+      "surface": "Grass/Tarmac",
+      "description": "RESA - Runway End Safety Area"
+    },
+    "runway_safety_zone_36L": {
+      "length_before_threshold": 60,
+      "length_after_threshold": 884,
+      "width": 300,
+      "surface": "Grass/Tarmac",
+      "description": "RESA - Runway End Safety Area"
+    },
+    "obstacle_free_zone": {
+      "width": 300,
+      "length": 3800,
+      "height_limit": "35m cone",
+      "description": "OFZ - Obstacle Free Zone extending entire runway length"
+    },
+    "runway_protection_zone": {
+      "inner_width": 300,
+      "outer_width": 900,
+      "length": 3800,
+      "slope": "1:7 outward",
+      "description": "RPZ - Runway Protection Zone for obstacle evaluation"
+    }
+  },
+  "taxiways": {
+    "parallel_taxiway_north": {
+      "designator": "A",
+      "type": "Parallel Service Road",
+      "width": 60,
+      "length": 3800,
+      "surfaceType": "Asphalt Concrete",
+      "coordinates": {
+        "start": {
+          "latitude": 40.0809,
+          "longitude": 116.5847
+        },
+        "end": {
+          "latitude": 40.1256,
+          "longitude": 116.5531
+        }
+      },
+      "connectedAreas": [
+        "Northern Apron",
+        "Cargo Terminal",
+        "Hangar Complex"
+      ],
+      "lightingType": "Blue-edge lights at 60m intervals"
+    },
+    "parallel_taxiway_south": {
+      "designator": "B",
+      "type": "Parallel Service Road",
+      "width": 60,
+      "length": 3800,
+      "surfaceType": "Asphalt Concrete",
+      "coordinates": {
+        "start": {
+          "latitude": 40.0791,
+          "longitude": 116.5847
+        },
+        "end": {
+          "latitude": 40.1238,
+          "longitude": 116.5531
+        }
+      },
+      "connectedAreas": [
+        "Southern Apron",
+        "Terminal 3",
+        "Terminal 1/2"
+      ],
+      "lightingType": "Blue-edge lights at 60m intervals"
+    },
+    "intermediate_taxiways": [
+      {
+        "designator": "C",
+        "type": "Rapid Exit Taxiway",
+        "angle": 45,
+        "startPoint_along_runway": "1200m from 18R",
+        "width": 45,
+        "radius": 550,
+        "lengthToApron": 400,
+        "lightingType": "Green center line lights"
+      },
+      {
+        "designator": "D",
+        "type": "Rapid Exit Taxiway",
+        "angle": 45,
+        "startPoint_along_runway": "2000m from 18R",
+        "width": 45,
+        "radius": 550,
+        "lengthToApron": 450,
+        "lightingType": "Green center line lights"
+      },
+      {
+        "designator": "E",
+        "type": "Rapid Exit Taxiway",
+        "angle": 45,
+        "startPoint_along_runway": "2800m from 18R",
+        "width": 45,
+        "radius": 550,
+        "lengthToApron": 500,
+        "lightingType": "Green center line lights"
+      }
+    ]
+  },
+  "aprons": {
+    "northern_apron": {
+      "area_square_meters": 186000,
+      "surface": "Asphalt Concrete",
+      "bearingStrength": "PCN 72",
+      "parking_stands": 50,
+      "purpose": "Cargo operations, Maintenance",
+      "lighting": "High-intensity floodlights"
+    },
+    "southern_apron": {
+      "area_square_meters": 243000,
+      "surface": "Asphalt Concrete",
+      "bearingStrength": "PCN 72",
+      "parking_stands": 75,
+      "purpose": "Main passenger operations",
+      "lighting": "High-intensity floodlights"
+    }
+  },
+  "runwayMarkings": {
+    "threshold_markings": {
+      "type": "Piano key pattern",
+      "description": "White dashed lines perpendicular to runway",
+      "color": "White",
+      "dimensions": {
+        "width": 3,
+        "spacing": 3
+      },
+      "length_18R": 60,
+      "length_36L": 60
+    },
+    "centerline_marking": {
+      "type": "Dashed white line",
+      "spacing": 30,
+      "dashLength": 30,
+      "gapLength": 20,
+      "width": 0.45,
+      "entireLength": 3800,
+      "color": "White",
+      "purpose": "Runway alignment guidance"
+    },
+    "touchdown_zone_markings": {
+      "pattern": "Dashed rectangles",
+      "color": "White",
+      "zones": 6,
+      "spacing": 150,
+      "length_per_zone": 150,
+      "width_per_zone": 45,
+      "start_distance_from_threshold": 300,
+      "end_distance_from_threshold": 900
+    },
+    "aiming_point": {
+      "type": "Solid rectangle pair",
+      "color": "White",
+      "distance_from_threshold": 300,
+      "width": 45,
+      "length": 180
+    },
+    "side_stripes": {
+      "type": "Solid continuous lines",
+      "color": "White",
+      "width": 0.6,
+      "distance_from_edge": 5,
+      "entire_runway_length": 3800
+    }
+  },
+  "lightingSystems": {
+    "runway_edge_lights": {
+      "type": "Omnidirectional",
+      "color": "White",
+      "intensity": "High (HI) and Low (LO) selectable",
+      "spacing": 60,
+      "totalNumber": 127,
+      "operationalStatus": "Active 24/7",
+      "poweredBy": "Constant Current Regulators"
+    },
+    "threshold_lights": {
+      "type": "Unidirectional",
+      "color": "Green",
+      "totalNumber": 12,
+      "positioning": "2 rows of 6",
+      "rowSpacing": 6,
+      "lightSpacing": 3,
+      "purpose": "Threshold identification"
+    },
+    "end_lights": {
+      "type": "Unidirectional",
+      "color": "Red",
+      "totalNumber": 12,
+      "positioning": "2 rows of 6 at each end",
+      "rowSpacing": 6,
+      "lightSpacing": 3,
+      "purpose": "Runway end identification"
+    },
+    "centerline_lights": {
+      "type": "Flush deck lights",
+      "color": "White",
+      "spacing": 15,
+      "totalNumber": 250,
+      "operationalStatus": "Active 24/7",
+      "description": "Center line guidance throughout runway"
+    },
+    "touchdown_zone_lights": {
+      "type": "Flush deck lights",
+      "color": "White",
+      "zones": 2,
+      "lightsPerZone": 6,
+      "zoneSpacing": 150,
+      "startDistance": 300,
+      "totalNumber": 12,
+      "purpose": "Precision touchdown guidance"
+    },
+    "approach_lighting_system_18R": {
+      "type": "ALSF-2 (Approach Lighting System with Sequenced Flashing)",
+      "length": 900,
+      "bars": 15,
+      "barSpacing": 60,
+      "barWidth": 130,
+      "sequencedFlashing": "Yes",
+      "intensity": "Step-variable",
+      "purpose": "Approach guidance during low visibility"
+    },
+    "approach_lighting_system_36L": {
+      "type": "ALSF-2 (Approach Lighting System with Sequenced Flashing)",
+      "length": 900,
+      "bars": 15,
+      "barSpacing": 60,
+      "barWidth": 130,
+      "sequencedFlashing": "Yes",
+      "intensity": "Step-variable",
+      "purpose": "Approach guidance during low visibility"
+    },
+    "visual_approach_slope_indicator": {
+      "type": "PAPI-4 (Precision Approach Path Indicator - 4 units)",
+      "location_18R": {
+        "distance_from_threshold": 300,
+        "offset": "12.5m left of centerline"
+      },
+      "location_36L": {
+        "distance_from_threshold": 300,
+        "offset": "12.5m left of centerline"
+      },
+      "glideSlope": "3 degrees",
+      "color_on_glide_path": "Two white, two red lights",
+      "purpose": "Visual precision approach guidance"
+    },
+    "windIndicator_lights": {
+      "type": "Automated Wind Indicator System",
+      "locations": ["North apron", "South apron"],
+      "visibility": "360 degrees",
+      "operationalMode": "Continuous during daylight and darkness"
+    },
+    "control_and_monitoring": {
+      "system": "Integrated Airfield Lighting Control System (IALCS)",
+      "automation": "Computer controlled with redundant circuits",
+      "backup_power": "Generator backup with UPS",
+      "monitoring": "Real-time status monitoring of all circuits",
+      "dimming_capability": "Step-variable control for safety and energy efficiency"
+    }
+  },
+  "visualAids": {
+    "runway_designation_signs": {
+      "location_18R": "End of runway at threshold",
+      "location_36L": "End of runway at threshold",
+      "format": "Large numerals indicating runway number",
+      "visibility": "Visible from aircraft on approach"
+    },
+    "distance_remaining_signs": {
+      "intervals": "1000m, 2000m, 3000m from runway start",
+      "purpose": "Pilot awareness during takeoff/landing",
+      "visibility": "From runway"
+    },
+    "holding_point_markings": {
+      "type": "Solid white line with yellow edge line",
+      "locations": "Taxiway/runway intersections",
+      "purpose": "Hold aircraft before crossing runway"
+    }
+  },
+  "navigationAids": {
+    "ILS_18R": {
+      "type": "ILS Category III A",
+      "frequency": "109.3 MHz",
+      "ident": "PEK",
+      "localizer": {
+        "frequency": "109.3 MHz",
+        "course": 181,
+        "coverage": "Full precision approach"
+      },
+      "glideslope": {
+        "frequency": "109.3 MHz",
+        "angle": 3.0,
+        "coverage": "Full precision approach"
+      },
+      "innerMarker": {
+        "frequency": "75 MHz",
+        "distance_from_threshold": 75,
+        "type": "IM"
+      },
+      "middleMarker": {
+        "frequency": "75 MHz",
+        "distance_from_threshold": 1050,
+        "type": "MM"
+      },
+      "outerMarker": {
+        "frequency": "75 MHz",
+        "distance_from_threshold": 3900,
+        "type": "OM"
+      }
+    },
+    "ILS_36L": {
+      "type": "ILS Category III A",
+      "frequency": "110.7 MHz",
+      "ident": "PKL",
+      "localizer": {
+        "frequency": "110.7 MHz",
+        "course": 1,
+        "coverage": "Full precision approach"
+      },
+      "glideslope": {
+        "frequency": "110.7 MHz",
+        "angle": 3.0,
+        "coverage": "Full precision approach"
+      },
+      "innerMarker": {
+        "frequency": "75 MHz",
+        "distance_from_threshold": 75,
+        "type": "IM"
+      },
+      "middleMarker": {
+        "frequency": "75 MHz",
+        "distance_from_threshold": 1050,
+        "type": "MM"
+      },
+      "outerMarker": {
+        "frequency": "75 MHz",
+        "distance_from_threshold": 3900,
+        "type": "OM"
+      }
+    }
+  },
+  "weatherServices": {
+    "ATIS": {
+      "frequency_arrival": "126.75 MHz",
+      "frequency_departure": "127.95 MHz",
+      "coverage": "Continuous information on weather, runway in use, QNH"
+    },
+    "METAR_STATION": {
+      "icao": "ZBAA",
+      "updateFrequency": "30 minutes",
+      "observations": "Wind, Visibility, Cloud, Temperature, QNH"
+    },
+    "RVR_Equipment": {
+      "type": "Automated Runway Visual Range",
+      "locations": ["18R threshold", "18R midpoint", "18R rollout", "36L threshold", "36L midpoint", "36L rollout"],
+      "measurement": "Transmissometer based",
+      "updateFrequency": "Continuous"
+    }
+  },
+  "operationalData": {
+    "designCodes": {
+      "runwayCodeNumber": "4",
+      "description": "Aircraft MTOW 60-80 tonnes"
+    },
+    "maxTakeoffWeight": 640000,
+    "maxLandingWeight": 640000,
+    "frequentAircraftTypes": [
+      "Boeing 777",
+      "Boeing 787",
+      "Airbus A380",
+      "Airbus A350",
+      "Airbus A330",
+      "Boeing 747"
+    ],
+    "directionPreference": {
+      "headwind": "Preferred for both arrivals and departures",
+      "note": "18R/36L operates in alternating pattern based on winds and demand"
+    },
+    "operatingHours": "24/7",
+    "weather_minimums": {
+      "VFR": {
+        "ceiling": "1000 ft",
+        "visibility": "5000m"
+      },
+      "MVFR": {
+        "ceiling": "500-1000 ft",
+        "visibility": "3000-5000m"
+      },
+      "IFR": {
+        "ceiling": "200-500 ft",
+        "visibility": "1000-3000m"
+      },
+      "LIFR": {
+        "ceiling": "<200 ft",
+        "visibility": "<1000m",
+        "requirement": "CAT IIIA ILS mandatory"
+      }
+    },
+    "maintenanceSchedule": {
+      "frequency": "Annual Scheduled Inspections",
+      "seasonal": "Pre-winter and pre-summer assessment",
+      "emergency": "As required after incidents/accidents"
+    }
+  },
+  "safetyEquipment": {
+    "firefighting_and_rescue": {
+      "type": "ARFF - Aircraft Rescue and Firefighting",
+      "vehicles_stationed": 25,
+      "coverage": "Full runway length within 2 minutes response",
+      "equipment": "High-capacity foam and water systems, Rescue equipment"
+    },
+    "snow_ice_removal": {
+      "equipment": "Snowplows, Deicing fluid trucks, Friction assessment vehicles",
+      "procedure": "Runway kept operational in winter conditions"
+    },
+    "foreign_object_damage_prevention": {
+      "type": "FOD prevention program",
+      "inspections": "Daily sweeping and inspections",
+      "procedures": "Regular surface clearing before operations"
+    },
+    "drainage": {
+      "type": "Subsurface and surface drainage system",
+      "capacity": "Handles heavy rainfall events",
+      "maintenance": "Regular clearing of drainage channels"
+    }
+  },
+  "airfieldGroundServices": {
+    "apronManagement": "Automated stand allocation system",
+    "groundSupport": "Full range of GSE available",
+    "fuelingServices": "Hydrant dispensing system and fuel trucks",
+    "cateringServices": "Catering truck availability",
+    "maintenanceServices": "Hangar facilities and outdoor maintenance areas"
+  },
+  "notam_and_restrictions": {
+    "currentStatus": "Runway fully operational",
+    "recentRestrictions": "None",
+    "plannedMaintenance": "Check NOTAM for scheduled maintenance windows",
+    "closurePolicy": "Scheduled maintenance performed during low traffic periods",
+    "windLimitations": "Demonstrated use restrictions based on aircraft type",
+    "crosswindLimit": "Up to 15 knots for most aircraft"
+  },
+  "futureUpgrades": {
+    "planned_improvements": [
+      "Surface rehabilitation program",
+      "Enhanced lighting systems upgrade",
+      "Improved drainage infrastructure",
+      "Expanded taxiway network"
+    ],
+    "expected_timeline": "2025-2030"
   }
 }
