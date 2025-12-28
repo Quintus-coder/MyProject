@@ -416,8 +416,7 @@ class AirportRunwayDXFGenerator:
             zone_width = tdz['width_per_zone']
             zone_length = tdz['length_per_zone']
             
-            # 使用JSON中的宽度值作为标记宽度
-            marking_width = threshold['dimensions']['width']
+            # 使用之前获取的stripe_width作为标记宽度（即threshold标记的宽度）
             
             # 从18R端开始的接地区
             for i in range(zones):
@@ -425,15 +424,15 @@ class AirportRunwayDXFGenerator:
                 if y_pos + zone_length <= l:
                     # 左侧标记
                     x_left = cx - zone_width / 2 - self.TDZ_MARKING_OFFSET
-                    pts_left = [(x_left - marking_width, y_pos), (x_left, y_pos),
-                               (x_left, y_pos + zone_length), (x_left - marking_width, y_pos + zone_length)]
+                    pts_left = [(x_left - stripe_width, y_pos), (x_left, y_pos),
+                               (x_left, y_pos + zone_length), (x_left - stripe_width, y_pos + zone_length)]
                     pline = self.msp.add_lwpolyline(pts_left, dxfattribs={'layer': 'RUNWAY_MARKINGS'})
                     pline.close()
                     
                     # 右侧标记
                     x_right = cx + zone_width / 2 + self.TDZ_MARKING_OFFSET
-                    pts_right = [(x_right, y_pos), (x_right + marking_width, y_pos),
-                                (x_right + marking_width, y_pos + zone_length), (x_right, y_pos + zone_length)]
+                    pts_right = [(x_right, y_pos), (x_right + stripe_width, y_pos),
+                                (x_right + stripe_width, y_pos + zone_length), (x_right, y_pos + zone_length)]
                     pline = self.msp.add_lwpolyline(pts_right, dxfattribs={'layer': 'RUNWAY_MARKINGS'})
                     pline.close()
             
@@ -443,15 +442,15 @@ class AirportRunwayDXFGenerator:
                 if y_pos >= 0:
                     # 左侧标记
                     x_left = cx - zone_width / 2 - self.TDZ_MARKING_OFFSET
-                    pts_left = [(x_left - marking_width, y_pos), (x_left, y_pos),
-                               (x_left, y_pos + zone_length), (x_left - marking_width, y_pos + zone_length)]
+                    pts_left = [(x_left - stripe_width, y_pos), (x_left, y_pos),
+                               (x_left, y_pos + zone_length), (x_left - stripe_width, y_pos + zone_length)]
                     pline = self.msp.add_lwpolyline(pts_left, dxfattribs={'layer': 'RUNWAY_MARKINGS'})
                     pline.close()
                     
                     # 右侧标记
                     x_right = cx + zone_width / 2 + self.TDZ_MARKING_OFFSET
-                    pts_right = [(x_right, y_pos), (x_right + marking_width, y_pos),
-                                (x_right + marking_width, y_pos + zone_length), (x_right, y_pos + zone_length)]
+                    pts_right = [(x_right, y_pos), (x_right + stripe_width, y_pos),
+                                (x_right + stripe_width, y_pos + zone_length), (x_right, y_pos + zone_length)]
                     pline = self.msp.add_lwpolyline(pts_right, dxfattribs={'layer': 'RUNWAY_MARKINGS'})
                     pline.close()
             
