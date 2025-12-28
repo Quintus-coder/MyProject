@@ -1,554 +1,550 @@
-#!/usr/bin/env python3
 """
-Extended DXF Generator for Airport Runway System
-Supports 4 modules: Runway Markings, Safety Areas, Lighting Systems, and Taxiways
-Reads from runway_geometry.json and generates R2010 format DXF files
-Author: Quintus-coder
-Date: 2025-12-28
+CAD Drawing Module for Airport Runway Design
+Generates DXF files using ezdxf for various runway components
+Updated: 2025-12-28 13:35:44 UTC
 """
 
-import json
-import os
-from datetime import datetime
-from typing import Dict, List, Tuple, Optional, Any
+import ezdxf
+from ezdxf.addons import DxfAttrib
 import math
+from dataclasses import dataclass
+from typing import List, Tuple, Optional
+from enum import Enum
+
+
+class LightingType(Enum):
+    """Enumeration for lighting system types"""
+    APPROACH = "Approach Lighting System"
+    END = "End Lights"
+    SIDE = "Side Stripes"
+    PAPI = "PAPI (Precision Approach Path Indicator)"
+
+
+@dataclass
+class Point:
+    """3D Point representation"""
+    x: float
+    y: float
+    z: float = 0.0
+
+
+@dataclass
+class RunwayConfig:
+    """Configuration for runway dimensions and properties"""
+    length: float
+    width: float
+    threshold_elevation: float
+    far_end_elevation: float
 
 
 class DXFGenerator:
-    """Generate DXF (R2010 format) files for airport runway systems using 2D entities."""
-
-    def __init__(self, filename: str = "airport_runway_system.dxf"):
-        """
-        Initialize DXF generator.
-        
-        Args:
-            filename: Output DXF filename
-        """
+    """Base class for DXF file generation"""
+    
+    def __init__(self, filename: str):
+        """Initialize DXF document"""
         self.filename = filename
-        self.entities = []
-        self.handles = {}
-        self.next_handle = 256
-        self.version = "AC1021"  # R2010 format
-        self.layers = {
-            "RUNWAY_MARKINGS": {"color": 1, "linetype": "CONTINUOUS"},
-            "SAFETY_AREAS": {"color": 3, "linetype": "DASHED"},
-            "LIGHTING_SYSTEMS": {"color": 5, "linetype": "CONTINUOUS"},
-            "TAXIWAYS": {"color": 2, "linetype": "CONTINUOUS"},
-            "TEXT_LABELS": {"color": 7, "linetype": "CONTINUOUS"},
-        }
-        self.current_entity_id = 0
+        self.doc = ezdxf.new('R2010')
+        self.msp = self.doc.modelspace()
+        self.setup_layers()
+    
+    def setup_layers(self):
+        """Create standard layers for drawing"""
+        layers = [
+            ('Runway', 7),  # White
+            ('Approach_Lighting', 1),  # Red
+            ('End_Lights', 5),  # Magenta
+            ('Side_Stripes', 3),  # Green
+            ('PAPI', 6),  # Yellow
+            ('Markings', 7),  # White
+            ('Elevation_Data', 4),  # Cyan
+        ]
+        
+        for layer_name, color in layers:
+            if layer_name not in self.doc.layers:
+                self.doc.layers.new(name=layer_name, dxfattribs={'color': color})
+    
+    def save(self):
+        """Save the DXF document to file"""
+        self.doc.saveas(self.filename)
+        print(f"DXF file saved: {self.filename}")
 
-    def get_handle(self) -> str:
-        """Generate next handle in hexadecimal format."""
-        handle = format(self.next_handle, 'X')
-        self.next_handle += 1
-        return handle
 
-    def add_line(self, x1: float, y1: float, x2: float, y2: float, 
-                 layer: str = "0", color: int = 256) -> None:
-        """Add LINE entity to DXF."""
-        handle = self.get_handle()
-        self.entities.append({
-            "type": "LINE",
-            "handle": handle,
-            "layer": layer,
-            "color": color,
-            "x1": x1,
-            "y1": y1,
-            "x2": x2,
-            "y2": y2,
-        })
+class RunwayDrawer(DXFGenerator):
+    """Generates runway layout and basic structure"""
+    
+    def __init__(self, filename: str, config: RunwayConfig):
+        super().__init__(filename)
+        self.config = config
+    
+    def draw_runway_outline(self):
+        """Draw the runway boundary"""
+        length = self.config.length
+        width = self.config.width
+        
+        # Define runway corners
+        corners = [
+            (0, 0),
+            (length, 0),
+            (length, width),
+            (0, width),
+            (0, 0)
+        ]
+        
+        # Draw runway outline
+        points = [Point(x, y) for x, y in corners]
+        self.msp.add_lwpolyline(
+            [(p.x, p.y) for p in points],
+            dxfattribs={'layer': 'Runway', 'lineweight': 50}
+        )
+    
+    def draw_centerline(self):
+        """Draw runway centerline"""
+        length = self.config.length
+        width = self.config.width
+        center_y = width / 2
+        
+        self.msp.add_line(
+            (0, center_y),
+            (length, center_y),
+            dxfattribs={
+                'layer': 'Markings',
+                'linetype': 'DASHED',
+                'lineweight': 25
+            }
+        )
+    
+    def draw_threshold_markings(self):
+        """Draw threshold and touchdown zone markings"""
+        width = self.config.width
+        
+        # Threshold bar
+        self.msp.add_line(
+            (0, 0),
+            (0, width),
+            dxfattribs={'layer': 'Markings', 'lineweight': 35}
+        )
+        
+        # Touchdown zone markings (dashed lines)
+        for i in range(1, 6):
+            offset = 150 * i
+            self.msp.add_line(
+                (offset, 0),
+                (offset, width),
+                dxfattribs={
+                    'layer': 'Markings',
+                    'linetype': 'DASHED',
+                    'lineweight': 20
+                }
+            )
 
-    def add_lwpolyline(self, points: List[Tuple[float, float]], 
-                       layer: str = "0", color: int = 256, closed: bool = False) -> None:
-        """Add LWPOLYLINE entity to DXF."""
-        handle = self.get_handle()
-        self.entities.append({
-            "type": "LWPOLYLINE",
-            "handle": handle,
-            "layer": layer,
-            "color": color,
-            "points": points,
-            "closed": closed,
-        })
 
-    def add_point(self, x: float, y: float, 
-                  layer: str = "0", color: int = 256) -> None:
-        """Add POINT entity to DXF."""
-        handle = self.get_handle()
-        self.entities.append({
-            "type": "POINT",
-            "handle": handle,
-            "layer": layer,
-            "color": color,
-            "x": x,
-            "y": y,
-        })
-
-    def add_circle(self, cx: float, cy: float, radius: float, 
-                   layer: str = "0", color: int = 256) -> None:
-        """Add CIRCLE entity to DXF."""
-        handle = self.get_handle()
-        self.entities.append({
-            "type": "CIRCLE",
-            "handle": handle,
-            "layer": layer,
-            "color": color,
-            "cx": cx,
-            "cy": cy,
-            "radius": radius,
-        })
-
-    def add_text(self, text: str, x: float, y: float, height: float = 1.0,
-                 layer: str = "0", color: int = 256) -> None:
-        """Add TEXT entity to DXF."""
-        handle = self.get_handle()
-        self.entities.append({
-            "type": "TEXT",
-            "handle": handle,
-            "layer": layer,
-            "color": color,
-            "text": text,
-            "x": x,
-            "y": y,
-            "height": height,
-        })
-
-    def generate_runway_markings(self, runway_data: Dict[str, Any]) -> None:
-        """Generate runway marking entities."""
-        if "runways" not in runway_data:
-            return
-
-        layer = "RUNWAY_MARKINGS"
-        color = self.layers[layer]["color"]
-
-        for runway in runway_data["runways"]:
-            # Runway outline
-            start_x = runway.get("start_x", 0)
-            start_y = runway.get("start_y", 0)
-            end_x = runway.get("end_x", 0)
-            end_y = runway.get("end_y", 0)
-            width = runway.get("width", 60)
-
-            # Calculate perpendicular points for runway width
-            direction_x = end_x - start_x
-            direction_y = end_y - start_y
-            length = math.sqrt(direction_x**2 + direction_y**2)
+class ApproachLightingSystem(DXFGenerator):
+    """MALS (Medium Intensity Approach Lighting System)"""
+    
+    def __init__(self, filename: str, runway_length: float, runway_width: float):
+        super().__init__(filename)
+        self.runway_length = runway_length
+        self.runway_width = runway_width
+    
+    def draw_approach_lights(self):
+        """Draw approach lighting system"""
+        width = self.runway_width
+        center_y = width / 2
+        
+        # Main approach light line (extends 2400-3000 ft before runway)
+        approach_distance = 2400  # feet
+        light_spacing = 200  # feet
+        
+        # Draw light positions
+        for distance in range(light_spacing, approach_distance, light_spacing):
+            x = -distance
             
-            if length > 0:
-                perp_x = -direction_y / length * (width / 2)
-                perp_y = direction_x / length * (width / 2)
-
-                # Runway boundary points
-                points = [
-                    (start_x - perp_x, start_y - perp_y),
-                    (end_x - perp_x, end_y - perp_y),
-                    (end_x + perp_x, end_y + perp_y),
-                    (start_x + perp_x, start_y + perp_y),
-                ]
-                
-                # Draw runway outline
-                self.add_lwpolyline(points, layer=layer, color=color, closed=True)
-
-                # Center line
-                self.add_line(start_x, start_y, end_x, end_y, layer=layer, color=color)
-
-            # Runway designation
-            runway_name = runway.get("name", "RWY")
-            mid_x = (start_x + end_x) / 2
-            mid_y = (start_y + end_y) / 2
-            self.add_text(runway_name, mid_x, mid_y, height=2.0, layer="TEXT_LABELS", color=color)
-
-            # Threshold markings (dashed lines)
-            threshold_offset = 30
-            threshold_points = [
-                (start_x - perp_x * 0.3, start_y - perp_y * 0.3),
-                (start_x + perp_x * 0.3, start_y + perp_y * 0.3),
-            ]
+            # Center light
+            self.msp.add_circle(
+                (x, center_y),
+                radius=5,
+                dxfattribs={'layer': 'Approach_Lighting', 'color': 1}
+            )
             
-            for i in range(0, int(width), 10):
-                frac = i / width
-                px = start_x + (perp_x * 2 * frac - perp_x)
-                py = start_y + (perp_y * 2 * frac - perp_y)
-                self.add_point(px, py, layer=layer, color=color)
-
-    def generate_safety_areas(self, runway_data: Dict[str, Any]) -> None:
-        """Generate safety area entities (RESA, OFZ, etc.)."""
-        if "runways" not in runway_data:
-            return
-
-        layer = "SAFETY_AREAS"
-        color = self.layers[layer]["color"]
-
-        for runway in runway_data["runways"]:
-            start_x = runway.get("start_x", 0)
-            start_y = runway.get("start_y", 0)
-            end_x = runway.get("end_x", 0)
-            end_y = runway.get("end_y", 0)
-            width = runway.get("width", 60)
-            resa_length = runway.get("resa_length", 240)
-
-            # Calculate direction vectors
-            direction_x = end_x - start_x
-            direction_y = end_y - start_y
-            length = math.sqrt(direction_x**2 + direction_y**2)
+            # Side lights (offset from centerline)
+            side_offset = width / 3
             
-            if length > 0:
-                unit_x = direction_x / length
-                unit_y = direction_y / length
-                perp_x = -unit_y * (width / 2)
-                perp_y = unit_x * (width / 2)
-
-                # RESA at start of runway
-                resa_start_x = start_x - unit_x * resa_length
-                resa_start_y = start_y - unit_y * resa_length
-                
-                resa_points = [
-                    (resa_start_x - perp_x, resa_start_y - perp_y),
-                    (start_x - perp_x, start_y - perp_y),
-                    (start_x + perp_x, start_y + perp_y),
-                    (resa_start_x + perp_x, resa_start_y + perp_y),
-                ]
-                self.add_lwpolyline(resa_points, layer=layer, color=color, closed=True)
-                self.add_text("RESA", resa_start_x, resa_start_y - 50, height=2.0, 
-                            layer="TEXT_LABELS", color=color)
-
-                # RESA at end of runway
-                resa_end_x = end_x + unit_x * resa_length
-                resa_end_y = end_y + unit_y * resa_length
-                
-                resa_end_points = [
-                    (end_x - perp_x, end_y - perp_y),
-                    (resa_end_x - perp_x, resa_end_y - perp_y),
-                    (resa_end_x + perp_x, resa_end_y + perp_y),
-                    (end_x + perp_x, end_y + perp_y),
-                ]
-                self.add_lwpolyline(resa_end_points, layer=layer, color=color, closed=True)
-                self.add_text("RESA", resa_end_x, resa_end_y + 50, height=2.0, 
-                            layer="TEXT_LABELS", color=color)
-
-    def generate_lighting_systems(self, runway_data: Dict[str, Any]) -> None:
-        """Generate lighting system entities (approach lights, edge lights, etc.)."""
-        if "runways" not in runway_data:
-            return
-
-        layer = "LIGHTING_SYSTEMS"
-        color = self.layers[layer]["color"]
-
-        for runway in runway_data["runways"]:
-            start_x = runway.get("start_x", 0)
-            start_y = runway.get("start_y", 0)
-            end_x = runway.get("end_x", 0)
-            end_y = runway.get("end_y", 0)
-            width = runway.get("width", 60)
-            light_spacing = runway.get("light_spacing", 30)
-
-            # Calculate direction and perpendicular vectors
-            direction_x = end_x - start_x
-            direction_y = end_y - start_y
-            length = math.sqrt(direction_x**2 + direction_y**2)
+            self.msp.add_circle(
+                (x, center_y - side_offset),
+                radius=4,
+                dxfattribs={'layer': 'Approach_Lighting'}
+            )
             
-            if length > 0:
-                unit_x = direction_x / length
-                unit_y = direction_y / length
-                perp_x = -unit_y
-                perp_y = unit_x
-
-                # Edge lighting along runway
-                for i in range(int(length / light_spacing)):
-                    t = (i * light_spacing) / length
-                    px = start_x + unit_x * i * light_spacing
-                    py = start_y + unit_y * i * light_spacing
-
-                    # Left edge light
-                    light_x = px - perp_x * (width / 2 + 5)
-                    light_y = py - perp_y * (width / 2 + 5)
-                    self.add_circle(light_x, light_y, radius=2.0, layer=layer, color=color)
-
-                    # Right edge light
-                    light_x = px + perp_x * (width / 2 + 5)
-                    light_y = py + perp_y * (width / 2 + 5)
-                    self.add_circle(light_x, light_y, radius=2.0, layer=layer, color=color)
-
-                # Approach lighting system
-                approach_length = runway.get("approach_length", 300)
-                approach_spacing = 15
-                
-                for i in range(0, approach_length, approach_spacing):
-                    # Left approach lights
-                    approach_x = start_x - unit_x * i
-                    approach_y = start_y - unit_y * i
-                    light_x = approach_x - perp_x * (width / 2 + 15)
-                    light_y = approach_y - perp_y * (width / 2 + 15)
-                    self.add_point(light_x, light_y, layer=layer, color=color)
-
-                    # Right approach lights
-                    light_x = approach_x + perp_x * (width / 2 + 15)
-                    light_y = approach_y + perp_y * (width / 2 + 15)
-                    self.add_point(light_x, light_y, layer=layer, color=color)
-
-    def generate_taxiways(self, runway_data: Dict[str, Any]) -> None:
-        """Generate taxiway entities."""
-        if "taxiways" not in runway_data:
-            return
-
-        layer = "TAXIWAYS"
-        color = self.layers[layer]["color"]
-
-        for taxiway in runway_data["taxiways"]:
-            taxiway_name = taxiway.get("name", "TWY")
-            start_x = taxiway.get("start_x", 0)
-            start_y = taxiway.get("start_y", 0)
-            end_x = taxiway.get("end_x", 0)
-            end_y = taxiway.get("end_y", 0)
-            width = taxiway.get("width", 30)
-
-            # Calculate perpendicular points
-            direction_x = end_x - start_x
-            direction_y = end_y - start_y
-            length = math.sqrt(direction_x**2 + direction_y**2)
+            self.msp.add_circle(
+                (x, center_y + side_offset),
+                radius=4,
+                dxfattribs={'layer': 'Approach_Lighting'}
+            )
+        
+        # Add text label
+        self.msp.add_text(
+            f'MALS - Medium Intensity Approach Lighting System',
+            dxfattribs={'layer': 'Approach_Lighting', 'height': 50}
+        ).set_pos((-approach_distance/2, center_y + 200))
+    
+    def draw_visual_glide_slope(self):
+        """Draw VGSI (Visual Glide Slope Indicator) reference lines"""
+        width = self.runway_width
+        
+        for angle in [2.5, 3.0, 3.5]:
+            # Calculate line points for different glide slope angles
+            rad = math.radians(angle)
+            x_far = -1500
+            y_at_far = width/2 + (x_far * math.tan(rad))
             
-            if length > 0:
-                perp_x = -direction_y / length * (width / 2)
-                perp_y = direction_x / length * (width / 2)
+            self.msp.add_line(
+                (x_far, y_at_far),
+                (500, width/2),
+                dxfattribs={
+                    'layer': 'Approach_Lighting',
+                    'linetype': 'DASHED',
+                    'color': 1
+                }
+            )
 
-                # Taxiway outline
-                points = [
-                    (start_x - perp_x, start_y - perp_y),
-                    (end_x - perp_x, end_y - perp_y),
-                    (end_x + perp_x, end_y + perp_y),
-                    (start_x + perp_x, start_y + perp_y),
-                ]
-                self.add_lwpolyline(points, layer=layer, color=color, closed=True)
 
-                # Center line
-                self.add_line(start_x, start_y, end_x, end_y, layer=layer, color=color)
-
-                # Taxiway label
-                mid_x = (start_x + end_x) / 2
-                mid_y = (start_y + end_y) / 2
-                self.add_text(taxiway_name, mid_x, mid_y, height=1.5, 
-                            layer="TEXT_LABELS", color=color)
-
-    def load_runway_geometry(self, json_file: str) -> Dict[str, Any]:
-        """Load runway geometry from JSON file."""
-        if not os.path.exists(json_file):
-            print(f"Warning: {json_file} not found. Using default geometry.")
-            return self._get_default_geometry()
+class EndLights(DXFGenerator):
+    """Runway End Identifier Lights (REIL)"""
+    
+    def __init__(self, filename: str, runway_length: float, runway_width: float):
+        super().__init__(filename)
+        self.runway_length = runway_length
+        self.runway_width = runway_width
+    
+    def draw_end_lights(self):
+        """Draw runway end identifier lights"""
+        width = self.runway_width
         
-        try:
-            with open(json_file, 'r') as f:
-                data = json.load(f)
-            print(f"Successfully loaded runway geometry from {json_file}")
-            return data
-        except json.JSONDecodeError as e:
-            print(f"Error parsing JSON: {e}. Using default geometry.")
-            return self._get_default_geometry()
+        # Near end lights
+        near_end_y_positions = [width * 0.25, width * 0.75]
+        for y in near_end_y_positions:
+            self.msp.add_circle(
+                (-50, y),
+                radius=6,
+                dxfattribs={'layer': 'End_Lights', 'color': 5}
+            )
+        
+        # Far end lights
+        far_end_y_positions = [width * 0.25, width * 0.75]
+        for y in far_end_y_positions:
+            self.msp.add_circle(
+                (self.runway_length + 50, y),
+                radius=6,
+                dxfattribs={'layer': 'End_Lights', 'color': 5}
+            )
+        
+        # Add connecting lines
+        self.msp.add_line(
+            (-50, near_end_y_positions[0]),
+            (-50, near_end_y_positions[1]),
+            dxfattribs={'layer': 'End_Lights', 'color': 5}
+        )
+        
+        self.msp.add_line(
+            (self.runway_length + 50, far_end_y_positions[0]),
+            (self.runway_length + 50, far_end_y_positions[1]),
+            dxfattribs={'layer': 'End_Lights', 'color': 5}
+        )
+        
+        # Add text label
+        self.msp.add_text(
+            'REIL - Runway End Identifier Lights',
+            dxfattribs={'layer': 'End_Lights', 'height': 40}
+        ).set_pos((self.runway_length/2 - 200, width + 100))
+    
+    def draw_threshold_lights(self):
+        """Draw threshold and threshold bar lights"""
+        width = self.runway_width
+        spacing = 15  # feet between lights
+        
+        for i, y in enumerate([y for y in range(int(spacing), int(width), int(spacing*2))]):
+            self.msp.add_circle(
+                (0, y),
+                radius=3,
+                dxfattribs={'layer': 'End_Lights', 'color': 5}
+            )
 
-    def _get_default_geometry(self) -> Dict[str, Any]:
-        """Return default airport geometry."""
-        return {
-            "airport_name": "Default Airport",
-            "runways": [
-                {
-                    "name": "09/27",
-                    "start_x": 0,
-                    "start_y": 0,
-                    "end_x": 4000,
-                    "end_y": 0,
-                    "width": 60,
-                    "resa_length": 240,
-                    "approach_length": 300,
-                    "light_spacing": 30,
-                },
-            ],
-            "taxiways": [
-                {
-                    "name": "A",
-                    "start_x": 500,
-                    "start_y": 100,
-                    "end_x": 500,
-                    "end_y": -100,
-                    "width": 30,
-                },
-                {
-                    "name": "B",
-                    "start_x": 2000,
-                    "start_y": 100,
-                    "end_x": 2000,
-                    "end_y": -100,
-                    "width": 30,
-                },
-            ],
-        }
 
-    def generate_dxf_header(self) -> str:
-        """Generate DXF header section."""
-        header = "  0\nSECTION\n  2\nHEADER\n"
-        header += "  9\n$ACADVER\n  1\nAC1021\n"  # R2010
-        header += "  9\n$EXTMIN\n 10\n-500.0\n 20\n-500.0\n"
-        header += "  9\n$EXTMAX\n 10\n5000.0\n 20\n500.0\n"
-        header += "  0\nENDSEC\n"
-        return header
-
-    def generate_dxf_classes(self) -> str:
-        """Generate DXF classes section."""
-        return "  0\nSECTION\n  2\nCLASSES\n  0\nENDSEC\n"
-
-    def generate_dxf_tables(self) -> str:
-        """Generate DXF tables section with layer definitions."""
-        tables = "  0\nSECTION\n  2\nTABLES\n"
+class SideStripes(DXFGenerator):
+    """Runway Side Stripe Lighting"""
+    
+    def __init__(self, filename: str, runway_length: float, runway_width: float):
+        super().__init__(filename)
+        self.runway_length = runway_length
+        self.runway_width = runway_width
+    
+    def draw_side_stripes(self):
+        """Draw side stripe lights"""
+        light_spacing = 200  # feet
         
-        # LTYPE table
-        tables += "  0\nTABLE\n  2\nLTYPE\n 70\n2\n"
-        tables += "  0\nLTYPE\n  2\nCONTINUOUS\n 70\n0\n  3\nSolid line\n 72\n65\n 73\n0\n 40\n0.0\n"
-        tables += "  0\nLTYPE\n  2\nDASHED\n 70\n0\n  3\nDashed line\n 72\n65\n 73\n2\n 40\n0.75\n 55\n0.5\n 55\n-0.25\n"
-        tables += "  0\nENDTAB\n"
+        # Left side stripe
+        for x in range(0, int(self.runway_length), int(light_spacing)):
+            self.msp.add_circle(
+                (x, 0),
+                radius=3,
+                dxfattribs={'layer': 'Side_Stripes', 'color': 3}
+            )
         
-        # LAYER table
-        tables += "  0\nTABLE\n  2\nLAYER\n 70\n6\n"
+        # Right side stripe
+        for x in range(0, int(self.runway_length), int(light_spacing)):
+            self.msp.add_circle(
+                (x, self.runway_width),
+                radius=3,
+                dxfattribs={'layer': 'Side_Stripes', 'color': 3}
+            )
         
-        for layer_name, layer_props in self.layers.items():
-            tables += f"  0\nLAYER\n  2\n{layer_name}\n 70\n0\n"
-            tables += f" 62\n{layer_props['color']}\n"
-            tables += f"  6\n{layer_props['linetype']}\n"
-            tables += " 370\n25\n"  # Line weight
+        # Add connecting lines
+        self.msp.add_line(
+            (0, 0),
+            (self.runway_length, 0),
+            dxfattribs={
+                'layer': 'Side_Stripes',
+                'linetype': 'DASHED',
+                'color': 3,
+                'lineweight': 15
+            }
+        )
         
-        # Default layer
-        tables += "  0\nLAYER\n  2\n0\n 70\n0\n 62\n7\n  6\nCONTINUOUS\n 370\n-1\n"
+        self.msp.add_line(
+            (0, self.runway_width),
+            (self.runway_length, self.runway_width),
+            dxfattribs={
+                'layer': 'Side_Stripes',
+                'linetype': 'DASHED',
+                'color': 3,
+                'lineweight': 15
+            }
+        )
         
-        tables += "  0\nENDTAB\n"
+        # Add text label
+        self.msp.add_text(
+            'Side Stripe Lights',
+            dxfattribs={'layer': 'Side_Stripes', 'height': 40}
+        ).set_pos((self.runway_length/2 - 150, -100))
+    
+    def draw_touchdown_zone_lights(self):
+        """Draw touchdown zone lights along runway length"""
+        width = self.runway_width
+        center_y = width / 2
+        light_spacing = 300  # feet
         
-        # STYLE table
-        tables += "  0\nTABLE\n  2\nSTYLE\n 70\n1\n"
-        tables += "  0\nSTYLE\n  2\nSTANDARD\n 70\n0\n 40\n0.0\n 41\n1.0\n 50\n0.0\n 71\n0\n 42\n1.0\n  3\ntxt\n  4\n\n"
-        tables += "  0\nENDTAB\n"
-        
-        tables += "  0\nENDSEC\n"
-        return tables
-
-    def generate_dxf_blocks(self) -> str:
-        """Generate DXF blocks section."""
-        return "  0\nSECTION\n  2\nBLOCKS\n  0\nBLOCK\n  8\n0\n  2\n*MODEL_SPACE\n 70\n0\n  0\nENDBLK\n  0\nENDSEC\n"
-
-    def generate_dxf_entities(self) -> str:
-        """Generate DXF entities section with all created entities."""
-        entities = "  0\nSECTION\n  2\nENTITIES\n"
-        
-        for entity in self.entities:
-            if entity["type"] == "LINE":
-                entities += f"  0\nLINE\n"
-                entities += f"  5\n{entity['handle']}\n"
-                entities += f"  8\n{entity['layer']}\n"
-                entities += f" 62\n{entity['color']}\n"
-                entities += f" 10\n{entity['x1']}\n 20\n{entity['y1']}\n"
-                entities += f" 11\n{entity['x2']}\n 21\n{entity['y2']}\n"
+        for x in range(int(light_spacing), int(self.runway_length - light_spacing), int(light_spacing)):
+            # Pair of lights on either side of centerline
+            offset = width * 0.15
             
-            elif entity["type"] == "LWPOLYLINE":
-                entities += f"  0\nLWPOLYLINE\n"
-                entities += f"  5\n{entity['handle']}\n"
-                entities += f"  8\n{entity['layer']}\n"
-                entities += f" 62\n{entity['color']}\n"
-                entities += f" 90\n{len(entity['points'])}\n"
-                entities += f" 70\n{'1' if entity['closed'] else '0'}\n"
-                for point in entity["points"]:
-                    entities += f" 10\n{point[0]}\n 20\n{point[1]}\n"
+            self.msp.add_circle(
+                (x, center_y - offset),
+                radius=4,
+                dxfattribs={'layer': 'Side_Stripes', 'color': 3}
+            )
             
-            elif entity["type"] == "POINT":
-                entities += f"  0\nPOINT\n"
-                entities += f"  5\n{entity['handle']}\n"
-                entities += f"  8\n{entity['layer']}\n"
-                entities += f" 62\n{entity['color']}\n"
-                entities += f" 10\n{entity['x']}\n 20\n{entity['y']}\n"
+            self.msp.add_circle(
+                (x, center_y + offset),
+                radius=4,
+                dxfattribs={'layer': 'Side_Stripes', 'color': 3}
+            )
+
+
+class PAPI(DXFGenerator):
+    """PAPI - Precision Approach Path Indicator"""
+    
+    def __init__(self, filename: str, runway_length: float, runway_width: float):
+        super().__init__(filename)
+        self.runway_length = runway_length
+        self.runway_width = runway_width
+    
+    def draw_papi_lights(self):
+        """Draw PAPI light units"""
+        width = self.runway_width
+        
+        # Typical PAPI installation: 4 lights offset to the side
+        papi_x = 300  # Distance from threshold
+        papi_y = width + 200  # Offset from runway edge
+        light_spacing = 15  # feet between lights
+        
+        for i in range(4):
+            light_y = papi_y + (i * light_spacing)
             
-            elif entity["type"] == "CIRCLE":
-                entities += f"  0\nCIRCLE\n"
-                entities += f"  5\n{entity['handle']}\n"
-                entities += f"  8\n{entity['layer']}\n"
-                entities += f" 62\n{entity['color']}\n"
-                entities += f" 10\n{entity['cx']}\n 20\n{entity['cy']}\n"
-                entities += f" 40\n{entity['radius']}\n"
+            # Draw PAPI light unit (box)
+            self.msp.add_rectangle(
+                (papi_x - 10, light_y - 5),
+                20, 10,
+                dxfattribs={'layer': 'PAPI', 'color': 6}
+            )
             
-            elif entity["type"] == "TEXT":
-                entities += f"  0\nTEXT\n"
-                entities += f"  5\n{entity['handle']}\n"
-                entities += f"  8\n{entity['layer']}\n"
-                entities += f" 62\n{entity['color']}\n"
-                entities += f" 10\n{entity['x']}\n 20\n{entity['y']}\n"
-                entities += f" 40\n{entity['height']}\n"
-                entities += f"  1\n{entity['text']}\n"
+            # Add indicator number
+            self.msp.add_text(
+                f'P{i+1}',
+                dxfattribs={'layer': 'PAPI', 'height': 8, 'color': 6}
+            ).set_pos((papi_x - 5, light_y))
         
-        entities += "  0\nENDSEC\n"
-        return entities
+        # Add PAPI information box
+        self.msp.add_rectangle(
+            (papi_x - 50, papi_y - 50),
+            300, 150,
+            dxfattribs={
+                'layer': 'PAPI',
+                'linetype': 'DASHED',
+                'color': 6
+            }
+        )
+        
+        self.msp.add_text(
+            'PAPI - Precision Approach Path Indicator\nGlide Slope: 3.0 degrees',
+            dxfattribs={'layer': 'PAPI', 'height': 30, 'color': 6}
+        ).set_pos((papi_x - 40, papi_y + 60))
+    
+    def draw_glide_slope_indicators(self):
+        """Draw glide slope angle indicators"""
+        width = self.runway_width
+        center_y = width / 2
+        
+        # Target glide slope: 3.0 degrees
+        target_angle = 3.0
+        
+        # Draw angle reference lines from PAPI position
+        papi_x = 300
+        
+        angles = [2.5, 3.0, 3.5]
+        colors = [1, 6, 5]  # Red, Yellow, Magenta
+        
+        for angle, color in zip(angles, colors):
+            rad = math.radians(angle)
+            x_far = papi_x - 1500
+            y_at_far = center_y + (x_far * math.tan(rad))
+            
+            linetype = 'CONTINUOUS' if angle == target_angle else 'DASHED'
+            
+            self.msp.add_line(
+                (x_far, y_at_far),
+                (papi_x + 500, center_y),
+                dxfattribs={
+                    'layer': 'PAPI',
+                    'linetype': linetype,
+                    'color': color
+                }
+            )
+    
+    def draw_papi_reference_data(self):
+        """Add PAPI reference data box"""
+        info_text = """
+PAPI CHARACTERISTICS:
+- Glide Slope Angle: 3.0°
+- Visual Range: 5-20 nautical miles
+- Light Intensity: High
+- Indication Colors:
+  Above Path: White/Red
+  On Path: Red/White
+  Below Path: All Red
+        """
+        
+        self.msp.add_text(
+            info_text,
+            dxfattribs={'layer': 'PAPI', 'height': 15}
+        ).set_pos((-500, -300))
 
-    def generate_dxf_objects(self) -> str:
-        """Generate DXF objects section."""
-        return "  0\nSECTION\n  2\nOBJECTS\n  0\nDICTIONARY\n  0\nENDSEC\n"
 
-    def generate(self, json_file: str = "runway_geometry.json") -> None:
-        """Generate complete DXF file from runway geometry JSON."""
-        print(f"Generating DXF file: {self.filename}")
+class ComprehensiveRunwayDXF(DXFGenerator):
+    """Master class that integrates all drawing modules"""
+    
+    def __init__(self, filename: str, config: RunwayConfig):
+        super().__init__(filename)
+        self.config = config
+    
+    def generate_complete_drawing(self):
+        """Generate complete runway with all systems"""
         
-        # Load runway geometry
-        runway_data = self.load_runway_geometry(json_file)
+        # 1. Draw basic runway
+        runway = RunwayDrawer(None, self.config)
+        runway.doc = self.doc
+        runway.msp = self.msp
+        runway.draw_runway_outline()
+        runway.draw_centerline()
+        runway.draw_threshold_markings()
         
-        # Generate all modules
-        print("Generating runway markings...")
-        self.generate_runway_markings(runway_data)
+        # 2. Draw Approach Lighting System
+        als = ApproachLightingSystem(None, self.config.length, self.config.width)
+        als.doc = self.doc
+        als.msp = self.msp
+        als.draw_approach_lights()
+        als.draw_visual_glide_slope()
         
-        print("Generating safety areas...")
-        self.generate_safety_areas(runway_data)
+        # 3. Draw End Lights
+        el = EndLights(None, self.config.length, self.config.width)
+        el.doc = self.doc
+        el.msp = self.msp
+        el.draw_end_lights()
+        el.draw_threshold_lights()
         
-        print("Generating lighting systems...")
-        self.generate_lighting_systems(runway_data)
+        # 4. Draw Side Stripes
+        ss = SideStripes(None, self.config.length, self.config.width)
+        ss.doc = self.doc
+        ss.msp = self.msp
+        ss.draw_side_stripes()
+        ss.draw_touchdown_zone_lights()
         
-        print("Generating taxiways...")
-        self.generate_taxiways(runway_data)
+        # 5. Draw PAPI
+        papi = PAPI(None, self.config.length, self.config.width)
+        papi.doc = self.doc
+        papi.msp = self.msp
+        papi.draw_papi_lights()
+        papi.draw_glide_slope_indicators()
+        papi.draw_papi_reference_data()
         
-        # Write DXF file
-        self._write_dxf_file()
-        print(f"DXF file generated successfully: {self.filename}")
-
-    def _write_dxf_file(self) -> None:
-        """Write all sections to DXF file."""
-        with open(self.filename, 'w') as f:
-            f.write(self.generate_dxf_header())
-            f.write(self.generate_dxf_classes())
-            f.write(self.generate_dxf_tables())
-            f.write(self.generate_dxf_blocks())
-            f.write(self.generate_dxf_entities())
-            f.write(self.generate_dxf_objects())
-            f.write("  0\nEOF\n")
+        # Add title block
+        self.add_title_block()
+    
+    def add_title_block(self):
+        """Add title block with document information"""
+        title_text = (
+            f"AIRPORT RUNWAY DESIGN\n"
+            f"Runway Length: {self.config.length} ft\n"
+            f"Runway Width: {self.config.width} ft\n"
+            f"Threshold Elev: {self.config.threshold_elevation} ft\n"
+            f"Far End Elev: {self.config.far_end_elevation} ft\n"
+            f"Generated: 2025-12-28 13:35:44 UTC"
+        )
+        
+        self.msp.add_text(
+            title_text,
+            dxfattribs={'layer': 'Markings', 'height': 25}
+        ).set_pos((-1000, -500))
 
 
 def main():
-    """Main function to generate airport runway system DXF."""
-    import sys
+    """Main execution function"""
     
-    output_file = "airport_runway_system.dxf"
-    input_json = "runway_geometry.json"
+    # Define runway configuration
+    runway_config = RunwayConfig(
+        length=12000.0,  # feet
+        width=200.0,     # feet
+        threshold_elevation=125.0,  # feet MSL
+        far_end_elevation=128.5  # feet MSL
+    )
     
-    # Check for command line arguments
-    if len(sys.argv) > 1:
-        input_json = sys.argv[1]
-    if len(sys.argv) > 2:
-        output_file = sys.argv[2]
+    # Generate comprehensive drawing
+    output_file = "airport_runway_complete.dxf"
     
-    print("=" * 60)
-    print("Extended Airport Runway System DXF Generator")
-    print("=" * 60)
-    print(f"Input JSON:  {input_json}")
-    print(f"Output DXF:  {output_file}")
-    print("Modules: Runway Markings, Safety Areas, Lighting Systems, Taxiways")
-    print("Format: R2010 (AC1021)")
-    print("=" * 60)
+    print("Generating comprehensive runway DXF drawing...")
+    print(f"  - Runway Length: {runway_config.length} ft")
+    print(f"  - Runway Width: {runway_config.width} ft")
+    print("  - Including Systems:")
+    print("    * Approach Lighting System (MALS)")
+    print("    * End Lights (REIL)")
+    print("    * Side Stripes & Touchdown Zone Lights")
+    print("    * PAPI (Precision Approach Path Indicator)")
     
-    generator = DXFGenerator(output_file)
-    generator.generate(input_json)
+    generator = ComprehensiveRunwayDXF(output_file, runway_config)
+    generator.generate_complete_drawing()
+    generator.save()
     
-    print("\nGeneration complete!")
+    print(f"\nDXF generation completed successfully!")
     print(f"Output file: {output_file}")
-    print("=" * 60)
 
 
 if __name__ == "__main__":
