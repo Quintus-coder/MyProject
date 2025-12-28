@@ -1,0 +1,152 @@
+{
+  "runway_geometry": {
+    "metadata": {
+      "created": "2025-12-28T10:06:09Z",
+      "version": "1.0",
+      "description": "Structured runway geometric parameters"
+    },
+    "runways": [
+      {
+        "id": "RWY01",
+        "designator": "01/19",
+        "orientation": {
+          "magnetic_heading_primary": 10,
+          "magnetic_heading_reciprocal": 190,
+          "true_heading_primary": 15,
+          "true_heading_reciprocal": 195,
+          "unit": "degrees"
+        },
+        "dimensions": {
+          "length": 3660,
+          "width": 60,
+          "unit": "meters"
+        },
+        "surface": {
+          "type": "asphalt",
+          "condition": "good",
+          "friction_coefficient": 0.85
+        },
+        "elevation": {
+          "primary_threshold": 340,
+          "secondary_threshold": 345,
+          "highest_point": 348,
+          "unit": "meters"
+        },
+        "clearways": {
+          "primary_side": {
+            "length": 300,
+            "width": 60,
+            "unit": "meters"
+          },
+          "secondary_side": {
+            "length": 300,
+            "width": 60,
+            "unit": "meters"
+          }
+        },
+        "displaced_thresholds": {
+          "primary": 0,
+          "secondary": 0,
+          "unit": "meters"
+        },
+        "coordinates": {
+          "primary_threshold": {
+            "latitude": 40.6413,
+            "longitude": -73.7781
+          },
+          "secondary_threshold": {
+            "latitude": 40.6533,
+            "longitude": -73.7604
+          }
+        },
+        "markings": {
+          "centerline": true,
+          "threshold_markings": true,
+          "touchdown_zone": true,
+          "aiming_point": true
+        },
+        "lighting": {
+          "runway_edge_lights": true,
+          "runway_end_lights": true,
+          "approach_lights": true,
+          "visual_glideslope": true,
+          "intensity_level": "high"
+        }
+      },
+      {
+        "id": "RWY02",
+        "designator": "04/22",
+        "orientation": {
+          "magnetic_heading_primary": 40,
+          "magnetic_heading_reciprocal": 220,
+          "true_heading_primary": 45,
+          "true_heading_reciprocal": 225,
+          "unit": "degrees"
+        },
+        "dimensions": {
+          "length": 2743,
+          "width": 46,
+          "unit": "meters"
+        },
+        "surface": {
+          "type": "concrete",
+          "condition": "excellent",
+          "friction_coefficient": 0.90
+        },
+        "elevation": {
+          "primary_threshold": 335,
+          "secondary_threshold": 340,
+          "highest_point": 342,
+          "unit": "meters"
+        },
+        "clearways": {
+          "primary_side": {
+            "length": 250,
+            "width": 46,
+            "unit": "meters"
+          },
+          "secondary_side": {
+            "length": 250,
+            "width": 46,
+            "unit": "meters"
+          }
+        },
+        "displaced_thresholds": {
+          "primary": 0,
+          "secondary": 0,
+          "unit": "meters"
+        },
+        "coordinates": {
+          "primary_threshold": {
+            "latitude": 40.6380,
+            "longitude": -73.7820
+          },
+          "secondary_threshold": {
+            "latitude": 40.6430,
+            "longitude": -73.7650
+          }
+        },
+        "markings": {
+          "centerline": true,
+          "threshold_markings": true,
+          "touchdown_zone": true,
+          "aiming_point": true
+        },
+        "lighting": {
+          "runway_edge_lights": true,
+          "runway_end_lights": true,
+          "approach_lights": false,
+          "visual_glideslope": true,
+          "intensity_level": "medium"
+        }
+      }
+    ],
+    "common_parameters": {
+      "airport_elevation": 340,
+      "unit_system": "metric",
+      "magnetic_variation": 12.5,
+      "magnetic_variation_unit": "degrees west",
+      "last_surveyed": "2025-11-15"
+    }
+  }
+}
