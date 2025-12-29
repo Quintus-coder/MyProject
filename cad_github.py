@@ -337,6 +337,10 @@ class AirportRunwayDXFGenerator:
             # 平行滑行道A（北侧）- 使用计算出的偏移
             taxiway_a = taxiways['parallel_taxiway_north']
             tw_width = taxiway_a['width']
+            
+            # 计算滑行道A的中心线位置（用于快速出口连接）
+            taxiway_a_center_x = w + offset_north + tw_width / 2
+            
             pts_a = [(w + offset_north, 0), (w + offset_north + tw_width, 0), 
                      (w + offset_north + tw_width, l), (w + offset_north, l)]
             pline_a = self.msp.add_lwpolyline(pts_a, dxfattribs={'layer': 'TAXIWAYS'})
@@ -350,7 +354,7 @@ class AirportRunwayDXFGenerator:
             pline_b = self.msp.add_lwpolyline(pts_b, dxfattribs={'layer': 'TAXIWAYS'})
             pline_b.close()
             
-            # 快速出口滑行道（C, D, E）- 使用JSON中的lengthToApron数据
+            # 快速出口滑行道（C, D, E）- 连接到平行滑行道A
             intermediate = taxiways['intermediate_taxiways']
             exit_count = 0
             
@@ -367,15 +371,30 @@ class AirportRunwayDXFGenerator:
                     angle = taxiway['angle']
                     width = taxiway['width']
                     
-                    # 从JSON读取每个滑行道的实际长度到停机坪
-                    length_exit = taxiway['lengthToApron']  # C=400, D=450, E=500
-                    
-                    # 绘制快速出口滑行道（简化为直线，实际应该是曲线）
-                    # 从跑道右侧边缘开始，45度角向外
+                    # 快速出口起点：跑道右侧边缘
                     start_x = w
                     start_y = distance
                     
-                    # 计算45度角延伸的终点
+                    # ✅ 新增：计算到滑行道A中心线的实际距离
+                    distance_to_taxiway_center = taxiway_a_center_x - start_x
+                    
+                    # ✅ 新增：计算快速出口延伸到滑行道A的实际长度
+                    # 45度角，实际长度 = 水平距离 / cos(45°)
+                    length_to_taxiway = distance_to_taxiway_center / math.cos(math.radians(angle))
+                    
+                    # ✅ 新增：使用JSON中的lengthToApron来决定是否继续延伸
+                    # 从JSON读取每个滑行道的实际长度到停机坪
+                    length_exit_original = taxiway['lengthToApron']  # C=400, D=450, E=500
+                    
+                    # 如果JSON中的长度大于到滑行道的距离，则继续延伸
+                    if length_exit_original > length_to_taxiway:
+                        # 延伸到JSON指定的长度（穿过滑行道A到停机坪）
+                        length_exit = length_exit_original
+                    else:
+                        # 只延伸到滑行道A
+                        length_exit = length_to_taxiway
+                    
+                    # 计算终点
                     end_x = start_x + length_exit * math.cos(math.radians(angle))
                     end_y = start_y + length_exit * math.sin(math.radians(angle))
                     
@@ -392,6 +411,10 @@ class AirportRunwayDXFGenerator:
                     ]
                     pline_exit = self.msp.add_lwpolyline(pts_exit, dxfattribs={'layer': 'RAPID_EXIT'})
                     pline_exit.close()
+                    
+                    # ✅ 新增：添加调试信息
+                    print(f"    - Exit {designator}: {distance}m, length={length_exit:.1f}m, reaches x={end_x:.1f}m")
+                    
                     exit_count += 1
             
             print(f"  ✓ Taxiways A(offset:{offset_north:.1f}m), B(offset:{offset_south:.1f}m) + {exit_count} rapid exits")
