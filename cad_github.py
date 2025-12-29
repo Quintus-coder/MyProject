@@ -104,8 +104,9 @@ class AirportRunwayDXFGenerator:
         
         # --- 几何辅助参数 ---
         self.TAXIWAY_OFFSET_FALLBACK = 100  # 滑行道距跑道边缘的备用偏移（米）
-                                             # 用途：当无法从JSON坐标计算时使用的估算值
-                                             # 原因：简化计算，实际应从坐标精确计算
+                                             # 用途：当GPS坐标缺失或计算失败时使用
+                                             # 原因：正常情况下从坐标精确计算，此值作为安全fallback
+                                             # 注：基于GPS坐标反推，北京首都机场实际约100米
         
         self.AIMING_POINT_WIDTH = 10  # 瞄准点矩形宽度（米）
                                        # 用途：控制瞄准点矩形的实际绘制宽度
@@ -267,6 +268,53 @@ class AirportRunwayDXFGenerator:
             print(f"  ✗ Unexpected error in _draw_runway: {e}")
             return
     
+    def _calculate_taxiway_offset_from_coordinates(self):
+        """
+        从GPS坐标精确计算滑行道与跑道的间距
+        
+        Returns:
+            tuple: (offset_north, offset_south) 北侧和南侧滑行道的偏移距离（米）
+                   如果计算失败，返回 (None, None)
+        """
+        try:
+            # 读取跑道中心线坐标（使用18R端作为参考）
+            runway_coords = self.geometry_data['runwayGeometry']['coordinates']['threshold_18R']
+            runway_lat = runway_coords['latitude']
+            
+            # 读取滑行道A（北侧）坐标
+            taxiway_north_coords = self.geometry_data['taxiways']['parallel_taxiway_north']['coordinates']['start']
+            taxiway_north_lat = taxiway_north_coords['latitude']
+            
+            # 读取滑行道B（南侧）坐标
+            taxiway_south_coords = self.geometry_data['taxiways']['parallel_taxiway_south']['coordinates']['start']
+            taxiway_south_lat = taxiway_south_coords['latitude']
+            
+            # 计算纬度差（度）
+            lat_diff_north = abs(taxiway_north_lat - runway_lat)
+            lat_diff_south = abs(runway_lat - taxiway_south_lat)
+            
+            # 转换为米
+            # 简化计算：1度纬度 ≈ 111,000米（在北京附近纬度40°时较准确）
+            # 更精确的计算需要考虑地球椭球体，但对于机场尺度，这个精度足够
+            METERS_PER_DEGREE_LAT = 111000
+            
+            offset_north = lat_diff_north * METERS_PER_DEGREE_LAT
+            offset_south = lat_diff_south * METERS_PER_DEGREE_LAT
+            
+            print(f"  ℹ Calculated taxiway offsets from GPS coordinates:")
+            print(f"     North (A): {offset_north:.1f}m")
+            print(f"     South (B): {offset_south:.1f}m")
+            
+            return (offset_north, offset_south)
+            
+        except KeyError as e:
+            print(f"  ⚠ Warning: Cannot calculate taxiway offset from coordinates - {e}")
+            print(f"     Using fallback value: {self.TAXIWAY_OFFSET_FALLBACK}m")
+            return (None, None)
+        except Exception as e:
+            print(f"  ⚠ Warning: Unexpected error calculating taxiway offset - {e}")
+            return (None, None)
+    
     def _draw_taxiways(self):
         """Draw taxiways - 绘制滑行道系统"""
         try:
@@ -278,21 +326,27 @@ class AirportRunwayDXFGenerator:
             # 从JSON获取滑行道数据
             taxiways = self.geometry_data['taxiways']
             
-            # 平行滑行道A（北侧）- 使用JSON中的准确宽度
+            # 从GPS坐标计算间距
+            offset_north, offset_south = self._calculate_taxiway_offset_from_coordinates()
+            
+            # 如果计算失败，使用备用值
+            if offset_north is None:
+                offset_north = self.TAXIWAY_OFFSET_FALLBACK
+                offset_south = self.TAXIWAY_OFFSET_FALLBACK
+            
+            # 平行滑行道A（北侧）- 使用计算出的偏移
             taxiway_a = taxiways['parallel_taxiway_north']
             tw_width = taxiway_a['width']
-            offset_a = self.TAXIWAY_OFFSET_FALLBACK  # 使用备用偏移值
-            pts_a = [(w + offset_a, 0), (w + offset_a + tw_width, 0), 
-                     (w + offset_a + tw_width, l), (w + offset_a, l)]
+            pts_a = [(w + offset_north, 0), (w + offset_north + tw_width, 0), 
+                     (w + offset_north + tw_width, l), (w + offset_north, l)]
             pline_a = self.msp.add_lwpolyline(pts_a, dxfattribs={'layer': 'TAXIWAYS'})
             pline_a.close()
             
-            # 平行滑行道B（南侧）- 使用JSON中的准确宽度
+            # 平行滑行道B（南侧）- 使用计算出的偏移
             taxiway_b = taxiways['parallel_taxiway_south']
             tw_width = taxiway_b['width']
-            offset_b = self.TAXIWAY_OFFSET_FALLBACK  # 使用备用偏移值
-            pts_b = [(-offset_b - tw_width, 0), (-offset_b, 0), 
-                     (-offset_b, l), (-offset_b - tw_width, l)]
+            pts_b = [(-offset_south - tw_width, 0), (-offset_south, 0), 
+                     (-offset_south, l), (-offset_south - tw_width, l)]
             pline_b = self.msp.add_lwpolyline(pts_b, dxfattribs={'layer': 'TAXIWAYS'})
             pline_b.close()
             
@@ -340,7 +394,7 @@ class AirportRunwayDXFGenerator:
                     pline_exit.close()
                     exit_count += 1
             
-            print(f"  ✓ Taxiways A, B + {exit_count} rapid exits (C, D, E)")
+            print(f"  ✓ Taxiways A(offset:{offset_north:.1f}m), B(offset:{offset_south:.1f}m) + {exit_count} rapid exits")
             
         except KeyError as e:
             print(f"  ✗ Error drawing taxiways: Missing required data - {e}")
