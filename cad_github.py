@@ -379,7 +379,7 @@ class AirportRunwayDXFGenerator:
                     distance_to_taxiway_center = taxiway_a_center_x - start_x
                     
                     # ✅ 新增：计算快速出口延伸到滑行道A的实际长度
-                    # 45度角，实际长度 = 水平距离 / cos(45°)
+                    # 实际长度 = 水平距离 / cos(angle)，适用于任意角度的快速出口
                     length_to_taxiway = distance_to_taxiway_center / math.cos(math.radians(angle))
                     
                     # ✅ 新增：使用JSON中的lengthToApron来决定是否继续延伸
@@ -412,7 +412,7 @@ class AirportRunwayDXFGenerator:
                     pline_exit = self.msp.add_lwpolyline(pts_exit, dxfattribs={'layer': 'RAPID_EXIT'})
                     pline_exit.close()
                     
-                    # ✅ 新增：添加调试信息
+                    # ✅ 新增：输出快速出口信息（用于验证连接正确性）
                     print(f"    - Exit {designator}: {distance}m, length={length_exit:.1f}m, reaches x={end_x:.1f}m")
                     
                     exit_count += 1
