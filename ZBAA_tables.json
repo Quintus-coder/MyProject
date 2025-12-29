@@ -1,0 +1,3689 @@
+[
+  {
+    "page": 1,
+    "table_index": 0,
+    "data": [
+      [
+        "1",
+        "机场基准点坐标及其在机场的位置\nARP coordinates and site at AD",
+        "N40°04.4′ E116°35.9′\nCenter of RWY 18L/36R"
+      ],
+      [
+        "2",
+        "机场基准点与城市的位置关系\nDirection and distance from city",
+        "044° GEO, 25.4km from Tiananmen Square"
+      ],
+      [
+        "3",
+        "机场标高、基准温度、低温均值\nELEV/Reference temperature/Mean low\ntemperature",
+        "35.3 m/31.8℃(JUL)/-9.6℃(JAN)"
+      ],
+      [
+        "4",
+        "机场标高位置的大地水准面波幅\nGeoid undulation at AD ELEV PSN",
+        ""
+      ],
+      [
+        "5",
+        "磁差（测量年份）及年变率\nVAR(Year)/Annual change",
+        "7°30′W(2022)/-6′22″"
+      ],
+      [
+        "6",
+        "机场管理部门、地址、电话、传真、AFS 地\n址、电子邮箱、网址\nAD administration/Address/Telephone/Telefax/\nAFS/ E-mail/Website",
+        "Beijing Capital International Airport CO. LTD.\nBeijing Capital International Airport, Siwei Road, Beijing, China Post\ncode:100621\nTEL:86-10-64535801\nFAX:86-10-64531114\nAFS:ZBAAYDYX"
+      ],
+      [
+        "7",
+        "允许飞行种类\nTypes of traffic permitted(IFR/VFR)",
+        "IFR-VFR"
+      ],
+      [
+        "8",
+        "机场性质/飞行区指标\nMilitary or civil airport/Reference code",
+        "CIVIL/RWY01/19, RWY18L/36R: 4F; RWY18R/36L: 4E"
+      ],
+      [
+        "9",
+        "备注\nRemarks",
+        "Nil"
+      ]
+    ]
+  },
+  {
+    "page": 1,
+    "table_index": 1,
+    "data": [
+      [
+        "1",
+        "机场开放时间\nAD Operational hours",
+        "H24"
+      ],
+      [
+        "2",
+        "海关和移民\nCustoms and immigration",
+        "H24"
+      ],
+      [
+        "3",
+        "卫生健康部门\nHealth and sanitation",
+        "H24"
+      ],
+      [
+        "4",
+        "航空情报服务讲解室\nAIS Briefing Office",
+        "H24"
+      ]
+    ]
+  },
+  {
+    "page": 2,
+    "table_index": 0,
+    "data": [
+      [
+        "5",
+        "空中交通服务报告室\nATS Reporting Office",
+        "H24"
+      ],
+      [
+        "6",
+        "气象服务讲解室\nMET Briefing Office",
+        "H24"
+      ],
+      [
+        "7",
+        "空中交通服务\nAir Traffic Service",
+        "H24"
+      ],
+      [
+        "8",
+        "加油服务\nFuelling",
+        "H24"
+      ],
+      [
+        "9",
+        "地勤服务\nHandling",
+        "H24"
+      ],
+      [
+        "10",
+        "安保服务\nSecurity",
+        "H24"
+      ],
+      [
+        "11",
+        "除冰服务\nDe-icing",
+        "H24"
+      ],
+      [
+        "12",
+        "备注\nRemarks",
+        "Nil"
+      ]
+    ]
+  },
+  {
+    "page": 2,
+    "table_index": 1,
+    "data": [
+      [
+        "1",
+        "货物装卸设施\nCargo-handling facilities",
+        "Container lift truck (5t), baggage transporter, unit load device (ULD) tractor,\ncontainer tractor, fork-lift (2.5-3.5 tonnes), tow tractor, etc."
+      ],
+      [
+        "2",
+        "燃油牌号\nFuel types",
+        "Jet Fuel No.3,Jet A-1"
+      ],
+      [
+        "3",
+        "滑油牌号\nOil types",
+        "Nil"
+      ],
+      [
+        "4",
+        "加油设施/能力\nFuelling facilities & Capacity",
+        "Refueling truck ;\nAirport can provide gravity refuelling\n(400L/min) and pressure refuelling(3800L/min) service;\nStorage capacity: 220000m³;\nA pipe network of apron aircraft-refuelling equipment for all aircraft."
+      ],
+      [
+        "5",
+        "除冰设施\nDe-icing facilities",
+        "72 De-icers.\nDeicing fluid (FCY-1 BIO+), anti-icing fluid (FCY-2)."
+      ],
+      [
+        "6",
+        "过站航空器机库\nHangar space for visiting aircraft",
+        "Yes, available for aircraft maintenance."
+      ],
+      [
+        "7",
+        "过站航空器的维修设施\nRepair facilities for visiting aircraft",
+        "Line maintenance, engine changes available for various types of aircraft on\nrequest. Spare parts and other maintenance work by prior arrangement."
+      ],
+      [
+        "8",
+        "备注\nRemarks",
+        "Nil"
+      ]
+    ]
+  },
+  {
+    "page": 3,
+    "table_index": 0,
+    "data": [
+      [
+        "1",
+        "宾馆\nHotels",
+        "Adjacent to AD"
+      ],
+      [
+        "2",
+        "餐饮\nRestaurants",
+        "At AD"
+      ],
+      [
+        "3",
+        "交通工具\nTransportation",
+        "Passenger‟s coaches, taxis, airport express"
+      ],
+      [
+        "4",
+        "医疗设施\nMedical facilities",
+        "First-aid equipment at AD, comprehensive hospital adjacent to AD\n(4 ambulances on duty)"
+      ],
+      [
+        "5",
+        "银行和邮局\nBank and Post Office",
+        "At AD"
+      ],
+      [
+        "6",
+        "旅行社\nTourist Office",
+        "At AD"
+      ],
+      [
+        "7",
+        "备注\nRemarks",
+        "Nil"
+      ]
+    ]
+  },
+  {
+    "page": 3,
+    "table_index": 1,
+    "data": [
+      [
+        "1",
+        "机场消防等级\nAD category for fire fighting",
+        "CAT 10"
+      ],
+      [
+        "2",
+        "援救设备\nRescue equipment",
+        "Fire fighting facilities: rapid intervention vehicle, combined foam and powder\nextinguishing vehicle , heavy-duty water vehicle, main foam vehicle, etc;\nRescue equipment: uplift air cushion, air pump, platform tractor, crane,\nmobile surface operation devices, fork lift, etc."
+      ],
+      [
+        "3",
+        "搬移受损航空器的能力\nCapability for removal of disabled aircraft",
+        "MTWA up to A380 and below.\nRemoval equipment: uplift air cushion, moving trailer, mobile surface, etc."
+      ],
+      [
+        "4",
+        "备注\nRemarks",
+        "Nil"
+      ]
+    ]
+  },
+  {
+    "page": 3,
+    "table_index": 2,
+    "data": [
+      [
+        "1",
+        "可用季节及扫雪设备类型\nSeasonal availability/Types of clearing\nequipment",
+        "All seasons\nSnow blowers, RWY snow removal vehicles, pre-snow rolling brush vehicles,\nramp snow vehicles, throwing snow mobile.s, de-icing fluid spreading trucks,\npower supply vehicles, trucks, forklift trucks"
+      ],
+      [
+        "2",
+        "扫雪顺序\nClearance priorities",
+        "Three runways, taxiways access to runways, operating aprons"
+      ],
+      [
+        "3",
+        "备注\nRemarks",
+        "Nil"
+      ]
+    ]
+  },
+  {
+    "page": 4,
+    "table_index": 0,
+    "data": [
+      [
+        "1",
+        "停机坪道面和强度\nApron surface and\nstrength",
+        "道面\nSurface",
+        "CONC"
+      ],
+      [
+        null,
+        null,
+        "强度\nStrength",
+        "PCR 1300/R/B/W/T : Apron W1\nPCR 1250/R/B/W/T : Stands Nr. 602, 603, 608-612\nPCR 1240/R/B/W/T : Stands Nr. 701-704, 706-710\nPCR 1200/R/B/W/T : Stands Nr. W308-W311\nPCR 1190/R/B/W/T : Stands Nr. 951-958\nPCR 1180/R/B/W/T : Stands Nr. 711-714, 931-940\nPCR 1160/R/B/W/T : Stands Nr. 721-735\nPCR 1150/R/B/W/T : Stands Nr. 816, 817\nPCR 1100/R/B/W/T : Stands Nr. 801-815\nPCR 1090/R/B/W/T : Stands Nr. 205-221, 223-240\nPCR 1030/R/B/W/T : Stands Nr. N121-N128\nPCR 1020/R/B/W/T : Stands Nr. 301-307, 331-337, 510-529, 558,\n559, W301-W307\nPCR 1010/R/B/W/T : Apron Nr.1, Apron W2\nPCR 990/R/B/W/T : Apron M\nPCR 950/R/B/W/T : Stands Nr. 818-821\nPCR 940/R/B/W/T : Stands Nr. 251-254\nPCR 900/R/B/W/T : Stands Nr. 622-640\nPCR 890/R/B/W/T : Stands Nr. 261-264, 267, 268\nPCR 840/R/A/W/T : Apron N1, Apron N2, Apron Nr.4, Stands Nr. 308-330,\nStands Nr. 351-361, Stands Nr. 501-509, Stands Nr. 530-536, Stands Nr.\n551-556, Stands Nr. 560-565\nPCR 570/R/B/W/T : Apron W5, Apron W6"
+      ],
+      [
+        "2",
+        "滑行道宽度、道面和强度\nTaxiway width, surface\nand strength",
+        "宽度\nWidth",
+        "70m : C6, C7\n68m : S3\n52m : D7, D8, G5-G7, H0-H2, K4-K7, M0, M1\n50m : K3\n48m : H4-H7, J1, J4\n44m : E1, E2, E7, G0-G2, K0-K2, Q0, Q1, Q8, Q9, U3, U4, Z12\n34m : D3-D5(BTN Z6 & M), D6, F2, F3, M2-M6, P1, P8, W2, W7, Z6\n30m : D3-D5(BTN Z4 & M), P3\n29m : E3-E6, E8, Q2-Q7, W9\n28.5m : C4, C5, D2(S of Z20), P2, P4, P5\n27m : P6, P7\n25m : E0, F(N of S4), G, G3, G4, H, J, J2, J3, J5, J6, K, M7, S6, S7, T1-T6,\nU2, U5-U9, Y8, Y9, Z3, Z9\n24m : F0, P9, Z15, Z23, Z24\n23m : A0, A1, A8, A9, C, C1-C3, C8, D1, D2(N of Z20), F(S of S4), F1, F4,\nF7, M, P0, S4, S5, W0, W3-W6, Y1-Y7, Z0-Z2, Z4, Z7, Z8, Z10"
+      ]
+    ]
+  },
+  {
+    "page": 5,
+    "table_index": 0,
+    "data": [
+      [
+        "",
+        "",
+        "",
+        "18m : Z20-Z22\n10.5m : Z16"
+      ],
+      [
+        null,
+        null,
+        "道面\nSurface",
+        "CONC_ASPH"
+      ],
+      [
+        null,
+        null,
+        "强度\nStrength",
+        "PCR 1410/R/B/W/T : D2(S of Z10)\nPCR 1360/R/B/W/T : Z10\nPCR 1340/R/B/W/T : P8, P9\nPCR 1300/R/B/W/T : F(BTN Z2 & S4)\nPCR 1290/R/B/W/T : Z0\nPCR 1280/R/B/W/T : C6-C8\nPCR 1270/F/B/X/T : P2, P6, P7\nPCR 1260/R/B/W/T : P1\nPCR 1250/F/B/X/T : A0, A1, A8, A9, E0-E8, W2, W7\nPCR 1250/R/B/W/T : Z3(N of Z4)\nPCR 1240/R/A/W/T : W3-W6\nPCR 1240/R/B/W/T : D2(N of Z10), S3\nPCR 1230/R/B/W/T : D3-D6, P0\nPCR 1220/R/B/W/T : M2-M6\nPCR 1200/R/B/W/T : F(N of S4)\nPCR 1170/R/B/W/T : M\nPCR 1150/R/B/W/T : M7, Y8, Y9\nPCR 1140/R/B/W/T : Z8\nPCR 1130/R/B/W/T : Z4, Z6\nPCR 1110/R/B/W/T : Y3, Y6\nPCR 1060/R/B/W/T : D1, Z7, Z9, Z18\nPCR 1050/R/B/W/T : C1, C2, J2, J3, Z3(S of Z2)\nPCR 1040/R/B/W/T : C\nPCR 1030/R/B/W/T : D7, D8, J(N of U2), S4, S5\nPCR 1020/R/A/W/T : M0, M1\nPCR 1020/R/B/W/T : Q2-Q7, Z3(BTN Z2 & Z4)\nPCR 1010/R/B/W/T : F(S of Z2), Z2\nPCR 960/R/B/W/T : Z12\nPCR 940/R/A/W/T : Q0, Q1, Q8, Q9, U2\nPCR 920/R/B/W/T : C3-C5\nPCR 910/R/A/W/T : J(S of U2), J1, J4, K, K0-K7, S6, S7\nPCR 900/R/A/W/T : U3-U9\nPCR 900/R/B/W/T : P3\nPCR 880/R/A/W/T : F0-F4, F7, J5, J6, T1-T6\nPCR 870/R/A/W/T : W0, W9, Y1, Y2, Y4, Y5, Y7\nPCR 850/R/A/W/T : G, G0-G7, H, H0-H2, H4-H7\nPCR 820/F/B/X/T : P4, P5\nPCR 780/R/B/W/T : Z15, Z16\nPCR 710/R/A/W/T : Z1"
+      ]
+    ]
+  },
+  {
+    "page": 6,
+    "table_index": 0,
+    "data": [
+      [
+        "",
+        "",
+        "",
+        "PCR 590/R/B/W/T : Z20-Z24"
+      ],
+      [
+        "3",
+        "高度表校正点的位置及\n其标高\nACL location and\nelevation",
+        "Nil",
+        null
+      ],
+      [
+        "4",
+        "VOR 校正点\nVOR checkpoints",
+        "Nil",
+        null
+      ],
+      [
+        "5",
+        "INS 校正点\nINS checkpoints",
+        "Nil",
+        null
+      ],
+      [
+        "6",
+        "备注\nRemarks",
+        "Nil",
+        null
+      ]
+    ]
+  },
+  {
+    "page": 6,
+    "table_index": 1,
+    "data": [
+      [
+        "1",
+        "航空器机位号码标记牌、滑行道引导\n线、航空器目视停靠引导系统的使用\nUse of aircraft stand ID signs, TWY\nguide lines and visual docking / parking\nguidance system of aircraft stands",
+        "Taxiing guidance signs at all intersections of TWY and RWY.\nTaxiing guidance signs at all holding positions.\nAircraft stand identification sign boards at all stands.\nGuide lines at all TWYs.\nGuide lines at all aprons.\nMarshalling assistance for aircraft stands Nr. 103, 104, 107, 108, 110, 111,\n114-116, 205-221, 223-240, 251-254, 261-264, 267, 268, 351-361, 401, 403, 411,\n413, 602, 603, 608-612, 622-640, 701-704, 706-714, 721-735, 801-821, 931-940,\n951-958, A106, A113, M01-M11, N101-N104, N104L, N104R, N105, N105L,\nN105R, N106, N106L, N106R, N107-N110, N121-N128, N201-N214, W101,\nW103-W113, W201-W213, W301-W311, Visual docking guidance system at\naircraft stands Nr. 301-337, 405-410, 451-466, 501-536, 551-556, 558-565",
+        null
+      ],
+      [
+        "2",
+        "跑道和滑行道标志及灯光\nRWY and TWY marking and LGT",
+        "跑道标志\nRWY markings",
+        "THR, RWY designation, edge line, RWY center line, TDZ,\naiming point"
+      ],
+      [
+        null,
+        null,
+        "跑道灯光\nRWY lights",
+        "RTHL, WBAR(01, 18R, 19, 36L), REDL, RCLL, RTZL(01,\n36L, 36R), RENL"
+      ],
+      [
+        null,
+        null,
+        "滑行道标志\nTWY markings",
+        "Edge line, center line, RWY holding position(A0, A1, A8, A9,\nE0-E2, E7, E8, P0, P1, P8, P9, Q0, Q1, Q8, Q9, U2, W0-W2,\nW7-W9), intermediate holding position"
+      ],
+      [
+        null,
+        null,
+        "滑行道灯光\nTWY lights",
+        "Edge line retroreflective markers, edge line lights, center line\nlights, No-entry bar(C2-C5, E3-E6, P2-P7, Q2-Q7, W3-W6) ,\nRETILs"
+      ],
+      [
+        "3",
+        "停止排灯和跑道警戒灯\nStop bars and runway guard lights",
+        "Runway guard lights",
+        null
+      ],
+      [
+        "4",
+        "其它跑道保护措施\nOther runway protection measures",
+        "Nil",
+        null
+      ]
+    ]
+  },
+  {
+    "page": 7,
+    "table_index": 0,
+    "data": [
+      [
+        "5",
+        "备注\nRemarks",
+        "BLUE apron edge line lights\nApron guidance lights"
+      ]
+    ]
+  },
+  {
+    "page": 7,
+    "table_index": 1,
+    "data": [
+      [
+        "半径15千米内主要障碍物 (相对机场ARP)\nObstacles within a circle with a radius of 15km (centered on the ARP)",
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        "障碍物名称\n或编号\nObstacle ID/\nDesignation",
+        "障碍物类\n型\nObstacle\ntype",
+        "障碍物位置\n磁方位(°)/距离(m)\nObstacle position\nMAG\nBRG(degree)/DIST(m)",
+        "标高或\n(高)\nElevation\n/(Height)\n(m)",
+        "障碍物标志，灯光\n类型及颜色\nObstacle\nmarking\n/Lighting Type\n& Colour",
+        "影响的飞行程序及\n起飞航径区/备注\nFlight procedure/take-off\npath area affected\n& Remarks"
+      ],
+      [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      [
+        "Antenna\n001",
+        "Antenna",
+        "000/2803",
+        "45.3",
+        "",
+        "RWY36R Take-off path"
+      ],
+      [
+        "STACK\n002",
+        "STACK",
+        "009/6881",
+        "86.3",
+        "",
+        ""
+      ],
+      [
+        "TRANSMISSION\n_LINE\n003",
+        "TRANSM\nISSION_L\nINE",
+        "011/8025",
+        "91.4",
+        "",
+        "RWY19 GP INOP"
+      ],
+      [
+        "BLDG\n004",
+        "BLDG",
+        "014/4629",
+        "77.5",
+        "LGT",
+        ""
+      ],
+      [
+        "BLDG\n005",
+        "BLDG",
+        "016/4696",
+        "80.4",
+        "LGT",
+        "RWY01 Take-off path"
+      ],
+      [
+        "BLDG\n006",
+        "BLDG",
+        "017/4563",
+        "77.4",
+        "LGT",
+        "RWY01 Take-off path"
+      ],
+      [
+        "BLDG\n007",
+        "BLDG",
+        "020/4047",
+        "53.7",
+        "",
+        "RWY01 Take-off path"
+      ],
+      [
+        "Antenna\n008",
+        "Antenna",
+        "021/2895",
+        "87",
+        "",
+        "RWY01 GP INOP"
+      ],
+      [
+        "Pole\n009",
+        "Pole",
+        "026/2099",
+        "47.6",
+        "LGT",
+        "RWY01 Departure"
+      ],
+      [
+        "BLDG\n010",
+        "BLDG",
+        "029/6572",
+        "77.8",
+        "LGT",
+        ""
+      ],
+      [
+        "BLDG\n011",
+        "BLDG",
+        "030/6500",
+        "72.2",
+        "LGT",
+        ""
+      ],
+      [
+        "Pole\n012",
+        "Pole",
+        "034/2967",
+        "32.5",
+        "",
+        "RWY01 Take-off path"
+      ]
+    ]
+  },
+  {
+    "page": 8,
+    "table_index": 0,
+    "data": [
+      [
+        "半径15千米内主要障碍物 (相对机场ARP)\nObstacles within a circle with a radius of 15km (centered on the ARP)",
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        "障碍物名称\n或编号\nObstacle ID/\nDesignation",
+        "障碍物类\n型\nObstacle\ntype",
+        "障碍物位置\n磁方位(°)/距离(m)\nObstacle position\nMAG\nBRG(degree)/DIST(m)",
+        "标高或\n(高)\nElevation\n/(Height)\n(m)",
+        "障碍物标志，灯光\n类型及颜色\nObstacle\nmarking\n/Lighting Type\n& Colour",
+        "影响的飞行程序及\n起飞航径区/备注\nFlight procedure/take-off\npath area affected\n& Remarks"
+      ],
+      [
+        "Antenna\n013",
+        "Antenna",
+        "036/3605",
+        "85.5",
+        "",
+        ""
+      ],
+      [
+        "BLDG\n014",
+        "BLDG",
+        "048/6248",
+        "104.2",
+        "",
+        ""
+      ],
+      [
+        "Control TWR\n015",
+        "Control\nTWR",
+        "051/1166",
+        "110.6",
+        "",
+        ""
+      ],
+      [
+        "TV TWR\n016",
+        "TV TWR",
+        "052/7540",
+        "142.9",
+        "LGT",
+        "RWY36R/01 Departure"
+      ],
+      [
+        "STACK\n017",
+        "STACK",
+        "062/5500",
+        "99.2",
+        "",
+        ""
+      ],
+      [
+        "BLDG\n018",
+        "BLDG",
+        "063/5840",
+        "106.9",
+        "",
+        ""
+      ],
+      [
+        "BLDG\n019",
+        "BLDG",
+        "091/2363",
+        "74.0",
+        "",
+        ""
+      ],
+      [
+        "Antenna\n020",
+        "Antenna",
+        "091/2592",
+        "89.1",
+        "",
+        ""
+      ],
+      [
+        "BLDG\n021",
+        "BLDG",
+        "093/2365",
+        "74.1",
+        "",
+        ""
+      ],
+      [
+        "TOWER\n022",
+        "TOWER",
+        "121/5977",
+        "106.5",
+        "LGT",
+        ""
+      ],
+      [
+        "Antenna\n023",
+        "Antenna",
+        "143/2498",
+        "29.1",
+        "",
+        "RWY19 Take-off path"
+      ],
+      [
+        "STACK\n024",
+        "STACK",
+        "157/7279",
+        "83.8",
+        "",
+        ""
+      ],
+      [
+        "BLDG\n025",
+        "BLDG",
+        "159/2981",
+        "58.0",
+        "LGT",
+        "RWY19 Departure"
+      ],
+      [
+        "STACK\n026",
+        "STACK",
+        "161/4537",
+        "60.2",
+        "",
+        "RWY19 Take-off path"
+      ],
+      [
+        "BLDG\n027",
+        "BLDG",
+        "162/2229",
+        "75.8",
+        "",
+        ""
+      ],
+      [
+        "WATER_TOWER\n028",
+        "WATER_T\nOWER",
+        "166/4566",
+        "62.6",
+        "",
+        "RWY19 Take-off path"
+      ]
+    ]
+  },
+  {
+    "page": 9,
+    "table_index": 0,
+    "data": [
+      [
+        "半径15千米内主要障碍物 (相对机场ARP)\nObstacles within a circle with a radius of 15km (centered on the ARP)",
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        "障碍物名称\n或编号\nObstacle ID/\nDesignation",
+        "障碍物类\n型\nObstacle\ntype",
+        "障碍物位置\n磁方位(°)/距离(m)\nObstacle position\nMAG\nBRG(degree)/DIST(m)",
+        "标高或\n(高)\nElevation\n/(Height)\n(m)",
+        "障碍物标志，灯光\n类型及颜色\nObstacle\nmarking\n/Lighting Type\n& Colour",
+        "影响的飞行程序及\n起飞航径区/备注\nFlight procedure/take-off\npath area affected\n& Remarks"
+      ],
+      [
+        "STACK\n029",
+        "STACK",
+        "166/5090",
+        "72.5",
+        "",
+        ""
+      ],
+      [
+        "Antenna\n030",
+        "Antenna",
+        "171/6201",
+        "87.0",
+        "",
+        "RWY19 Take-off path"
+      ],
+      [
+        "Antenna\n031",
+        "Antenna",
+        "180/2888",
+        "36.4",
+        "",
+        ""
+      ],
+      [
+        "STACK\n032",
+        "STACK",
+        "185/3121",
+        "54.5",
+        "",
+        "RWY18L Departure;\nRWY36R Final approach"
+      ],
+      [
+        "TOWER\n033",
+        "TOWER",
+        "191/3037",
+        "62.5",
+        "",
+        ""
+      ],
+      [
+        "BLDG\n034",
+        "BLDG",
+        "195/2856",
+        "68",
+        "",
+        ""
+      ],
+      [
+        "Antenna\n035",
+        "Antenna",
+        "197/13076",
+        "89.5",
+        "",
+        ""
+      ],
+      [
+        "BLDG\n036",
+        "BLDG",
+        "214/1096",
+        "73.8",
+        "",
+        ""
+      ],
+      [
+        "Antenna\n037",
+        "Antenna",
+        "223/1836",
+        "69.8",
+        "",
+        ""
+      ],
+      [
+        "Antenna\n038",
+        "Antenna",
+        "224/7663",
+        "106.8",
+        "",
+        ""
+      ],
+      [
+        "STACK\n039",
+        "STACK",
+        "227/1231",
+        "75.8",
+        "",
+        ""
+      ],
+      [
+        "Antenna\n040",
+        "Antenna",
+        "232/1423",
+        "76.5",
+        "",
+        ""
+      ],
+      [
+        "BLDG\n041",
+        "BLDG",
+        "238/2261",
+        "61.4",
+        "LGT",
+        "RWY18R Take-off path"
+      ],
+      [
+        "BLDG\n042",
+        "BLDG",
+        "241/2462",
+        "47.4",
+        "",
+        ""
+      ],
+      [
+        "STACK\n043",
+        "STACK",
+        "242/2270",
+        "53.7",
+        "",
+        ""
+      ],
+      [
+        "STACK\n044",
+        "STACK",
+        "244/2644",
+        "54.6",
+        "",
+        ""
+      ]
+    ]
+  },
+  {
+    "page": 10,
+    "table_index": 0,
+    "data": [
+      [
+        "半径15千米内主要障碍物 (相对机场ARP)\nObstacles within a circle with a radius of 15km (centered on the ARP)",
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        "障碍物名称\n或编号\nObstacle ID/\nDesignation",
+        "障碍物类\n型\nObstacle\ntype",
+        "障碍物位置\n磁方位(°)/距离(m)\nObstacle position\nMAG\nBRG(degree)/DIST(m)",
+        "标高或\n(高)\nElevation\n/(Height)\n(m)",
+        "障碍物标志，灯光\n类型及颜色\nObstacle\nmarking\n/Lighting Type\n& Colour",
+        "影响的飞行程序及\n起飞航径区/备注\nFlight procedure/take-off\npath area affected\n& Remarks"
+      ],
+      [
+        "STACK\n045",
+        "STACK",
+        "244/2669",
+        "56.5",
+        "",
+        ""
+      ],
+      [
+        "STACK\n046",
+        "STACK",
+        "244/6083",
+        "77",
+        "",
+        ""
+      ],
+      [
+        "BLDG\n047",
+        "BLDG",
+        "245/2887",
+        "48.6",
+        "",
+        ""
+      ],
+      [
+        "STACK\n048",
+        "STACK",
+        "247/1942",
+        "49.1",
+        "",
+        ""
+      ],
+      [
+        "BLDG\n049",
+        "BLDG",
+        "248/1197",
+        "72.2",
+        "",
+        ""
+      ],
+      [
+        "TRANSMISSION\n_LINE\n050",
+        "TRANSM\nISSION_L\nINE",
+        "248/5185",
+        "72.4",
+        "",
+        ""
+      ],
+      [
+        "Antenna\n051",
+        "Antenna",
+        "250/2089",
+        "43.1",
+        "",
+        ""
+      ],
+      [
+        "STACK\n052",
+        "STACK",
+        "253/6839",
+        "65.5",
+        "",
+        ""
+      ],
+      [
+        "STACK\n053",
+        "STACK",
+        "260/827",
+        "79.1",
+        "",
+        ""
+      ],
+      [
+        "Antenna\n054",
+        "Antenna",
+        "264/1153",
+        "70.4",
+        "",
+        ""
+      ],
+      [
+        "WATER_TOWER\n055",
+        "WATER_T\nOWER",
+        "270/2770",
+        "52.7",
+        "",
+        ""
+      ],
+      [
+        "STACK\n056",
+        "STACK",
+        "276/5116",
+        "83",
+        "",
+        ""
+      ],
+      [
+        "STACK\n057",
+        "STACK",
+        "278/3133",
+        "77.8",
+        "",
+        ""
+      ],
+      [
+        "Control TWR\n058",
+        "Control\nTWR",
+        "317/1347",
+        "134.6",
+        "",
+        ""
+      ],
+      [
+        "STACK\n059",
+        "STACK",
+        "327/4986",
+        "59.3",
+        "",
+        ""
+      ]
+    ]
+  },
+  {
+    "page": 11,
+    "table_index": 0,
+    "data": [
+      [
+        "半径15千米内主要障碍物 (相对机场ARP)\nObstacles within a circle with a radius of 15km (centered on the ARP)",
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        "障碍物名称\n或编号\nObstacle ID/\nDesignation",
+        "障碍物类\n型\nObstacle\ntype",
+        "障碍物位置\n磁方位(°)/距离(m)\nObstacle position\nMAG\nBRG(degree)/DIST(m)",
+        "标高或\n(高)\nElevation\n/(Height)\n(m)",
+        "障碍物标志，灯光\n类型及颜色\nObstacle\nmarking\n/Lighting Type\n& Colour",
+        "影响的飞行程序及\n起飞航径区/备注\nFlight procedure/take-off\npath area affected\n& Remarks"
+      ],
+      [
+        "FENCE\n060",
+        "FENCE",
+        "334/4160",
+        "38.0",
+        "",
+        "RWY36L Take-off path"
+      ],
+      [
+        "Pole\n061",
+        "Pole",
+        "334/4923",
+        "43.6",
+        "",
+        ""
+      ],
+      [
+        "BLDG\n062",
+        "BLDG",
+        "334/6117",
+        "81.1",
+        "",
+        ""
+      ],
+      [
+        "Pole\n063",
+        "Pole",
+        "335/4967",
+        "43.9",
+        "",
+        ""
+      ],
+      [
+        "Pole\n064",
+        "Pole",
+        "335/5011",
+        "43.3",
+        "",
+        ""
+      ],
+      [
+        "STACK\n065",
+        "STACK",
+        "335/5437",
+        "58.1",
+        "",
+        ""
+      ],
+      [
+        "STACK\n066",
+        "STACK",
+        "337/5029",
+        "49.6",
+        "",
+        ""
+      ],
+      [
+        "TOWER\n067",
+        "TOWER",
+        "340/9456",
+        "114.8",
+        "",
+        "RWY36L Departure"
+      ],
+      [
+        "WATER_TOWER\n068",
+        "WATER_T\nOWER",
+        "355/7042",
+        "71.8",
+        "",
+        "RWY36L Departure"
+      ],
+      [
+        "半径15千米-50千米内主要障碍物 (相对机场ARP)\nObstacles between two circles with the radius of 15km and 50km (centered on the ARP)",
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        "障碍物名称\n或编号\nObstacle ID/\nDesignation",
+        "障碍物类\n型\nObstacle\ntype",
+        "障碍物位置\n磁方位(°)/距离(m)\nObstacle position\nMAG\nBRG(degree)/DIST(m)",
+        "标高或\n(高)\nElevation\n/(Height)\n(m)",
+        "障碍物标志、灯光\n类型及颜色\nObstacle\nmarking\n/Lighting Type\n& Colour",
+        "影响的飞行程序及\n起飞航径区/备注\nFlight procedure/take-off\npath area affected\n& Remarks"
+      ],
+      [
+        "MT\n069",
+        "MT",
+        "000/48000",
+        "1535",
+        "",
+        "Sectors;\nRWY18L Initial approach"
+      ],
+      [
+        "MT\n070",
+        "MT",
+        "002/42771",
+        "1039",
+        "",
+        "RWY19 Initial approach"
+      ],
+      [
+        "MT\n071",
+        "MT",
+        "009/35674",
+        "800",
+        "",
+        "RWY18R RNAV ILS/DME z\nIntermediate approach"
+      ]
+    ]
+  },
+  {
+    "page": 12,
+    "table_index": 0,
+    "data": [
+      [
+        "半径15千米-50千米内主要障碍物 (相对机场ARP)\nObstacles between two circles with the radius of 15km and 50km (centered on the ARP)",
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        "障碍物名称\n或编号\nObstacle ID/\nDesignation",
+        "障碍物类\n型\nObstacle\ntype",
+        "障碍物位置\n磁方位(°)/距离(m)\nObstacle position\nMAG\nBRG(degree)/DIST(m)",
+        "标高或\n(高)\nElevation\n/(Height)\n(m)",
+        "障碍物标志、灯光\n类型及颜色\nObstacle\nmarking\n/Lighting Type\n& Colour",
+        "影响的飞行程序及\n起飞航径区/备注\nFlight procedure/take-off\npath area affected\n& Remarks"
+      ],
+      [
+        "MT\n072",
+        "MT",
+        "010/35811",
+        "815",
+        "",
+        "RWY18L RNAV ILS/DME y,\nRWY19 RNAV ILS/DME y\nIntermediate approach"
+      ],
+      [
+        "TOWER\n073",
+        "TOWER",
+        "022/16307",
+        "134",
+        "",
+        ""
+      ],
+      [
+        "MT\n074",
+        "MT",
+        "069/63300",
+        "1230",
+        "",
+        "Sectors"
+      ],
+      [
+        "MT\n075",
+        "MT",
+        "094/57400",
+        "865",
+        "",
+        ""
+      ],
+      [
+        "BLDG\n076",
+        "BLDG",
+        "172/17935",
+        "214",
+        "",
+        "RWY36R RNAV ILS/DME y\nIntermediate approach"
+      ],
+      [
+        "BLDG\n077",
+        "BLDG",
+        "190/17852",
+        "106",
+        "",
+        ""
+      ],
+      [
+        "Antenna\n078",
+        "Antenna",
+        "192/20816",
+        "222",
+        "",
+        "RWY36L RNAV ILS/DME\nIntermediate approach"
+      ],
+      [
+        "STACK\n079",
+        "STACK",
+        "193/16315",
+        "92",
+        "",
+        ""
+      ],
+      [
+        "STACK\n080",
+        "STACK",
+        "203/21400",
+        "274",
+        "",
+        ""
+      ],
+      [
+        "Antenna\n081",
+        "Antenna",
+        "220/15769",
+        "185",
+        "",
+        ""
+      ],
+      [
+        "BLDG\n082",
+        "BLDG",
+        "223/20974",
+        "257",
+        "LGT",
+        ""
+      ],
+      [
+        "TOWER\n083",
+        "TOWER",
+        "243/30623",
+        "449",
+        "LGT",
+        ""
+      ],
+      [
+        "TOWER\n084",
+        "TOWER",
+        "248/22490",
+        "377",
+        "",
+        ""
+      ],
+      [
+        "MT\n085",
+        "MT",
+        "264/40042",
+        "797",
+        "",
+        "Sectors"
+      ],
+      [
+        "MT\n086",
+        "MT",
+        "279/47000",
+        "1291",
+        "",
+        "RWY18R Initial approach"
+      ]
+    ]
+  },
+  {
+    "page": 13,
+    "table_index": 0,
+    "data": [
+      [
+        "半径15千米-50千米内主要障碍物 (相对机场ARP)\nObstacles between two circles with the radius of 15km and 50km (centered on the ARP)",
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        "障碍物名称\n或编号\nObstacle ID/\nDesignation",
+        "障碍物类\n型\nObstacle\ntype",
+        "障碍物位置\n磁方位(°)/距离(m)\nObstacle position\nMAG\nBRG(degree)/DIST(m)",
+        "标高或\n(高)\nElevation\n/(Height)\n(m)",
+        "障碍物标志、灯光\n类型及颜色\nObstacle\nmarking\n/Lighting Type\n& Colour",
+        "影响的飞行程序及\n起飞航径区/备注\nFlight procedure/take-off\npath area affected\n& Remarks"
+      ],
+      [
+        "MT\n087",
+        "MT",
+        "310/49000",
+        "1067",
+        "",
+        ""
+      ],
+      [
+        "MT\n088",
+        "MT",
+        "343/30744",
+        "859",
+        "",
+        "RWY18L/R Initial approach"
+      ],
+      [
+        "MT\n089",
+        "MT",
+        "349/27603",
+        "659",
+        "",
+        "RWY19 RNAV ILS/DME z,\nRWY18L RNAV ILS/DME,\nRWY18R RNAV ILS/DME z\nIntermediate approach"
+      ],
+      [
+        "MT\n090",
+        "MT",
+        "351/25965",
+        "400",
+        "",
+        "RWY19 RNAV ILS/DME z,\nRWY18R RNAV ILS/DME y\nIntermediate approach"
+      ],
+      [
+        "MT\n091",
+        "MT",
+        "352/25546",
+        "300",
+        "",
+        ""
+      ],
+      [
+        "Remarks:",
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    ]
+  },
+  {
+    "page": 13,
+    "table_index": 1,
+    "data": [
+      [
+        "提供的气象情报\nMeteorological information provided",
+        null,
+        null
+      ],
+      [
+        "1",
+        "相关气象台的名称\nAssociated MET Office",
+        "Beijing Capital Airport MET Center of CAAC"
+      ],
+      [
+        "2",
+        "气象服务时间、服务时间以外的责任气象台\nHours of service/MET Office outside hours",
+        "H24"
+      ],
+      [
+        "3",
+        "负责编发TAF 的气象台、有效时段、发布间隔\nOffice responsible for TAF preparation/Periods of\nvalidity/Interval of issuance",
+        "Beijing Capital Airport MET Center of CAAC;30h;6h"
+      ],
+      [
+        "4",
+        "趋势预报及发布间隔\nTrend forecast/Interval of issuance",
+        "trend 30min"
+      ],
+      [
+        "5",
+        "所提供的讲解或咨询服务\nBriefing/Consultation provided",
+        "Briefing provided: P, T"
+      ],
+      [
+        "6",
+        "飞行文件及其使用语言\nFlight documentation/Language(s) used",
+        "Chart, International MET Codes, Abbreviated Plain Language Text;Ch,En"
+      ]
+    ]
+  },
+  {
+    "page": 14,
+    "table_index": 0,
+    "data": [
+      [
+        "7",
+        "讲解或咨询服务时可利用的图表和其它信息\nCharts and other information available for\nbriefing or consultation",
+        "Synoptic charts, significant weather charts, upper W/T Charts, satellite and\nradar material, AWOS Real-time Data"
+      ],
+      [
+        "8",
+        "提供气象情报的辅助设备\nSupplementary equipment available for providing\ninformation",
+        "FAX, MET Service Terminal"
+      ],
+      [
+        "9",
+        "提供气象情报的空中交通服务单位\nATS units provided with information",
+        "Beijing ACC, Beijing APP, Beijing TWR"
+      ],
+      [
+        "10",
+        "其他信息\nAdditional information",
+        "When special requirement, Periods of validity/Interval of issuance: 9h/3h"
+      ],
+      [
+        "气象观测和报告\nMeteorological observations and reports",
+        null,
+        null
+      ],
+      [
+        "1",
+        "机场观测类型与频率、自动观测设备\nType & frequency of observation\n/Automatic observation equipment",
+        "Half hourly plus special observation/YES"
+      ],
+      [
+        "2",
+        "气象报告类型及所包含的补充资料\nType of MET Report/Supplementary information\nincluded",
+        "METAR, SPECI"
+      ],
+      [
+        "3",
+        "观测系统及安装位置\nObservation system/Site(s)",
+        "RVR EQPT\nA: 105m W of RCL, 315m inward THR36L;\nB: 105m W of RCL, 1685m inward THR18R;\nC: 105m W of RCL, 360m inward THR18R;\nD: 110m W of RCL, 301m inward THR36R;\nE: 100m W of RCL, 1830m inward THR18L;\nF: 115m W of RCL, 328m inward THR18L;\nG: 115m E of RCL, 325m inward THR01;\nH: 115m E of RCL, 1800m inward THR19;\nJ: 115m E of RCL, 331m inward THR19.\nSFC wind sensors\n01: 109m E of RCL, 355m inward THR01;\n01/19 Center: 110m E of RCL, 1802m inward THR19;\n19: 109m E of RCL, 331m inward THR19;\n18L: 120m W of RCL, 330m inward THR18L;\n18L/36R Center: 100m W of RCL, 1835m inward THR18L;\n36R: 100m W of RCL, 306m inward THR36R;\n18R: 105m W of RCL, 320m inward THR18R;\n18R/36L Center: 105m W of RCL, 1645m inward THR18R;\n36L: 105m W of RCL, 305m inward THR36L.\nCeilometer\n01: 25m W of RCL, 1050m outward THR01;\n19: 5m W of RCL, 973m outward THR19;\n18L: 25m W of RCL, 1085m outward THR18L;"
+      ]
+    ]
+  },
+  {
+    "page": 15,
+    "table_index": 0,
+    "data": [
+      [
+        "",
+        "",
+        "36R: 25m W of RCL, 1066m outward THR36R;\n18R: 90m E of RCL, 443m outward THR18R;\n36L: 25m W of RCL, 1066m outward THR36L."
+      ],
+      [
+        "4",
+        "观测系统的工作时间\nHours of operation for meteorological observation\nsystem",
+        "H24"
+      ],
+      [
+        "5",
+        "气候资料\nClimatological information",
+        "Climatological tables AVBL"
+      ],
+      [
+        "6",
+        "其他信息\nAdditional information",
+        "Nil"
+      ]
+    ]
+  },
+  {
+    "page": 15,
+    "table_index": 1,
+    "data": [
+      [
+        "跑道号码\nRWY\nDesignator",
+        "真方位和\n磁方位\nTRUE &\nMAG BRG",
+        "跑道长宽\nDimensions\nof RWY(m)",
+        "跑道强度、跑道和停\n止道道面\nRWY strength/\nSurface of\nRWY /SWY",
+        "跑道入口坐标、\n跑道末端坐标、\n跑道入口大地水\n准面波幅\nTHR coordinates\n& RWY end\ncoordinates &\nTHR geoid\nundulation",
+        "跑道入口标高和\n精密进近跑道接\n地带最高标高\nTHR elevation &\nhighest elevation\nof TDZ of\nprecision APP\nRWY",
+        "跑道和停止道坡\n度\nSlope of\nRWY/SWY"
+      ],
+      [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      [
+        "19",
+        "172.98° GEO\n181° MAG",
+        "3800×60",
+        "PCR 930/R/A/W/T\nCONC/-",
+        "Nil",
+        "THR 28.5m\nTDZ 29.8m",
+        "0.09%(700m)/0.0\n9%(700m)/-0.24\n%(500m)/-0.17%\n(600m)/-0.16%(7\n00m)/-0.15%(600\nm)"
+      ],
+      [
+        "01",
+        "352.98° GEO\n001° MAG",
+        "3800×60",
+        "PCR 930/R/A/W/T\nCONC/-",
+        "Nil",
+        "THR 25.5m\nTDZ 27.3m",
+        "0.15%(600m)/0.1\n6%(700m)/0.17%\n(600m)/0.24%(50\n0m)/-0.09%(700\nm)/-0.09%(700m)"
+      ],
+      [
+        "18L",
+        "172.98° GEO\n181° MAG",
+        "3800×60",
+        "PCR 1010/R/B/W/T\nASPH/-",
+        "Nil",
+        "THR 33.4m\nTDZ 35.2m",
+        "0.3%(600m)/-0.1\n5%(1300m)/0.13\n%(300m)/-0.18%\n(600m)/-0.23%(4\n00m)/-0.3%(600\nm)"
+      ]
+    ]
+  },
+  {
+    "page": 16,
+    "table_index": 0,
+    "data": [
+      [
+        "跑道号码\nRWY\nDesignator",
+        "真方位和\n磁方位\nTRUE &\nMAG BRG",
+        "跑道长宽\nDimensions\nof RWY(m)",
+        "跑道强度、跑道和停\n止道道面\nRWY strength/\nSurface of\nRWY /SWY",
+        "跑道入口坐标、\n跑道末端坐标、\n跑道入口大地水\n准面波幅\nTHR coordinates\n& RWY end\ncoordinates &\nTHR geoid\nundulation",
+        "跑道入口标高和\n精密进近跑道接\n地带最高标高\nTHR elevation &\nhighest elevation\nof TDZ of\nprecision APP\nRWY",
+        "跑道和停止道坡\n度\nSlope of\nRWY/SWY"
+      ],
+      [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      [
+        "36R",
+        "352.98° GEO\n001° MAG",
+        "3800×60",
+        "PCR 1010/R/B/W/T\nASPH/-",
+        "Nil",
+        "THR 29.9m\nTDZ 32.4m",
+        "0.3%(600m)/0.23\n%(400m)/0.18%(\n600m)/-0.13%(30\n0m)/0.15%(1300\nm)/-0.3%(600m)"
+      ],
+      [
+        "18R",
+        "172.98° GEO\n181° MAG",
+        "3200×50",
+        "PCR 1020/R/B/W/T\nCONC_ASPH/-",
+        "Nil",
+        "THR 35.1m\nTDZ 35.1m",
+        "-0.04%(700m)/0\n%(100m)/-0.09%\n(1700m)/0%(200\nm)/-0.16%(500m)"
+      ],
+      [
+        "36L",
+        "352.98° GEO\n001° MAG",
+        "3200×50",
+        "PCR 1020/R/B/W/T\nCONC_ASPH/-",
+        "Nil",
+        "THR 32.5m\nTDZ 33.5m",
+        "0.16%(500m)/0%\n(200m)/0.09%(17\n00m)/0%(100m)/\n0.04%(700m)"
+      ],
+      [
+        "跑道号码\nRWY\nDesignator",
+        "停止道长宽\nSWY\ndimensions\n(m)",
+        "净空道长宽\nCWY\ndimensions\n(m)",
+        "升降带长宽\nStrip dimensions\n(m)",
+        "跑道端安全区\n长宽\nRESA\ndimensions\n(m)",
+        "拦阻系统的\n位置及描述\nLocation&\nDescription of\narresting system",
+        "无障碍物区\nOFZ"
+      ],
+      [
+        "1",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13"
+      ],
+      [
+        "19",
+        "Nil",
+        "Nil",
+        "3920×280",
+        "215×120",
+        "Nil",
+        "-"
+      ],
+      [
+        "01",
+        "Nil",
+        "200×150",
+        "3920×280",
+        "240×120",
+        "Nil",
+        "-"
+      ],
+      [
+        "18L",
+        "Nil",
+        "200×150",
+        "3920×280",
+        "240×120",
+        "Nil",
+        "-"
+      ],
+      [
+        "36R",
+        "Nil",
+        "200×150",
+        "3920×280",
+        "240×120",
+        "Nil",
+        "-"
+      ],
+      [
+        "18R",
+        "Nil",
+        "Nil",
+        "3320×280",
+        "240×100",
+        "Nil",
+        "-"
+      ],
+      [
+        "36L",
+        "Nil",
+        "Nil",
+        "3320×280",
+        "240×100",
+        "Nil",
+        "-"
+      ],
+      [
+        "Remarks: 01/19:Distance between RCL of RWY01/19 and RCL of RWY18L/36R is 1525m; THR01 is 200m north of THR36R.\n18L/36R:Distance between RCL of RWY18L/36R and RCL of RWY18R/36L is 1960m; THR18R is 1650m north of THR18L.",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    ]
+  },
+  {
+    "page": 17,
+    "table_index": 0,
+    "data": [
+      [
+        "跑道号码\nRWY Designator",
+        "可用起飞滑跑距离\nTORA(m)",
+        "可用起飞距离\nTODA(m)",
+        "可用加速停止距离\nASDA(m)",
+        "可用着陆距离\nLDA(m)",
+        "备注\nRemarks"
+      ],
+      [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      [
+        "19",
+        "3800",
+        "3800",
+        "3800",
+        "3800",
+        "Nil"
+      ],
+      [
+        "19",
+        "3725",
+        "3725",
+        "3725",
+        "3800",
+        "FM Q9"
+      ],
+      [
+        "19",
+        "3525",
+        "3525",
+        "3525",
+        "3800",
+        "FM Q8"
+      ],
+      [
+        "01",
+        "3800",
+        "4000",
+        "3800",
+        "3800",
+        "Nil"
+      ],
+      [
+        "01",
+        "3725",
+        "3925",
+        "3725",
+        "3800",
+        "FM Q1"
+      ],
+      [
+        "18L",
+        "3800",
+        "4000",
+        "3800",
+        "3800",
+        "Nil"
+      ],
+      [
+        "18L",
+        "3725",
+        "3925",
+        "3725",
+        "3800",
+        "FM E7"
+      ],
+      [
+        "18L",
+        "3420",
+        "3620",
+        "3420",
+        "3800",
+        "FM W7"
+      ],
+      [
+        "36R",
+        "3800",
+        "4000",
+        "3800",
+        "3800",
+        "Nil"
+      ],
+      [
+        "36R",
+        "3725",
+        "3925",
+        "3725",
+        "3800",
+        "FM E1"
+      ],
+      [
+        "36R",
+        "3625",
+        "3825",
+        "3625",
+        "3800",
+        "FM E2"
+      ],
+      [
+        "36R",
+        "3420",
+        "3620",
+        "3420",
+        "3800",
+        "FM W2"
+      ],
+      [
+        "18R",
+        "3200",
+        "3200",
+        "3200",
+        "3200",
+        "Nil"
+      ],
+      [
+        "18R",
+        "2980",
+        "2980",
+        "2980",
+        "3200",
+        "FM P8"
+      ],
+      [
+        "36L",
+        "3200",
+        "3200",
+        "3200",
+        "3200",
+        "Nil"
+      ],
+      [
+        "36L",
+        "2980",
+        "2980",
+        "2980",
+        "3200",
+        "FM P1"
+      ]
+    ]
+  },
+  {
+    "page": 17,
+    "table_index": 1,
+    "data": [
+      [
+        "跑道\n号码\nRWY\nDesig\nnator",
+        "进近灯\n类型、长\n度、强度\nAPCH\nLGT\ntype/\nLEN/\n/INTST",
+        "入口灯\n颜色、翼\n排灯\nTHR\nLGT\ncolour/\nWBAR",
+        "目视进近坡度\n指示系统类\n型、位置、仰\n角、跑道入口\n最低眼高\nType of\nVASIS/Position\n/Angle/MEHT",
+        "接地\n带\n灯长\n度\nTDZ\nLGT\nLEN",
+        "跑道中线灯长度、\n间隔、颜色、强度\nRWY center line\nLGT LEN/Spacing\n/Colour/INTST",
+        "跑道边灯长度、间\n隔、颜色、强度\nRWY edge LGT\nLEN/Spacing\n/Colour/INTST",
+        "跑道末端灯\n颜色\nRWY end\nLGT\ncolour",
+        "停止道灯长\n度、颜色\nSWY\nLGT\nLEN\n/Colour"
+      ],
+      [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      [
+        "19",
+        "PALS\nCAT Ⅰ\nSFL\n900 m\nLIH",
+        "GREEN\nYes",
+        "PAPI\nLEFT\n414m inward\nTHR19\n3.2°\n22.5m",
+        "Nil",
+        "3800 m\nspacing 15m\n0-2900m, WHITE\n2900-3500m,\nRED/WHITE\n3500-3800m, RED\nVRB LIH",
+        "3800 m\nspacing 60m\n0-3200m, WHITE\n3200-3800m,\nYELLOW\nVRB LIH",
+        "RED",
+        "Nil"
+      ]
+    ]
+  },
+  {
+    "page": 18,
+    "table_index": 0,
+    "data": [
+      [
+        "跑道\n号码\nRWY\nDesig\nnator",
+        "进近灯\n类型、长\n度、强度\nAPCH\nLGT\ntype/\nLEN/\n/INTST",
+        "入口灯\n颜色、翼\n排灯\nTHR\nLGT\ncolour/\nWBAR",
+        "目视进近坡度\n指示系统类\n型、位置、仰\n角、跑道入口\n最低眼高\nType of\nVASIS/Position\n/Angle/MEHT",
+        "接地\n带\n灯长\n度\nTDZ\nLGT\nLEN",
+        "跑道中线灯长度、\n间隔、颜色、强度\nRWY center line\nLGT LEN/Spacing\n/Colour/INTST",
+        "跑道边灯长度、间\n隔、颜色、强度\nRWY edge LGT\nLEN/Spacing\n/Colour/INTST",
+        "跑道末端灯\n颜色\nRWY end\nLGT\ncolour",
+        "停止道灯长\n度、颜色\nSWY\nLGT\nLEN\n/Colour"
+      ],
+      [
+        "01",
+        "PALS\nCAT Ⅲ\nSFL\n900 m\nLIH",
+        "GREEN\nYes",
+        "PAPI\nLEFT\n438m inward\nTHR01\n3°\n21.5m",
+        "900 m",
+        "3800 m\nspacing 15m\n0-2900m, WHITE\n2900-3500m,\nRED/WHITE\n3500-3800m, RED\nVRB LIH",
+        "3800 m\nspacing 60m\n0-3200m, WHITE\n3200-3800m,\nYELLOW\nVRB LIH",
+        "RED",
+        "Nil"
+      ],
+      [
+        "18L",
+        "PALS\nCAT Ⅰ\nSFL\n900 m\nLIH",
+        "GREEN\nNil",
+        "PAPI\nLEFT\n423m inward\nTHR18L\n3°\n21.9m",
+        "Nil",
+        "3800 m\nspacing 15m\n0-2900m, WHITE\n2900-3500m,\nRED/WHITE\n3500-3800m, RED\nVRB LIH",
+        "3800 m\nspacing 60m\n0-3200m, WHITE\n3200-3800m,\nYELLOW\nVRB LIH",
+        "RED",
+        "Nil"
+      ],
+      [
+        "36R",
+        "PALS\nCAT Ⅲ\nSFL\n900 m\nLIH",
+        "GREEN\nNil",
+        "PAPI\nLEFT\n420m inward\nTHR36R\n3°\n22.7m",
+        "900 m",
+        "3800 m\nspacing 15m\n0-2900m, WHITE\n2900-3500m,\nRED/WHITE\n3500-3800m, RED\nVRB LIH",
+        "3800 m\nspacing 60m\n0-3200m, WHITE\n3200-3800m,\nYELLOW\nVRB LIH",
+        "RED",
+        "Nil"
+      ],
+      [
+        "18R",
+        "PALS\nCAT Ⅰ\nSFL\n900 m\nLIH",
+        "GREEN\nYes",
+        "PAPI\nLEFT\n420m inward\nTHR18R\n3°\n22m",
+        "Nil",
+        "3200 m\nspacing 15m\n0-2300m, WHITE\n2300-2900m,\nRED/WHITE\n2900-3200m, RED\nVRB LIH",
+        "3200 m\nspacing 60m\n0-2600m, WHITE\n2600-3200m,\nYELLOW\nVRB LIH",
+        "RED",
+        "Nil"
+      ]
+    ]
+  },
+  {
+    "page": 19,
+    "table_index": 0,
+    "data": [
+      [
+        "跑道\n号码\nRWY\nDesig\nnator",
+        "进近灯\n类型、长\n度、强度\nAPCH\nLGT\ntype/\nLEN/\n/INTST",
+        "入口灯\n颜色、翼\n排灯\nTHR\nLGT\ncolour/\nWBAR",
+        "目视进近坡度\n指示系统类\n型、位置、仰\n角、跑道入口\n最低眼高\nType of\nVASIS/Position\n/Angle/MEHT",
+        "接地\n带\n灯长\n度\nTDZ\nLGT\nLEN",
+        "跑道中线灯长度、\n间隔、颜色、强度\nRWY center line\nLGT LEN/Spacing\n/Colour/INTST",
+        "跑道边灯长度、间\n隔、颜色、强度\nRWY edge LGT\nLEN/Spacing\n/Colour/INTST",
+        "跑道末端灯\n颜色\nRWY end\nLGT\ncolour",
+        "停止道灯长\n度、颜色\nSWY\nLGT\nLEN\n/Colour"
+      ],
+      [
+        "36L",
+        "PALS\nCAT Ⅱ\nSFL\n900 m\nLIH",
+        "GREEN\nYes",
+        "PAPI\nLEFT\n420m inward\nTHR36L\n3°\n22.7m",
+        "900 m",
+        "3200 m\nspacing 15m\n0-2300m, WHITE\n2300-2900m,\nRED/WHITE\n2900-3200m, RED\nVRB LIH",
+        "3200 m\nspacing 60m\n0-2600m, WHITE\n2600-3200m,\nYELLOW\nVRB LIH",
+        "RED",
+        "Nil"
+      ],
+      [
+        "Remarks:",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    ]
+  },
+  {
+    "page": 19,
+    "table_index": 1,
+    "data": [
+      [
+        "1",
+        "机场灯标或识别灯标位置、特性和工作时间\nABN/IBN location, characteristics and hours\nof operation",
+        "Nil"
+      ],
+      [
+        "2",
+        "着陆方向标和风向标位置和灯光\nLDI/ WDI location and LGT",
+        "WDI:\n01:99m W of RCL, 354m inward THR01;\n19:100m W of RCL, 348m inward THR19;\n18L:133m E of RCL, 353m inward THR18L;\n36L:110m E of RCL, 361m inward THR36L.\n18R:114m E of RCL, 363m inward THR18R;\n36R:118m W of RCL, 530m inward THR36R;"
+      ],
+      [
+        "3",
+        "滑行道边灯和滑行道中线灯\nTWY edge and center line lighting",
+        "All TWYs: green center line lights, blue retroreflective markers, blue edge\nline lights"
+      ],
+      [
+        "4",
+        "备份电源及转换时间\nSecondary power supply/Switch-over time",
+        "Dual feed, diesel engine driven generator/≤15s"
+      ],
+      [
+        "5",
+        "备注\nRemarks",
+        "Nil"
+      ]
+    ]
+  },
+  {
+    "page": 19,
+    "table_index": 2,
+    "data": [
+      [
+        "1",
+        "TLOF 坐标或FATO 入口坐标及大地水准\n面波幅\nCoordinates TLOF or THR of FATO, Geoid\nundulation",
+        "Nil"
+      ]
+    ]
+  },
+  {
+    "page": 20,
+    "table_index": 0,
+    "data": [
+      [
+        "2",
+        "TLOF和（或）FATO标高\nTLOF and/or FATO elevation",
+        "Nil"
+      ],
+      [
+        "3",
+        "TLOF 和FATO 区域范围、道面、强度和标\n志\nTLOF and FATO area dimensions,surface,\nstrength, marking",
+        "Nil"
+      ],
+      [
+        "4",
+        "FATO 的真方位和磁方位\nTrue and MAG BRG of FATO",
+        "Nil"
+      ],
+      [
+        "5",
+        "公布距离\nDeclared distance available",
+        "Nil"
+      ],
+      [
+        "6",
+        "进近灯光和FATO 灯光\nAPP and FATO lighting",
+        "Nil"
+      ],
+      [
+        "7",
+        "备注\nRemarks",
+        "Nil"
+      ]
+    ]
+  },
+  {
+    "page": 20,
+    "table_index": 1,
+    "data": [
+      [
+        "空域名称和水平范围\nDesignation and lateral limits",
+        null,
+        "垂直范围\nVertical limits",
+        "空域分类\nAirspace\nclass",
+        "空中交通服务单位\n呼号和使用语言\nATS unit callsign\nLanguage",
+        "工作时间\nHours of\napplicability",
+        "备注\nRemarks"
+      ],
+      [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      [
+        "Beijing\nControl\nZone",
+        "A circle, radius 15km\ncentered at AD ARP",
+        "600m MSL(inclusive)\nand below (include the\nAirport Maneuvering\nArea)",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Fuel\nDumping\nArea",
+        "N4156E11546-N4040E\n11625-N4048E11651-N\n4203E11614-N4156E11\n546",
+        "Above 4000m",
+        "",
+        "",
+        "",
+        "See Fuel\nDumping\nArea Chart"
+      ],
+      [
+        "Prohibited\nFly Over\nArea",
+        "N394900E1162830-N39\n5900E1162830-N39590\n0E1161500-N394900E1\n161500-N394900E1162\n830",
+        "",
+        "",
+        "",
+        "",
+        "No aircraft\nis permitted\nto maneuver\nor\ncircumnavig\nate CB in\nthis area"
+      ],
+      [
+        "Altimeter\nsetting\nregion and\nTL/TA",
+        "Same as Beijing TMA",
+        "TL 3600m\nTA 3000m\n3300m(QNH≥1031hPa)\n2700m(QNH≤979hPa)",
+        "",
+        "",
+        "",
+        ""
+      ]
+    ]
+  },
+  {
+    "page": 21,
+    "table_index": 0,
+    "data": [
+      [
+        "服务名称\nService\ndesignation",
+        "呼号\nCallsign",
+        "频率\nFrequency (MHz)",
+        "卫星话音通信\n号码\nSATVOICE\nnumber",
+        "登录地址\nLogon address",
+        "工作时间\nHours of\noperation",
+        "备注\nRemarks"
+      ],
+      [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      [
+        "ATIS",
+        "",
+        "127.6 (Chinese)",
+        "",
+        "",
+        "H24",
+        "D-ATIS available"
+      ],
+      [
+        null,
+        null,
+        "128.65 (English)",
+        "",
+        "",
+        "H24",
+        "D-ATIS available"
+      ],
+      [
+        "APP",
+        "Capital\nApproach",
+        "APP01:126.1\n(125.05)",
+        "",
+        "",
+        "by ATC",
+        ""
+      ],
+      [
+        null,
+        null,
+        "APP02:119.0\n(125.05)",
+        "",
+        "",
+        "by ATC",
+        ""
+      ],
+      [
+        null,
+        null,
+        "APP03:120.2\n(125.05)",
+        "",
+        "",
+        "by ATC",
+        ""
+      ],
+      [
+        null,
+        "Beijing\nApproach",
+        "APP09:121.1\n(127.75)",
+        "",
+        "",
+        "by ATC",
+        ""
+      ],
+      [
+        null,
+        null,
+        "APP10:129.0\n(127.75)",
+        "",
+        "",
+        "by ATC",
+        ""
+      ],
+      [
+        null,
+        null,
+        "APP11:119.7\n(127.75)",
+        "",
+        "",
+        "by ATC",
+        ""
+      ],
+      [
+        null,
+        null,
+        "APP12:119.85\n(119.425)",
+        "",
+        "",
+        "H24",
+        ""
+      ],
+      [
+        null,
+        null,
+        "APP13:121.25\n(119.425)",
+        "",
+        "",
+        "by ATC",
+        ""
+      ],
+      [
+        null,
+        null,
+        "APP14:126.3\n(119.425)",
+        "",
+        "",
+        "by ATC",
+        ""
+      ],
+      [
+        null,
+        null,
+        "APP15:125.8\n(119.425)",
+        "",
+        "",
+        "by ATC",
+        ""
+      ],
+      [
+        null,
+        null,
+        "APP16:124.4\n(127.75)",
+        "",
+        "",
+        "by ATC",
+        ""
+      ],
+      [
+        null,
+        null,
+        "APP17:120.6\n(127.75)",
+        "",
+        "",
+        "H24",
+        ""
+      ],
+      [
+        null,
+        null,
+        "APP18:125.5\n(119.425)",
+        "",
+        "",
+        "by ATC",
+        ""
+      ],
+      [
+        "TWR",
+        "Beijing Tower",
+        "TWR01(18R/36L):1\n24.3 (118.3)",
+        "",
+        "",
+        "HO",
+        "for RWY18R/36L"
+      ],
+      [
+        null,
+        null,
+        "TWR02(18L/36R):1\n18.5 (118.05)",
+        "",
+        "",
+        "H24",
+        "for RWY18L/36R"
+      ]
+    ]
+  },
+  {
+    "page": 22,
+    "table_index": 0,
+    "data": [
+      [
+        "服务名称\nService\ndesignation",
+        "呼号\nCallsign",
+        "频率\nFrequency (MHz)",
+        "卫星话音通信\n号码\nSATVOICE\nnumber",
+        "登录地址\nLogon address",
+        "工作时间\nHours of\noperation",
+        "备注\nRemarks"
+      ],
+      [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      [
+        "",
+        "",
+        "TWR03(01/19):118.\n6 (118.3)",
+        "",
+        "",
+        "HO",
+        "for RWY01/19"
+      ],
+      [
+        "GND",
+        "Beijing\nDelivery",
+        "DELIVERY01:121.\n6",
+        "",
+        "",
+        "H24",
+        "DCL available\nWest of RWY18L/36R"
+      ],
+      [
+        null,
+        null,
+        "DELIVERY02:121.\n65",
+        "",
+        "",
+        "HO",
+        "DCL available\nEast of RWY18L/36R"
+      ],
+      [
+        null,
+        "Beijing Ground",
+        "GND01:121.9\n(121.95)",
+        "",
+        "",
+        "HO",
+        ""
+      ],
+      [
+        null,
+        null,
+        "GND02:121.8\n(121.95)",
+        "",
+        "",
+        "H24",
+        ""
+      ],
+      [
+        null,
+        null,
+        "GND03:121.7\n(121.95)",
+        "",
+        "",
+        "HO",
+        ""
+      ],
+      [
+        null,
+        null,
+        "GND04:121.75\n(121.95)",
+        "",
+        "",
+        "HO",
+        ""
+      ],
+      [
+        null,
+        null,
+        "GND05:121.85\n(121.95)",
+        "",
+        "",
+        "HO",
+        ""
+      ],
+      [
+        "APN",
+        "Beijing Apron",
+        "APN01:122.225\n(121.95)",
+        "",
+        "",
+        "H24",
+        ""
+      ],
+      [
+        null,
+        null,
+        "APN02:122.625\n(121.95)",
+        "",
+        "",
+        "H24",
+        ""
+      ],
+      [
+        null,
+        null,
+        "APN03:122.675\n(121.95)",
+        "",
+        "",
+        "H24",
+        ""
+      ],
+      [
+        null,
+        null,
+        "APN04:122.125\n(121.95)",
+        "",
+        "",
+        "H24",
+        ""
+      ],
+      [
+        "EMG",
+        "",
+        "121.5",
+        "",
+        "",
+        "H24",
+        ""
+      ]
+    ]
+  },
+  {
+    "page": 22,
+    "table_index": 1,
+    "data": [
+      [
+        "设施名称及类型、磁\n差、支持运行类别、\nVOR/ILS磁偏角\nName and type of\naid, VAR,Type of\nsupported OPS,\nDeclination of\nVOR/ILS",
+        "识别\nID",
+        "频率、波道\nFrequency/\nChannel\nnumber",
+        "工作时\n间\nHours of\noperation",
+        "发射天线坐标\n及相对位置\nCoordinates of\ntransmitting antenna/\nPosition",
+        "DME发射\n天线标高\nElevation of\nDME\ntransmitting\nantenna",
+        "备注\nRemarks"
+      ]
+    ]
+  },
+  {
+    "page": 23,
+    "table_index": 0,
+    "data": [
+      [
+        "设施名称及类型、磁\n差、支持运行类别、\nVOR/ILS磁偏角\nName and type of\naid, VAR,Type of\nsupported OPS,\nDeclination of\nVOR/ILS",
+        "识别\nID",
+        "频率、波道\nFrequency/\nChannel\nnumber",
+        "工作时\n间\nHours of\noperation",
+        "发射天线坐标\n及相对位置\nCoordinates of\ntransmitting antenna/\nPosition",
+        "DME发射\n天线标高\nElevation of\nDME\ntransmitting\nantenna",
+        "备注\nRemarks"
+      ],
+      [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      [
+        "Huairou\nVOR/DME",
+        "HUR",
+        "113.6 MHz\nCH 83X",
+        "H24",
+        "N40°19.8′\nE116°44.9′",
+        "62 m",
+        ""
+      ],
+      [
+        "Guanzhuang\nVOR/DME",
+        "PEK",
+        "114.7 MHz\nCH 94X",
+        "H24",
+        "N40°02.9′\nE116°44.1′",
+        "62 m",
+        "R195°-R285°\nclockwise U/S"
+      ],
+      [
+        "Shaziying\nVOR/DME",
+        "SZY",
+        "117.2 MHz\nCH 119X",
+        "",
+        "N40°06.4′\nE116°25.8′",
+        "72 m",
+        "R160°-R250°\nclockwise U/S"
+      ],
+      [
+        "Liangxiang\nNDB",
+        "JR",
+        "475 kHz",
+        "H24",
+        "N39°43.2′\nE116°05.7′",
+        "",
+        ""
+      ],
+      [
+        "Chedaoyu\nNDB",
+        "CDY",
+        "292 kHz",
+        "H24",
+        "N40°34.7′\nE117°13.4′",
+        "",
+        "U/S."
+      ],
+      [
+        "Shigezhuang\nNDB",
+        "VM",
+        "280 kHz",
+        "H24",
+        "N39°17.8′\nE116°54.1′",
+        "",
+        "U/S."
+      ],
+      [
+        "Zangangzhen\nNDB",
+        "JB",
+        "403 kHz",
+        "H24",
+        "N39°02.6′\nE116°11.9′",
+        "",
+        ""
+      ],
+      [
+        "Huairou\nNDB",
+        "OB",
+        "380 kHz",
+        "",
+        "N40°17.3′\nE116°32.1′",
+        "",
+        "U/S."
+      ],
+      [
+        "Shahe\nNDB",
+        "CU",
+        "555 kHz",
+        "",
+        "N40°07.3′\nE116°22.3′",
+        "",
+        ""
+      ],
+      [
+        "Xiliuhetun\nNDB",
+        "WF",
+        "395 kHz",
+        "",
+        "N39°56.7′\nE116°52.5′",
+        "",
+        "U/S"
+      ],
+      [
+        "MM 01",
+        "",
+        "75 MHz",
+        "",
+        "On the extension of RCL,\n1052m S of THR01",
+        "",
+        "U/S."
+      ],
+      [
+        "IM 01",
+        "",
+        "75 MHz",
+        "",
+        "On the extension of RCL,\n350m S of THR01",
+        "",
+        ""
+      ],
+      [
+        "LOC 01\nILS CAT II",
+        "INJ",
+        "108.5 MHz",
+        "",
+        "On the extension of RCL,\n310m N of RWY01 end",
+        "",
+        ""
+      ],
+      [
+        "GP 01",
+        "",
+        "329.9 MHz",
+        "",
+        "125m E of RCL, 305m\ninside THR01",
+        "",
+        "Angle 3° , RDH 15 m"
+      ],
+      [
+        "DME 01",
+        "INJ",
+        "CH 22X\n(108.5 MHz)",
+        "",
+        "120m E of RCL, 309m\ninside THR01",
+        "31m",
+        "Co-located with GP 01"
+      ]
+    ]
+  },
+  {
+    "page": 24,
+    "table_index": 0,
+    "data": [
+      [
+        "设施名称及类型、磁\n差、支持运行类别、\nVOR/ILS磁偏角\nName and type of\naid, VAR,Type of\nsupported OPS,\nDeclination of\nVOR/ILS",
+        "识别\nID",
+        "频率、波道\nFrequency/\nChannel\nnumber",
+        "工作时\n间\nHours of\noperation",
+        "发射天线坐标\n及相对位置\nCoordinates of\ntransmitting antenna/\nPosition",
+        "DME发射\n天线标高\nElevation of\nDME\ntransmitting\nantenna",
+        "备注\nRemarks"
+      ],
+      [
+        "MM 19",
+        "",
+        "75 MHz",
+        "",
+        "On the extension of RCL,\n950m N of THR19",
+        "",
+        "U/S."
+      ],
+      [
+        "LOC 19\nILS CAT I",
+        "ISZ",
+        "108.9 MHz",
+        "",
+        "On the extension of RCL,\n279m S of RWY19 end",
+        "",
+        ""
+      ],
+      [
+        "GP 19",
+        "",
+        "329.3 MHz",
+        "",
+        "125m E of RCL, 290m\ninside THR19",
+        "",
+        "Angle 3.2° , RDH 15 m"
+      ],
+      [
+        "DME 19",
+        "ISZ",
+        "CH 26X\n(108.9 MHz)",
+        "",
+        "120m E of RCL, 294m\ninside THR19",
+        "",
+        "Co-located with GP 19"
+      ],
+      [
+        "LOM 18L",
+        "OR",
+        "196 kHz",
+        "",
+        "On the extension of RCL,\n3650m N of THR18L",
+        "",
+        "U/S."
+      ],
+      [
+        "MM 18L",
+        "",
+        "75 MHz",
+        "",
+        "On the extension of RCL,\n850m N of THR18L",
+        "",
+        "U/S."
+      ],
+      [
+        "LOC 18L\nILS CAT I",
+        "IOR",
+        "109.3 MHz",
+        "",
+        "On the extension of RCL,\n327m S of RWY18L end",
+        "",
+        "Coverage 45km"
+      ],
+      [
+        "GP 18L",
+        "",
+        "332.0 MHz",
+        "",
+        "125m W of RCL, 288m\ninside THR18L",
+        "",
+        "Angle 3° , RDH 16.3 m"
+      ],
+      [
+        "DME 18L",
+        "IOR",
+        "CH 30X\n(109.3 MHz)",
+        "",
+        "125m W of RCL, 288m\ninside THR18L",
+        "38m",
+        "Co-located with GP\n18L\nCoverage 35.5km"
+      ],
+      [
+        "LOM 36R",
+        "QU",
+        "240 kHz",
+        "",
+        "On the extension of RCL,\n7000m S of THR36R",
+        "",
+        "U/S."
+      ],
+      [
+        "MM 36R",
+        "",
+        "75 MHz",
+        "",
+        "On the extension of RCL,\n1000m S of THR36R",
+        "",
+        "U/S."
+      ],
+      [
+        "IM 36R",
+        "",
+        "75 MHz",
+        "",
+        "On the extension of RCL,\n276m S of THR36R",
+        "",
+        ""
+      ],
+      [
+        "LOC 36R\nILS CAT IIIA",
+        "IQU",
+        "111.55 MHz",
+        "",
+        "On the extension of RCL,\n307m N of RWY36R end",
+        "",
+        "Coverage 45km"
+      ],
+      [
+        "GP 36R",
+        "",
+        "332.75 MHz",
+        "",
+        "125m W of RCL, 300m\ninside THR36R",
+        "",
+        "Angle 3° , RDH 15.8 m\nCoverage 25km"
+      ],
+      [
+        "DME 36R",
+        "IQU",
+        "CH 52Y\n(111.55 MHz)",
+        "",
+        "125m W of RCL, 300m\ninside THR36R",
+        "34m",
+        "Co-located with GP\n36R\nCoverage 47.6km"
+      ]
+    ]
+  },
+  {
+    "page": 25,
+    "table_index": 0,
+    "data": [
+      [
+        "设施名称及类型、磁\n差、支持运行类别、\nVOR/ILS磁偏角\nName and type of\naid, VAR,Type of\nsupported OPS,\nDeclination of\nVOR/ILS",
+        "识别\nID",
+        "频率、波道\nFrequency/\nChannel\nnumber",
+        "工作时\n间\nHours of\noperation",
+        "发射天线坐标\n及相对位置\nCoordinates of\ntransmitting antenna/\nPosition",
+        "DME发射\n天线标高\nElevation of\nDME\ntransmitting\nantenna",
+        "备注\nRemarks"
+      ],
+      [
+        "OM 18R",
+        "",
+        "75 MHz",
+        "",
+        "On the extension of RCL,\n4160m N of THR18R",
+        "",
+        "U/S."
+      ],
+      [
+        "MM 18R",
+        "",
+        "75 MHz",
+        "",
+        "On the extension of RCL,\n1085m N of THR18R",
+        "",
+        "U/S."
+      ],
+      [
+        "LOC 18R\nILS CAT I",
+        "ILG",
+        "110.3 MHz",
+        "",
+        "On the extension of RCL,\n441m S of RWY18R end",
+        "",
+        "Coverage 45km"
+      ],
+      [
+        "GP 18R",
+        "",
+        "335.0 MHz",
+        "",
+        "110m W of RCL, 300m\ninside THR18R",
+        "",
+        "Angle 3° , RDH 15.8 m\nCoverage 25km"
+      ],
+      [
+        "DME 18R",
+        "ILG",
+        "CH 40X\n(110.3 MHz)",
+        "",
+        "",
+        "45m",
+        "Co-located with GP\n18R"
+      ],
+      [
+        "LOM 36L",
+        "DK",
+        "354 kHz",
+        "",
+        "On the extension of RCL,\n4120m S of THR36L",
+        "",
+        "U/S."
+      ],
+      [
+        "MM 36L",
+        "",
+        "75 MHz",
+        "",
+        "On the extension of RCL,\n1066m S of THR36L",
+        "",
+        "U/S."
+      ],
+      [
+        "LOC 36L\nILS CAT I",
+        "IDK",
+        "111.7 MHz",
+        "",
+        "On the extension of RCL,\n402m N of RWY36L end",
+        "",
+        "Coverage 45km"
+      ],
+      [
+        "GP 36L",
+        "",
+        "333.5 MHz",
+        "",
+        "110m W of RCL, 285m\ninside THR36L",
+        "",
+        "Angle 3° , RDH 15.5 m\nCoverage 25km"
+      ],
+      [
+        "DME 36L",
+        "IDK",
+        "CH 54X\n(111.7 MHz)",
+        "",
+        "110m W of RCL, 285m\ninside THR36L",
+        "36m",
+        "Co-located with GP\n36L\nCoverage 49.9km"
+      ]
+    ]
+  },
+  {
+    "page": 31,
+    "table_index": 0,
+    "data": [
+      [
+        "跑道等待位置所在滑行\n道及类型\nTWY of RWY holding\nposition/pattern",
+        null,
+        "与跑道中\n心线距离\n(m)\nDIST to\nRCL (m)",
+        "与最近的\n平行滑行\n道中线距\n离(m)\nDIST to the\nnearest\nparallel\nTWY\ncenter line\n(m)",
+        "跑道等待位置所在滑行\n道及类型\nTWY of RWY holding\nposition/pattern",
+        null,
+        "与跑道中\n心线距离\n(m)\nDIST to\nRCL (m)",
+        "与最近的\n平行滑行\n道中线距\n离(m)\nDIST to the\nnearest\nparallel\nTWY\ncenter line\n(m)"
+      ],
+      [
+        "A0(east)",
+        "pattern A",
+        "107.5",
+        "92.5",
+        "E7",
+        "pattern A",
+        "107.5",
+        "92.5"
+      ],
+      [
+        null,
+        "pattern B",
+        "137",
+        "63",
+        "E8",
+        "pattern A",
+        "107.5",
+        "92.5"
+      ],
+      [
+        "A0(west)",
+        "pattern A",
+        "107.5",
+        "92.5",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        null,
+        "pattern B",
+        "137",
+        "63",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "A1(east)",
+        "pattern A",
+        "107.5",
+        "92.5",
+        "P0",
+        "pattern A",
+        "90",
+        "96.5"
+      ],
+      [
+        null,
+        "pattern B",
+        "137",
+        "63",
+        "P1",
+        "pattern A",
+        "90",
+        "96.5"
+      ],
+      [
+        "A1(west)",
+        "pattern A",
+        "107.5",
+        "92.5",
+        "P8",
+        "pattern A",
+        "90",
+        "96.5"
+      ],
+      [
+        null,
+        "pattern B",
+        "137",
+        "63",
+        "P9",
+        "pattern A",
+        "90",
+        "96.5"
+      ],
+      [
+        "A8(east)",
+        "pattern A",
+        "107.5",
+        "92.5",
+        "Q0",
+        "pattern A",
+        "107.5",
+        "92.5"
+      ]
+    ]
+  },
+  {
+    "page": 32,
+    "table_index": 0,
+    "data": [
+      [
+        "",
+        "pattern B",
+        "137",
+        "63",
+        "",
+        "pattern B",
+        "137",
+        "63"
+      ],
+      [
+        "A8(west)",
+        "pattern A",
+        "107.5",
+        "140.5",
+        "Q1",
+        "pattern A",
+        "107.5",
+        "92.5"
+      ],
+      [
+        null,
+        "pattern B",
+        "137",
+        "111",
+        null,
+        "pattern B",
+        "137",
+        "63"
+      ],
+      [
+        "A9(east)",
+        "pattern A",
+        "107.5",
+        "92.5",
+        "Q8",
+        "pattern A",
+        "107.5",
+        "92.5"
+      ],
+      [
+        null,
+        "pattern B",
+        "137",
+        "63",
+        "Q9",
+        "pattern A",
+        "107.5",
+        "92.5"
+      ],
+      [
+        "A9(west)",
+        "pattern A",
+        "107.5",
+        "140.5",
+        "U2",
+        "pattern A",
+        "107.5",
+        "92.5"
+      ],
+      [
+        null,
+        "pattern B",
+        "137",
+        "111",
+        "W0",
+        "pattern A",
+        "107.5",
+        "92.5"
+      ],
+      [
+        "E0",
+        "pattern A",
+        "107.5",
+        "92.5",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        null,
+        "pattern B",
+        "137",
+        "63",
+        "W2",
+        "pattern A",
+        "107.5",
+        "92.5"
+      ],
+      [
+        "E1",
+        "pattern A",
+        "107.5",
+        "92.5",
+        null,
+        "pattern B",
+        "137",
+        "63"
+      ],
+      [
+        null,
+        "pattern B",
+        "137",
+        "63",
+        "W7",
+        "pattern A",
+        "107.5",
+        "140.5"
+      ],
+      [
+        "E2",
+        "pattern A",
+        "107.5",
+        "92.5",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        null,
+        "pattern B",
+        "137",
+        "63",
+        "W9",
+        "pattern A",
+        "107.5",
+        "92.5"
+      ]
+    ]
+  },
+  {
+    "page": 32,
+    "table_index": 1,
+    "data": [
+      [
+        "TWY",
+        "Wingspan limits for A/C"
+      ],
+      [
+        "A0, A1, E0-E8, F(north of W2), F2, F3, F4(east of Z3),\nF7(east of Z3), G, G0-G7, H, H0-H2, H4-H7, J, J1,\nJ2(BTN T5&T6), J3(BTN T5&T6), J4, J5(south of",
+        "≤80m"
+      ]
+    ]
+  },
+  {
+    "page": 33,
+    "table_index": 0,
+    "data": [
+      [
+        "Nr.951), J6(south of Nr.955), K, K0-K7, M0, M1,\nM4(east of Z3), M5(east of Z3), M7(east of Nr.212),\nQ0-Q9, S6, S7, T1-T6, U2-U4, W2, W3, W6, W7, W9,\nY1, Y2, Y3(BTN H&J1), Y4, Y5, Y6(BTN J&J4),\nY7(south of S7), Y8(west of Nr.932), Y9(east of\nNr.938), Z3(BTN F2&M4), Z3(north of M1)",
+        ""
+      ],
+      [
+        "W0, F(south of W2), F0, F1, F4(west of Z3)，Z0(BTN\nF0&HP14), Z3(south of F2), F7(west of Z3), Z9(BTN\nNr.714&F7)",
+        "≤69m"
+      ],
+      [
+        "A8, A9, C, C1-C8, D1, D2(south of C8), D3(north of\nZ4), D4(north of Z4), D5(north of Z4), D6-D8, J2(south\nof T5), J3(south of T5), J5(north of Nr.951), J6(north of\nNr.955), M, M2, M3, M4(west of Z3), M5(west of Z3),\nM6, M7(west of Nr.212), P0-P9, S3-S5, U5-U9, W4,\nW5, Y3(east of J1), Y6(west of J4), Y8(east of Nr.932),\nY9(west of Nr.938), Z0(BTN Nr.612 & F0, north of\nHP14), Z2, Z3(BTN M1&M4), Z4, Z6, Z7, Z9(north of\nF7, south of Nr.714), Z10, Z18",
+        "≤65m"
+      ],
+      [
+        "Z1",
+        "≤48m"
+      ],
+      [
+        "D2(north of C8), D3(south of Z4), D4(south of Z4),\nD5(south of Z4), Y7(north of S7), Z0(south of Nr.612),\nZ8, Z12(east of Z0), Z15, Z23(west of Nr.W620)",
+        "≤36m"
+      ],
+      [
+        "Z23(east of Nr.W620)",
+        "≤32m"
+      ],
+      [
+        "Z12(west of Z0), Z20-Z22",
+        "≤31m"
+      ],
+      [
+        "Z24",
+        "≤29m"
+      ],
+      [
+        "Z16",
+        "≤24m"
+      ]
+    ]
+  },
+  {
+    "page": 34,
+    "table_index": 0,
+    "data": [
+      [
+        "运行A380、B747-8、AN124的滑",
+        "受限的滑行道/TWYs with",
+        "受限类型/Limit type"
+      ]
+    ]
+  },
+  {
+    "page": 35,
+    "table_index": 0,
+    "data": [
+      [
+        "行道/TWYs for A380, B747-8 and\nAN124 taxiing",
+        "operation limits",
+        ""
+      ],
+      [
+        "Y1(BTN T2 & G1)",
+        "Y2(BTN T2 & G1)",
+        "Wingspan for A/C ≤ 52m"
+      ],
+      [
+        "Y2(BTN T2 & G1)",
+        "Y1(BTN T2 & G1)",
+        "Wingspan for A/C ≤ 52m"
+      ],
+      [
+        "Y1(south of G1)",
+        "Y2(south of G1)",
+        "A/C forbidden to taxiing"
+      ],
+      [
+        "Y2(south of G1)",
+        "Y1(south of G1)",
+        "A/C forbidden to taxiing"
+      ],
+      [
+        "Z3(BTN M7 & F2)",
+        "",
+        "A380, B747-8 and AN124 taxiing\nspeed ≤ 20km/h"
+      ],
+      [
+        "F4(west of Z3)",
+        "",
+        "B747-8 taxiing speed ≤ 20km/h"
+      ],
+      [
+        "F(south of W2), F0, F1, F4(west of\nZ3), F7(west of Z3), W0, Z0(BTN\nF0 & HP14), Z3(south of F2),\nZ9(BTN F7 & stand Nr.714)",
+        "",
+        "only B747-8 taxiing"
+      ]
+    ]
+  },
+  {
+    "page": 36,
+    "table_index": 0,
+    "data": [
+      [
+        "",
+        "滑行道/TWY",
+        "航空器转弯限制/Taxi-turning limits\nfor A/C"
+      ],
+      [
+        "West part of RWY 18L/36R",
+        "W2",
+        "Turning south to TWY F is\nforbidden"
+      ],
+      [
+        null,
+        "A0",
+        "Turning to TWY F is forbidden"
+      ],
+      [
+        null,
+        "A1",
+        "Turning south to TWY F is\nforbidden"
+      ],
+      [
+        null,
+        "F4",
+        "Turning north to TWY F from east\nto west is forbidden"
+      ],
+      [
+        null,
+        "M4",
+        "Turning to TWY F from east to west\nis forbidden"
+      ],
+      [
+        null,
+        "S6",
+        "Turning north to TWY F from east\nto west is forbidden\nTurning to TWY F from west to east\nis forbidden"
+      ],
+      [
+        null,
+        "S7",
+        "Turning to TWY F from west to east\nis forbidden"
+      ],
+      [
+        "East part of RWY 18L/36R",
+        "A0, A1",
+        "Turning to TWY G is forbidden"
+      ],
+      [
+        null,
+        "G0",
+        "Turning to TWY Y1 is forbidden"
+      ]
+    ]
+  },
+  {
+    "page": 40,
+    "table_index": 0,
+    "data": [
+      [
+        "停机位/Stands",
+        "使用规则/Operational rules"
+      ],
+      [
+        "264, 267, 268, 622-625, 630-640, N110, N124, N128,\nN214, W101, W206, W301, W306, W501-W511,\nW612-W623",
+        "1. Aircraft shall taxi in and be pushed back by tow\ntractors, taxiing in and out by its own power is strictly\nforbidden;\n2. These stands are only available for aircraft parking,\nground support activities such as passengers\nembarkation and disembarkation, refueling, cargo\nloading and unloading is forbidden."
+      ]
+    ]
+  },
+  {
+    "page": 41,
+    "table_index": 0,
+    "data": [
+      [
+        "停机位/Stands",
+        "航空器翼展限制/\nWing span limits for aircraft"
+      ],
+      [
+        "Nr. 507-509",
+        "80m"
+      ],
+      [
+        "Nr. 308,403,405, 410, 530, 531, 536",
+        "69m"
+      ],
+      [
+        "Nr. 107, A113, 208, 210, 212, 214, 217, 219, 220, 221,\n224, 301-303, 307, 331, 335-337, 401, 406-409, 411,\n413, 510-514, 516, 518, 520, 521, 523, 525, 526, 528,\n529, 532, 535",
+        "65m"
+      ],
+      [
+        "Nr. A106, 223, 233",
+        "61m"
+      ],
+      [
+        "Nr. 515, 517, 519, 522, 524",
+        "52m"
+      ],
+      [
+        "Nr. 207",
+        "44m"
+      ],
+      [
+        "Nr. 209",
+        "42m"
+      ],
+      [
+        "Nr. 103, 104, 108, 110, 111, 114-116, 205, 206, 211,\n213, 215, 216, 218, 225-232, 234-240 ,304-306,\n309-330, 332-334, 501-506, 527, 533, 534",
+        "36m"
+      ]
+    ]
+  },
+  {
+    "page": 41,
+    "table_index": 1,
+    "data": [
+      [
+        "停机位/Stands",
+        "航空器翼展限制/Wing span limits for aircraft"
+      ],
+      [
+        "Nr. 701, 702, 931, 932, 938, 939, 951, 955, M01, M02",
+        "80m"
+      ]
+    ]
+  },
+  {
+    "page": 42,
+    "table_index": 0,
+    "data": [
+      [
+        "Nr. N205, N206",
+        "74m"
+      ],
+      [
+        "Nr. 709, 710, N104-N106, N109, N207, N214",
+        "69m"
+      ],
+      [
+        "Nr. 254, 361, 455, 463, 561, 565, 603,608-612, 703,\n704, 706-708, 807-811, 933, 934, 936, 937, 952-954,\n956-958, M03, M05, M07, M09, M10, N103, N107,\nN108, N202-N204, N208-N211, W105, W107, W109,\nW111, W205, W207-W210, W308-W311",
+        "65m"
+      ],
+      [
+        "Nr. 554, 555, 563, 602, W103, W104",
+        "61m"
+      ],
+      [
+        "Nr. M04, M06, M08, N101, N102, N201",
+        "52m"
+      ],
+      [
+        "Nr. 802, 804, W203, W204",
+        "51m"
+      ],
+      [
+        "Nr. 253, W202",
+        "48m"
+      ],
+      [
+        "Nr. 803, 805",
+        "45m"
+      ],
+      [
+        "Nr. W201",
+        "42m"
+      ],
+      [
+        "Nr. 351-360, 451-454, 456-462, 464-466, 551-553, 556,\n558-560, 562, 564, 636-640, 711-714, 722-726,\n731-735, 801, 806, 812-821, 935, 940, M11, N104L/R,\nN105L/R, N106L/R, N110, N121-N128, N212, N213,\nW101, W106, W108, W110, W112, W113, W206,\nW301-W307",
+        "36m"
+      ],
+      [
+        "Nr. 251, 252, 727, 729",
+        "32m"
+      ],
+      [
+        "Nr. 626, 728, 730",
+        "31m"
+      ],
+      [
+        "Nr. 622-625, 627, 628, 630-635",
+        "29m"
+      ],
+      [
+        "Nr. 721",
+        "28m"
+      ],
+      [
+        "Nr. 261-264, 267, 268, 629",
+        "24m"
+      ]
+    ]
+  },
+  {
+    "page": 43,
+    "table_index": 0,
+    "data": [
+      [
+        "停机位/Stands",
+        "航空器翼展限制/\nWing span limits for aircraft"
+      ],
+      [
+        "Nr. 636-640, N121-N128, N104L/R-N106L/R",
+        "36m"
+      ],
+      [
+        "Nr. 626, 728, 730",
+        "31m"
+      ],
+      [
+        "Nr. 251, 252, 622-625, 627, 628, 630-635, 727, 729",
+        "29m"
+      ],
+      [
+        "Nr. 261-264, 267, 268, 269",
+        "24m"
+      ]
+    ]
+  },
+  {
+    "page": 43,
+    "table_index": 1,
+    "data": [
+      [
+        "使用机位/The stand in use",
+        "不能同时使用的机位/The\nstands forbidden to be\nused",
+        "使用机位/The stand in use",
+        "不能同时使用的机位/The\nstands forbidden to be\nused"
+      ],
+      [
+        "N104",
+        "N104L and N104R",
+        "N104L or N104R",
+        "N104"
+      ],
+      [
+        "N105",
+        "N105L and N105R",
+        "N105L or N105R",
+        "N105"
+      ],
+      [
+        "N106",
+        "N106L and N106R",
+        "N106L or N106R",
+        "N106"
+      ],
+      [
+        "W622",
+        "W622L and W622R",
+        "W622L or W622R",
+        "W622"
+      ],
+      [
+        "W623",
+        "W623L and W623R",
+        "W623L or W623R",
+        "W623"
+      ]
+    ]
+  },
+  {
+    "page": 48,
+    "table_index": 0,
+    "data": [
+      [
+        "起飞跑道RWY",
+        "对应除冰区域\nCorresponding\nDeicing Areas",
+        "等待位置编号\nHolding position Nr.",
+        "是否具备灯光引导\nLight guidance is\navailable",
+        "排队区域line-up"
+      ],
+      [
+        "36L",
+        "Nr.1deicing\narea(W211-W213)",
+        "11",
+        "Yes",
+        "TWY Z2(east of\nTWY Z7)"
+      ],
+      [
+        null,
+        null,
+        "12",
+        "Yes",
+        "TWY D1(north of\nTWY C1)"
+      ],
+      [
+        "18L/18R, 36L/36R",
+        "Nr.2deicing\narea(TWY F7 (BTN\nZ3 & Z9), 706-710)",
+        "21",
+        "Yes",
+        "TWY Z9(south of\nTWY F4)"
+      ],
+      [
+        null,
+        null,
+        "23",
+        "Yes",
+        "TWY Z3(north of\nTWY F7)"
+      ],
+      [
+        "36R",
+        "Nr.3deicing\narea(G1,G2,371-373\n)",
+        "31",
+        "Yes",
+        "TWY Y2(south of\nTWY G1)"
+      ],
+      [
+        null,
+        null,
+        "32",
+        "Yes",
+        "TWY Y2(north of"
+      ]
+    ]
+  },
+  {
+    "page": 49,
+    "table_index": 0,
+    "data": [
+      [
+        "",
+        "",
+        "",
+        "",
+        "TWY U6)"
+      ],
+      [
+        "01",
+        "Nr.4deicing\narea(K1,K2,381,382\n)",
+        "41",
+        "Yes",
+        "TWY Y5(south of\nTWY K1)"
+      ],
+      [
+        null,
+        null,
+        "42",
+        "Yes",
+        "TWY Y5(north of\nTWY U9)"
+      ],
+      [
+        "18L/18R, 36L/36R",
+        "Nr.7deicing\narea(W103-W107)",
+        "71",
+        "Yes",
+        "TWY D4(south of\nTWY S4)"
+      ],
+      [
+        null,
+        null,
+        "72",
+        "Yes",
+        "TWY S4(east of\nTWY D4)"
+      ],
+      [
+        "18L",
+        "Nr.8deicing\narea(951-954)",
+        "81",
+        "Yes",
+        "TWY H(south of\nTWY J5)"
+      ],
+      [
+        "19",
+        "Nr.9deicing\narea(955-958)",
+        "91",
+        "Yes",
+        "TWY J(south of\nTWY J6)"
+      ]
+    ]
+  },
+  {
+    "page": 52,
+    "table_index": 0,
+    "data": [
+      [
+        "RWY\nRVR（m）",
+        "36L",
+        "36R",
+        "01"
+      ],
+      [
+        "550-450",
+        "take-off, landing(HUD",
+        "take-off,",
+        "take-off,"
+      ]
+    ]
+  },
+  {
+    "page": 53,
+    "table_index": 0,
+    "data": [
+      [
+        "",
+        "special CAT I)",
+        "landing(CAT II, HUD\nspecial CAT I)",
+        "landing(CAT II, HUD\nspecial CAT I)"
+      ],
+      [
+        "450-400",
+        "take-off",
+        "take-off, landing(CAT II)",
+        "take-off, landing(CAT II)"
+      ],
+      [
+        "400-300",
+        "-",
+        "take-off, landing(CAT II)",
+        "take-off, landing(CAT II)"
+      ],
+      [
+        "300-200",
+        "-",
+        "take-off, landing(CAT\nIIIA)",
+        "take-off"
+      ],
+      [
+        "200-175",
+        "-",
+        "HUD take-off,\nlanding(CAT IIIA)",
+        "HUD take-off"
+      ],
+      [
+        "175-150",
+        "-",
+        "HUD take-off",
+        "HUD take-off"
+      ],
+      [
+        "150-90",
+        "-",
+        "-",
+        "HUD take-off"
+      ],
+      [
+        "<90",
+        "-",
+        "-",
+        "-"
+      ]
+    ]
+  },
+  {
+    "page": 55,
+    "table_index": 0,
+    "data": [
+      [
+        "RWY",
+        "RVR",
+        "Route"
+      ],
+      [
+        "01",
+        "RVR≥150m",
+        "(TWY J→T3)/T3/T1→TWY\nK→TWY K( BTN TWY Q1 and\nTWY Q0);\nor /T3/T1→TWY Y4→TWY K1\n(beyond TWY K)"
+      ],
+      [
+        "36R\n(East)",
+        "RVR≥150m",
+        "TWY T2/T4→TWY Y1→TWY\nG0→TWY G0 (beyond TWY G) ;\nor (TWY H→TWY\nT4)/T4/T2→TWY G→TWY\nG(BTN TWY G1 and TWY G0)"
+      ],
+      [
+        "36R\n(West)",
+        "RVR≥150m",
+        "TWY Z3 (north of TWY\nZ2)/Z2→TWY F→TWY F (north of\nTWY W2)/TWY F (north of TWY\nW0);\nor TWY Z3 (north of TWY Z2)/\nZ2→TWY Z3→TWY Z3 (north of\nTWY F0)"
+      ],
+      [
+        "01",
+        "RVR≥90m",
+        "TWY (J→T3)/T3/T1→TWY\nK→TWY K( BTN TWY Q1 and\nTWY Q0)"
+      ]
+    ]
+  },
+  {
+    "page": 67,
+    "table_index": 0,
+    "data": [
+      [
+        "Migratory Season",
+        "Active Time",
+        "Direction of activity",
+        "Flight height within\nAD",
+        "Characteristic"
+      ],
+      [
+        "Spring (Mar-May)",
+        "Day",
+        "Runway and\nsurrounding soil area",
+        "0-100m",
+        "Group, small size; A\nfew, medium and big\nsize"
+      ],
+      [
+        null,
+        "Night",
+        "Aircraft movement\narea and surrounding\nclearance protection\narea",
+        "0-2000 m",
+        "Group, small and\nmedium size"
+      ],
+      [
+        "Summer (Jun- Aug)",
+        "Day",
+        "Runway and\nsurrounding soil area",
+        "0-200m",
+        "Group, small size"
+      ],
+      [
+        null,
+        "Night",
+        "Runway and\nsurrounding soil area",
+        "0-50m",
+        "A few, small size;\nBat"
+      ],
+      [
+        "Autumn (Sep-Nov)",
+        "Day",
+        "Runway and\nsurrounding soil area",
+        "0-100m",
+        "Group, small size; A\nfew, medium and big\nsize"
+      ],
+      [
+        null,
+        "Night",
+        "Aircraft movement\narea and surrounding\nclearance protection\narea",
+        "0-2000m",
+        "Group, small and\nmedium size"
+      ]
+    ]
+  },
+  {
+    "page": 68,
+    "table_index": 0,
+    "data": [
+      [
+        "Winter (Dec-Feb)",
+        "Day",
+        "Runway and\nsurrounding soil area",
+        "0-100m",
+        "Group, small size; A\nfew, medium and big\nsize"
+      ],
+      [
+        null,
+        "During snow cover\nin soil area",
+        "Inhabit on the\nrunway and taxiway",
+        "0-50m",
+        "Group,small size"
+      ]
+    ]
+  }
+]
