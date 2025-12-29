@@ -853,12 +853,13 @@ class AirportRunwayDXFGenerator:
 def main():
     """Main entry point"""
     import sys
-    
-    geometry = sys.argv[1] if len(sys.argv) > 1 else 'runway_geometry.json'
-    
+
     base_path = os.path.dirname(__file__)
+    geometry = os.path.join(base_path, 'runway_geometry.json')
+    
     output = os.path.join(base_path, "output", "airport_runway_system_R2010.dxf")
     gen = AirportRunwayDXFGenerator(geometry)
+
     return 0 if gen.generate(output) else 1
 
 
