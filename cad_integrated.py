@@ -155,6 +155,98 @@ class IntegratedAirportCAD:
             total += math.sqrt(dx**2 + dy**2)
         return total
     
+    def _find_closest_point_on_line(self, 
+                                    point: Tuple[float, float], 
+                                    line_points: List[Tuple[float, float]]) -> Tuple[float, Tuple[float, float]]:
+        """
+        找到点到折线的最近点
+        
+        Args:
+            point: 目标点坐标
+            line_points: 折线的点列表
+        
+        Returns:
+            (最小距离, 最近点坐标)
+        
+        算法：
+        - 遍历折线的每一段
+        - 计算点到线段的投影点
+        - 投影点限制在线段范围内
+        - 返回最小距离和对应的最近点
+        """
+        px, py = point
+        min_dist = float('inf')
+        closest_point = line_points[0]
+        
+        for i in range(len(line_points) - 1):
+            x1, y1 = line_points[i]
+            x2, y2 = line_points[i + 1]
+            
+            dx = x2 - x1
+            dy = y2 - y1
+            length_sq = dx * dx + dy * dy
+            
+            if length_sq < 1e-10:  # 线段退化为点
+                closest = (x1, y1)
+            else:
+                # 计算投影参数 t，限制在 [0, 1]
+                t = max(0.0, min(1.0, ((px - x1) * dx + (py - y1) * dy) / length_sq))
+                closest = (x1 + t * dx, y1 + t * dy)
+            
+            # 计算距离
+            dist = math.sqrt((px - closest[0])**2 + (py - closest[1])**2)
+            
+            if dist < min_dist:
+                min_dist = dist
+                closest_point = closest
+        
+        return min_dist, closest_point
+    
+    def connect_taxiway_to_runway(self, 
+                                  taxiway_coords: List[Tuple[float, float]], 
+                                  runway_coords: List[Tuple[float, float]],
+                                  threshold: float = 100.0) -> Tuple[List[Tuple[float, float]], bool]:
+        """
+        自动连接滑行道到跑道中心线
+        
+        Args:
+            taxiway_coords: 滑行道中心线坐标
+            runway_coords: 跑道中心线坐标
+            threshold: 连接距离阈值（米），小于此值则自动连接
+        
+        Returns:
+            (修正后的滑行道坐标, 是否进行了连接)
+        
+        逻辑：
+        1. 检查滑行道起点和终点距离跑道的距离
+        2. 如果距离 < threshold 且 > 0.01米（避免重复点）
+        3. 在端点和跑道中心线最近点之间添加连接线段
+        """
+        if len(taxiway_coords) < 2 or len(runway_coords) < 2:
+            return taxiway_coords, False
+        
+        start = taxiway_coords[0]
+        end = taxiway_coords[-1]
+        
+        # 找到起点和终点到跑道的最近点
+        start_dist, start_closest = self._find_closest_point_on_line(start, runway_coords)
+        end_dist, end_closest = self._find_closest_point_on_line(end, runway_coords)
+        
+        new_coords = list(taxiway_coords)
+        modified = False
+        
+        # 如果起点接近跑道，添加连接点
+        if start_dist < threshold and start_dist > 0.01:
+            new_coords.insert(0, start_closest)
+            modified = True
+        
+        # 如果终点接近跑道，添加连接点
+        if end_dist < threshold and end_dist > 0.01:
+            new_coords.append(end_closest)
+            modified = True
+        
+        return new_coords, modified
+    
     # ========== 阶段1：绘制真实几何 ==========
     
     def draw_runway_from_real_geometry(self):
@@ -198,49 +290,59 @@ class IntegratedAirportCAD:
         
         return centerline_points, width
     
-    def draw_taxiways_from_real_geometry(self):
-        """从真实几何数据绘制滑行道"""
+    def draw_taxiways_from_real_geometry(self, runway_coords: List[Tuple[float, float]]):
+        """从真实几何数据绘制滑行道（带自动连接）"""
         print("\n🛤️  Drawing taxiways from real geometry...")
         
         taxiways = self.real_geometry['taxiways']
         
-        # 按系列分类统计
         series_count = {}
         drawn_count = 0
+        connected_count = 0
         
         for tw in taxiways:
             ref = tw['ref']
             coords = tw['geometry']['local_coordinates']
-            width = tw. get('width_meters', 23)  # 默认23m
+            width = tw.get('width_meters', 23)
             
-            # 统计系列
             series = ref[0] if ref else '?'
             series_count[series] = series_count.get(series, 0) + 1
             
-            # 转换坐标
             centerline = [(x, y) for x, y in coords]
             
             if len(centerline) < 2:
-                continue  # 跳过无效数据
+                continue
             
-            # 绘制滑行道中心线（黄色）
-            self.msp.add_lwpolyline(centerline, 
+            # ✨ 自动连接到跑道
+            connected_centerline, was_connected = self.connect_taxiway_to_runway(
+                centerline, 
+                runway_coords, 
+                threshold=100.0  # 100米以内自动连接（调整后以覆盖所有快速出口）
+            )
+            
+            if was_connected:
+                connected_count += 1
+                print(f"      ✓ {ref}: Connected to runway")
+            
+            # 绘制中心线（使用修正后的坐标）
+            self.msp.add_lwpolyline(connected_centerline, 
                                    dxfattribs={'layer': 'TAXIWAY_CENTERLINE',
-                                              'color': 2})  # 黄色
+                                              'color': 2})
             
-            # 可选：绘制滑行道边界（简化版，只画轮廓）
-            if len(centerline) >= 2:
-                left, right = self._offset_polyline(centerline, width / 2.0)
+            # 绘制边界
+            if len(connected_centerline) >= 2:
+                left, right = self._offset_polyline(connected_centerline, width / 2.0)
                 boundary = left + list(reversed(right))
                 
                 pline = self.msp.add_lwpolyline(boundary,
                                                dxfattribs={'layer': 'TAXIWAY',
-                                                          'color':  5})  # 蓝色
-                pline. close()
+                                                          'color': 5})
+                pline.close()
             
             drawn_count += 1
         
         print(f"  ✓ Drew {drawn_count} taxiways")
+        print(f"  ✓ Auto-connected {connected_count} to runway")
         print(f"\n  📊 By series:")
         for series in sorted(series_count.keys()):
             count = series_count[series]
@@ -287,25 +389,27 @@ Stage 1: Basic Geometry (Runway + Taxiways)"""
     # ========== 构建和保存 ==========
     
     def build(self):
-        """构建完整图纸 - 阶段1"""
+        """构建完整图纸 - 阶段1（修正版）"""
         print("="*70)
-        print("🏗️  BUILDING INTEGRATED AIRPORT CAD - STAGE 1")
+        print("🏗️  BUILDING INTEGRATED AIRPORT CAD - STAGE 1 (FIXED)")
         print("="*70)
         
-        # 加载数据
         self.load_data()
         
-        # 阶段1：绘制真实几何
         print("\n" + "="*70)
         print("📦 STAGE 1: Real Geometry (Runway + Taxiways)")
         print("="*70)
         
+        # 先绘制跑道，获取中心线坐标
         runway_coords, runway_width = self.draw_runway_from_real_geometry()
-        self.draw_taxiways_from_real_geometry()
+        
+        # 绘制滑行道（传入跑道坐标用于连接）
+        self.draw_taxiways_from_real_geometry(runway_coords)
+        
         self.add_title_block()
         
         print("\n" + "="*70)
-        print("✅ BUILD COMPLETED - STAGE 1")
+        print("✅ BUILD COMPLETED - STAGE 1 (FIXED)")
         print("="*70)
         print("\n📊 Summary:")
         print(f"  - Runway:  {self.real_geometry['runway']['designator']}")
