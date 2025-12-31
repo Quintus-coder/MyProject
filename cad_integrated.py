@@ -205,7 +205,7 @@ class IntegratedAirportCAD:
     def connect_taxiway_to_runway(self, 
                                   taxiway_coords: List[Tuple[float, float]], 
                                   runway_coords: List[Tuple[float, float]],
-                                  threshold: float = 50.0) -> Tuple[List[Tuple[float, float]], bool]:
+                                  threshold: float = 100.0) -> Tuple[List[Tuple[float, float]], bool]:
         """
         自动连接滑行道到跑道中心线
         
