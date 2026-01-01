@@ -734,59 +734,83 @@ class IntegratedAirportCAD:
                                         'lineweight': 25})
     
     def draw_holding_position_markings(self, runway_coords):
-        """绘制跑道等待位置标志"""
+        """绘制跑道等待位置标志(智能版 - 只在垂直交叉处)"""
         print("  🚦 Drawing holding position markings...")
         
         taxiways = self.real_geometry['taxiways']
         start, end, direction, perpendicular, _ = self._get_runway_direction(runway_coords)
         
+        # 只为这些滑行道绘制等待位置
+        target_taxiways = ['P0', 'P1', 'P2', 'P3', 'P6', 'P7', 'P8', 'P9']
+        
         holding_count = 0
         
-        for tw in taxiways:
+        for tw in taxiways: 
             ref = tw['ref']
+            
+            # ⚠️ 关键修复: 只处理目标滑行道,跳过C系列(平行滑行道)
+            if ref not in target_taxiways: 
+                continue
+            
             coords = tw['geometry']['local_coordinates']
             
             if len(coords) < 2:
+                continue
+            
+            # 计算滑行道方向
+            tw_start = coords[0]
+            tw_end = coords[-1]
+            tw_dx = tw_end[0] - tw_start[0]
+            tw_dy = tw_end[1] - tw_start[1]
+            tw_length = math.sqrt(tw_dx**2 + tw_dy**2)
+            
+            if tw_length < 1e-6:
+                continue
+            
+            tw_dir_x = tw_dx / tw_length
+            tw_dir_y = tw_dy / tw_length
+            
+            # ⚠️ 关键修复: 检查是否与跑道垂直交叉
+            # 点积接近0表示垂直,接近1表示平行
+            dot_product = abs(tw_dir_x * direction[0] + tw_dir_y * direction[1])
+            
+            if dot_product > 0.5:  # 如果接近平行(角度<60°),跳过
+                print(f"    ⊗ Skipping {ref} (parallel, dot={dot_product:.2f})")
                 continue
             
             # 找到滑行道与跑道的交点
             for point in coords:
                 dist, closest = self._find_closest_point_on_line(point, runway_coords)
                 
-                # 如果距离跑道很近（50m内），认为是交叉点
-                if dist < 50:
-                    # 绘制等待位置标志（简化版：双实线）
-                    line_length = 60  # 标志长度
+                if dist < 30:  # 距离<30m认为是交叉点
+                    # 绘制等待位置标志
+                    line_length = 60
                     
-                    # 沿垂直方向绘制
                     p1 = self._point_perpendicular(closest, perpendicular, -line_length/2)
                     p2 = self._point_perpendicular(closest, perpendicular, line_length/2)
                     
                     # 第一条线
                     self.msp.add_line(p1, p2, dxfattribs={'layer': 'MARK', 'color': 2, 'lineweight': 50})
                     
-                    # 第二条线（向外偏移3m）
-                    offset_dist = 3
-                    # 判断是在起点还是终点侧
+                    # 第二条线(向滑行道方向偏移3m)
                     to_start = math.sqrt((closest[0]-start[0])**2 + (closest[1]-start[1])**2)
                     to_end = math.sqrt((closest[0]-end[0])**2 + (closest[1]-end[1])**2)
                     
                     if to_start < to_end:
-                        # 靠近起点，向起点方向偏移
-                        offset_point = self._point_along_runway(closest, direction, -offset_dist)
+                        offset_point = self._point_along_runway(closest, direction, -3)
                     else:
-                        # 靠近终点，向终点方向偏移
-                        offset_point = self._point_along_runway(closest, direction, offset_dist)
+                        offset_point = self._point_along_runway(closest, direction, 3)
                     
                     p3 = self._point_perpendicular(offset_point, perpendicular, -line_length/2)
                     p4 = self._point_perpendicular(offset_point, perpendicular, line_length/2)
                     
-                    self.msp.add_line(p3, p4, dxfattribs={'layer': 'MARK', 'color': 2, 'lineweight': 50})
+                    self. msp.add_line(p3, p4, dxfattribs={'layer': 'MARK', 'color': 2, 'lineweight': 50})
                     
                     holding_count += 1
+                    print(f"    ✓ Drew holding position for {ref}")
                     break  # 每条滑行道只画一次
         
-        print(f"    ✓ Holding positions: {holding_count} locations")
+        print(f"    ✓ Holding positions:  {holding_count} locations")
     
     def draw_lighting_systems(self, runway_coords, runway_width):
         """绘制灯光系统（优化版 - 全部用圆点）"""
